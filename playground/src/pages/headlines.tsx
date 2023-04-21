@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 
 type headings = {
-  heading: string;
-  subheading: string;
+  heading: string|number;
+  subheading: string |number;
 };
 
 const Headlines: FC<headings> = ({ heading, subheading }) => {
   return (
-    <div>
+    <div className='heading'>
      {heading} 
      <br></br>
     {subheading}

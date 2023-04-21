@@ -27,7 +27,8 @@ function Home() {
     <div className='home-page'>
       {/* <div className='container'> */}
       <div className='sidebar'>
-      <ConnectWalletButton></ConnectWalletButton>
+         
+         <h2>Playground</h2>
 
            <ul>
           {contractName.map((name, index) => (
@@ -39,20 +40,24 @@ function Home() {
       </div>
       {/* <div className='navbar-container'> */}
         <div className='navbar'>
+          <div className='wallet-button'>
+          <ConnectWalletButton></ConnectWalletButton>
+          </div>
           <div className='description'>
-             <Headlines heading= {activeContract} subheading='contract description'></Headlines>
+             {activeContract}
+
              </div>
        <button onClick={() => handleNavClick('instantiate')} className={`navbar-item ${activeSection !== 'query' && activeSection !== 'execute'? 'active' : ''}`}>
       <div className='instantiate'>
         
-        <Headlines heading='Instantiate' subheading='ewibaa. ne'></Headlines>
+        <Headlines heading='Instantiate' subheading=''></Headlines>
        
       </div>
       </button>
       <button onClick={() => handleNavClick('query')} className={`navbar-item ${activeSection === 'query' ? 'active' : ''}`}>
       <div className='query'>
     
-      <Headlines heading='Query' subheading='ewibaa. ne'></Headlines>
+      <Headlines heading='Query' subheading=''></Headlines>
  
       </div>
       </button>
@@ -60,7 +65,7 @@ function Home() {
 
       <div className='execute'>
      
-      <Headlines heading='Execute' subheading='ewibaa. ne'></Headlines>
+      <Headlines heading='Execute' subheading=''></Headlines>
       
       </div>
       </button>

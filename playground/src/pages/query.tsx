@@ -6,17 +6,8 @@ import { isPropertyAccessChain } from 'typescript';
 import { walletState } from "../context/walletState";
 import { Contract } from "../hooks/clients/contract"
 import contractInfo from "../../src/counter.json";
-interface Property {
-  name: string;
-  type: string;
-  modifiers?: string[];
-}
+import { ClassStructure, Property, Coin } from "../types/configTypes";
 
-interface ClassStructure {
-  kind: string;
-  name: string;
-  properties?: Property[];
-}
 const clas = require("../../src/counterInf.json");
 const stk = "StakingContract";
 const count="Counter";
@@ -116,13 +107,13 @@ const temp = new Contract(val.client as SigningCosmWasmClient,val.client as Cosm
 
          <label htmlFor="menu">Select an item:</label>
       <select id="menu" value={selectedItem} onChange={handleSelect}>
-        
+      <option value="" selected disabled>Choose an option</option>
            {prop.map((item) => (
             <option key={item}>{item}</option>
           ))}
         
       </select>
-      <p>You have selected: {selectedItem}</p>
+      <p>You have selected: {selectedItem === "" ? "None" : selectedItem}</p>
 
     </div>
   )

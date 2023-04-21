@@ -81,3 +81,33 @@ export interface contractInfo {
   contract_addr: string;
   contract_code_hash: string;
 }
+export interface Property {
+  name: string;
+  type: string;
+  modifiers?: string[];
+}
+
+export interface ClassStructure {
+  kind: string;
+  name: string;
+  properties?: Property[];
+}
+export interface Coin {
+  readonly denom: string;
+  readonly amount: string;
+}
+
+export interface contractInformation {
+  [key: string]: {
+    [key: string]: {
+      deployInfo: {
+        codeId: number;
+        deployTimestamp: string;
+      };
+      instantiateInfo: {
+        contractAddress: string;
+        instantiateTimestamp: string;
+      };
+    };
+  };
+}
