@@ -1,45 +1,40 @@
-/* @import "../theme.css" */
-/* Create a container for the five divs
-.container {
-    display: flex;
-    height: 100%;
-  } */
-  .home-page{
-    height: 100vh;
-    /* padding-right: 5px; */
-   
-    overflow: hidden;
-  }
-  /* Set the width and background color of the sidebar */
-  .sidebar {
-    /* width: 20%;
+.home-page {
+  height: 100vh;
+  /* padding-right: 5px; */
+
+  overflow: hidden;
+}
+/* Set the width and background color of the sidebar */
+.sidebar {
+  /* width: 20%;
     background-color: #ccc; */
-    height: 100vh;
+  height: 100vh;
   width: 20%;
+  padding-left: 15px;
+  padding-right: 15px;
+
   /* background-color: rgb(19, 40, 161); */
-  font-size: 400;
-  font-size: 24px;
+  font-size: 18px;
   float: left; /* add this line to float the sidebar to the left */
   border-right: 1px solid var(--primary-font-color);
   text-transform: capitalize;
   /* overflow-y: auto; */
   color: aliceblue;
   text-align: center;
-  }
- .sidebar button{
-   text-decoration: none;
-   border: none;
-   background-color: transparent;
-   color:var(--primary-font-color);
-   font-size: 24px;
-   font-weight: 300;
-   text-transform: capitalize;
-   width: 100%;
-   height: 100%;
-   cursor: pointer;
- }
- .sidebar-button {
-
+}
+.sidebar button {
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  color: var(--primary-font-color);
+  font-size: 24px;
+  font-weight: 200;
+  text-transform: capitalize;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.sidebar-button {
   padding: 10px 7px;
   /* color: var(--primary-font-color); */
   font-size: var(--normal-font-size);
@@ -47,7 +42,7 @@
   transition: 100ms ease-in-out;
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 25px;
   color: var(--faded-subtitle-color);
   justify-content: flex-start;
   /* padding-top: 20px; */
@@ -63,7 +58,11 @@
 .sidebar-button__active {
   /* background-color: var(--accent-color-1); */
   padding: 10px 7px;
-  background: linear-gradient(to right, var(--gradient-left), var(--gradient-right));
+  background: linear-gradient(
+    to right,
+    var(--gradient-left),
+    var(--gradient-right)
+  );
   border-radius: var(--standard-radius);
   color: var(--primary-font-color);
 }
@@ -71,210 +70,202 @@
   transition: none;
   color: var(--secondary-font-color);
 }
-.sidebar-menu{
-  height: 65%;
+.sidebar-menu {
+  height: 70%;
   overflow: hidden;
   overflow-y: auto;
   padding-top: 10px;
 }
-.text-logo-container{
+.text-logo-container {
   color: var(--primary-font-color);
   display: flex;
   flex-direction: row;
+  text-align: center;
   align-items: center;
   margin-top: 5px;
   gap: 3px;
   border-bottom: 1px solid var(--primary-font-color);
 }
-.text-logo-img{
+.text-logo-img {
   height: 50px;
 }
-  /* Create a container for the navbar divs
-  .navbar-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  } */
-  
+
 /* Set the height and background color of the navbar divs */
 .navbar {
-    /* height: 50px;
+  /* height: 50px;
     flex: 1; add this line to make the navbar items fill the available space */
-    padding-top: 40px;
-     height: 200px;
+  padding-top: 70px;
+  height: 200px;
   /* background-color: rgb(9, 28, 110); modify this as needed */
   overflow: hidden; /* add this line to hide any content that overflows the navbar */
   font-size: 14px;
-  border-bottom: 1px solid var(--primary-font-color);;
-  }
-  .dropdown-div {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    padding: 12px 10px;
-    gap: 2%;
-    /* margin-top: 20px; */
-    position: fixed;
-    right: 0px;
-    /* border-radius: 12px; */
-    /* margin-bottom: 30px; */
-    /* z-index: 500; */
-    z-index: 299;
-    background-color: rgba(255, 255, 255, 0.95);
-  }
+  border-bottom: 1px solid var(--primary-font-color);
+}
+.dropdown-div {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 12px 10px;
+  gap: 2%;
+  /* margin-top: 20px; */
+  position: fixed;
+  right: 0px;
+  /* border-radius: 12px; */
+  /* margin-bottom: 30px; */
+  /* z-index: 500; */
+  z-index: 299;
+  background-color: rgba(255, 255, 255, 0.95);
+}
 
-  .description{
-    /* background-image: var(--logo-img);
+.description {
+  /* background-image: var(--logo-img);
     background-repeat: no-repeat;
     background-size: cover; */
-      /* text-align: left; */
-      /* background-color: var( --multicolor-mid); */
-      display: flex;
-     
-      width: 100%;
- 
-      font-size: 32px;
-      /* float: left; */
-      text-align: left;
-      padding-left: 15px;
-      height: 50px;
-      color: var(--primary-font-color);
-      font-weight: 600;
-      text-transform: capitalize;
-      justify-content: left;
-  }
+  /* text-align: left; */
+  /* background-color: var( --multicolor-mid); */
+  display: flex;
 
-  .navbar button{
-   
-      text-decoration: none;
+  width: 100%;
 
-      background-color: transparent;
-      color: var(--primary-font-color);
-      /* font-size: 24px; */
-      /* font-weight: 300; */
-      /* text-transform: capitalize; */
-      
+  font-size: 32px;
+  /* float: left; */
+  text-align: left;
+  padding-left: 15px;
+  height: 50px;
+  color: var(--primary-font-color);
+  font-weight: 400;
+  text-transform: capitalize;
+  justify-content: left;
+}
 
-      cursor: pointer;
-  }
-  /* Set the background color of each navbar item */
-  .navbar-item {
-    /* background-color: #333;
-    color: #fff; 
-    text-align: center; 
-    text-decoration: none; 
-    padding: 10px; */
-    /* background-color: rgb(3, 20, 114); */
-    /* color: #fff; add this line to set the text color of the navbar items */
-    text-align: left; /* add this line to center the text horizontally */
-    text-decoration: none; /* add this line to remove the underline from links */
-    padding: 10px; /* add this line to add some padding to the navbar items */
-    /* flex: 1; add this line to make each navbar item fill the available space equally */
-    height:80px;
-    /* font-size: 24px; */
-    /* font-weight: 300; */
-    color: whitesmoke;
-    width: calc(100% / 3);
-    border: 1px solid var(--primary-font-color);
-    /* transition: 100ms ease-in-out; */
-  }
- .active{
-     background-color: rgb(15, 4, 78);
- }
-  /* Add hover effects to the navbar items */
+.navbar button {
+  text-decoration: none;
+
+  background-color: transparent;
+  color: var(--primary-font-color);
+  /* font-size: 24px; */
+  /* font-weight: 300; */
+  /* text-transform: capitalize; */
+
+  cursor: pointer;
+}
+/* Set the background color of each navbar item */
+.navbar-item {
+  text-align: left; /* add this line to center the text horizontally */
+  text-decoration: none; /* add this line to remove the underline from links */
+  padding: 10px; /* add this line to add some padding to the navbar items */
+  /* flex: 1; add this line to make each navbar item fill the available space equally */
+  height: 80px;
+  /* font-size: 24px; */
+  /* font-weight: 300; */
+  color: whitesmoke;
+  width: calc(100% / 3);
+  border: 1px solid var(--primary-font-color);
+  /* transition: 100ms ease-in-out; */
+}
+.active {
+  background: linear-gradient(
+    to right,
+    var(--gradient-left),
+    var(--gradient-right)
+  ) !important;
+}
+/* Add hover effects to the navbar items */
 .navbar-item:hover {
-    background-color: var( --primary-bg-color);
-    cursor: pointer;
-  }
- 
-  
-  /* Set the remaining space to fill the container */
-  .playground {
-    /* flex: 1;
+  /* background-color: var( --primary-bg-color); */
+  cursor: pointer;
+  border-right: 10px var(--accent-color-1) solid;
+  transition: 100ms ease-in-out;
+  color: var(--primary-font-color);
+  cursor: pointer;
+}
+
+/* Set the remaining space to fill the container */
+.playground {
+  /* flex: 1;
     background-color: #eee; */
-    padding-top: 5px;
-    color: var(--primary-font-color);
-    font-weight: 400;
-    font-size: 24px;
-    height: calc(100vh - 150px);
-    width: 80%;
-    float: right; /* add this line to float the fillup div to the right */
-    /* background-color: rgb(13, 4, 134); */
-    overflow-y: scroll;
-  }
-.playground button{
+  padding-top: 5px;
+  padding-left: 5px;
+  color: var(--primary-font-color);
+  font-weight: 200;
+  font-size: 20px;
+  height: calc(100vh - 150px);
+  width: 80%;
+  float: right; /* add this line to float the fillup div to the right */
+  /* background-color: rgb(13, 4, 134); */
+  overflow-y: scroll;
+}
+.playground button {
   border: none;
   text-decoration: none;
   width: 100%;
 }
-  .wallet-button{
-    
-    overflow: hidden;
-    text-align: left;
-    /* float: left; */
-    width: fit-content;
-    float: right;
-    /* padding-right:10px ; */
-  }
-  /* button{
+.wallet-button {
+  overflow: hidden;
+  text-align: left;
+  /* float: left; */
+  width: fit-content;
+  float: right;
+  /* padding-right:10px ; */
+}
+/* button{
     float: left;
   } */
-  .heading{
-    text-align: center;
-    font-size: 24px;
-  }
-  .nav-heading{
-    text-align: left;
-    font-size: 24px;
-  }
-  .nav-subheading{
-    text-align: left;
-    font-size: 14px;
-  }
+.heading {
+  text-align: center;
+  font-size: 24px;
+}
+.nav-heading {
+  text-align: left;
+  font-size: 24px;
+}
+.nav-subheading {
+  text-align: left;
+  font-size: 14px;
+}
 
-
-  .dropdown-menu {
-    line-height: 50px;
-    max-height: 300px;
-    font-size: 14px;
-    font-weight: 200;
-    overflow-y: auto;
-    /* background-color: rgb(38, 109, 168); */
-  }
-  .test{
-    max-height: 100px;
-    overflow-y: scroll;
-  }
-  .execute-page{
-    display: flex;
-    flex-direction: row;
-    overflow:hidden;
-    width: 100%;
-    height: 100%;
-  }
-  .menubar{
-    width: 50%;
-    flex: 1;
-  }
-  .preview-box{
-    margin-top: 30px;
-    margin-bottom: calc(100%-30px);
-    margin-right: 30px;
-    margin-left: 30px;
-    background-color: rgb(45, 89, 92);
-    height:100%;
-    width: 50%;
-    float: left;
-    /* z-index: 1; */
-    overflow-y: auto;
-    /* flex: 1; */
-  }
-  #menu{
-    width: fit-content;
-    height: 28px;
-    font-size: 18px;
-    font-weight: 300;
-    color: whitesmoke;
-    background-color: blueviolet;
-    border-radius: 2%;
-  }
+.dropdown-menu {
+  line-height: 50px;
+  max-height: 300px;
+  font-size: 14px;
+  font-weight: 200;
+  overflow-y: auto;
+  /* background-color: rgb(38, 109, 168); */
+}
+.test {
+  max-height: 100px;
+  overflow-y: scroll;
+}
+.execute-page {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.menubar {
+  width: 50%;
+  flex: 1;
+}
+.preview-box {
+  margin-top: 30px;
+  margin-bottom: calc(100%-30px);
+  margin-right: 30px;
+  margin-left: 30px;
+  background-color: var(--card-background);
+  height: 100%;
+  width: 50%;
+  float: left;
+  /* z-index: 1; */
+  overflow-y: auto;
+  /* flex: 1; */
+}
+#menu {
+  width: fit-content;
+  height: 28px;
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--primary-font-color);
+  background-color: var(--gradient-right);
+  border-radius: 2%;
+}

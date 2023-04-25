@@ -52,7 +52,10 @@ export function sleep(seconds: number) {
 export const TxnLinkComp = (hash: string) => (
   <div>
     <span>Transaction hash </span>
-    <a style={{ color: "black" }} href={`${networkConstants['JunoMainnet'].mintscanPrefix}${hash}`}>
+    <a
+      style={{ color: "black" }}
+      href={`${networkConstants["JunoMainnet"].mintscanPrefix}${hash}`}
+    >
       {hash}
     </a>
   </div>

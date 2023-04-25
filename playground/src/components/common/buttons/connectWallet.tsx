@@ -95,7 +95,7 @@ const ConnectWalletButton = () => {
             {" | "}
             {/* <FontAwesomeIcon rotate={"20deg"} icon={faWallet} size="1x" /> */}
             <div className="scrt-value">
-              SCRT{" "}
+              JUNOX{" "}
               <span>{coinConvert(balance?.amount as string, 6, "human")}</span>
             </div>
           </div>

@@ -5,8 +5,6 @@ import {
 } from "@cosmjs/cosmwasm-stargate";
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { isPropertyAccessChain } from "typescript";
-// import ClassInfo from "../../src/counterInf.json";
 import { Contract } from "../hooks/clients/contract";
 import contractInfo from "../../src/counter.json";
 import { walletState } from "../context/walletState";
@@ -14,8 +12,6 @@ import Preview from "./preview";
 import { ClassStructure, Property, Coin } from "../types/configTypes";
 
 const clas = require("../../src/counterInf.json");
-
-// import { CounterQueryContract } from "../method"
 function Execute(contractName: any) {
   const contract = contractName["contractName"];
   const className =
@@ -44,20 +40,6 @@ function Execute(contractName: any) {
       propertiesJsx = <div>Class {className} has no properties.</div>;
     } else {
       classStructure.properties.map((property) => prop.push(property.name));
-
-      // propertiesJsx = (
-      //   <div>
-      //     {interfaceStructure.properties.map((property) => (
-      //       <div key={property.name}>
-      //         <p>Property name: {property.name}</p>
-      //         {/* <p>Property type: {property.type}</p> */}
-      //         {property.modifiers && property.modifiers.length > 0 && (
-      //           <p>Property modifiers: {property.modifiers.join(", ")}</p>
-      //         )}
-      //       </div>
-      //     ))}
-      //   </div>
-      // );
     }
   }
   if (!interfaceStructure) {
@@ -147,9 +129,7 @@ function Execute(contractName: any) {
         <p>You have selected: {selectedItem === "" ? "None" : selectedItem}</p>
       </div>
 
-      {/* <div className="template"> */}
       <Preview msg={msg}></Preview>
-      {/* </div> */}
     </div>
   );
 }
