@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ConnectWalletButton from './../components/common/buttons/connectWallet';
-// import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react'; 
 import Headlines from './headlines';
 import contractName from "../../src/contracts.json";
 import Instantiate from './instantiate';
 import Execute from './execute';
 import Query from './query';
+import HeaderSocials from './socials/socials';
 import './home.css'
-
+import '../components/common/buttons/buttons.css'
+import NetSwitch from './netswitch';
+import logolight from "../assets/img/wasm_kit_logo_6_white.png"
+import logodark from "../assets/img/wasm_kit_logo_6_dark.png"
+import { themeState } from '../context/themeState';
+import { useRecoilValue } from 'recoil';
+import { useConnectWallet } from '../hooks/useTxnClient';
+import { walletState } from '../context/walletState';
 function Home() {
  
   
@@ -22,27 +30,52 @@ function Home() {
       setActiveIndex(index);
       setActiveContract(contractName[index]);
     }
+    const { address } = useRecoilValue(walletState);
+    const root = document.querySelector(':root');
+  const theme = useRecoilValue(themeState);
+  const connectWallet = useConnectWallet();
+  useEffect(()=>{
+
+    if(theme === "Light"){
+      root?.classList.add('lighttheme')
+    }
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    if (!isLoggedIn || isLoggedIn === "true") {
+      if (address === undefined) {
+        connectWallet();
+      }
+    }
+  },[])
   return ( 
     <>
     <div className='home-page'>
       {/* <div className='container'> */}
       <div className='sidebar'>
+        <div className='text-logo-container'>
+        <img className="text-logo-img" src={theme === "Light" ? logodark:logolight} />
+        <h3>Playground</h3>
+        </div>
          
-         <h2>Playground</h2>
-
-           <ul>
+          <div className='sidebar-menu'>
           {contractName.map((name, index) => (
-           <li key={index}>
+        
+         <div className={`${activeContract === name ? 'sidebar-button__active' : 'sidebar-button'}`}>
             <button onClick={()=>handleSidebarClick(index)}> {name}</button>
-            </li>
+        
+         </div>
            ))}
-             </ul>
+          </div>
+           <HeaderSocials></HeaderSocials>
+            
       </div>
+      <NetSwitch></NetSwitch>
       {/* <div className='navbar-container'> */}
         <div className='navbar'>
           <div className='wallet-button'>
-          <ConnectWalletButton></ConnectWalletButton>
+          {/* <ConnectWalletButton></ConnectWalletButton> */}
+          {/* <NetSwitch></NetSwitch> */}
           </div>
+          
           <div className='description'>
              {activeContract}
 
@@ -50,14 +83,25 @@ function Home() {
        <button onClick={() => handleNavClick('instantiate')} className={`navbar-item ${activeSection !== 'query' && activeSection !== 'execute'? 'active' : ''}`}>
       <div className='instantiate'>
         
-        <Headlines heading='Instantiate' subheading=''></Headlines>
+      <div className='nav-heading'>
+         Instantiate
+         </div>
+         <div className='nav-subheading'>
+         {`Create new ${activeContract}`}
+           </div> 
+    
        
       </div>
       </button>
       <button onClick={() => handleNavClick('query')} className={`navbar-item ${activeSection === 'query' ? 'active' : ''}`}>
       <div className='query'>
     
-      <Headlines heading='Query' subheading=''></Headlines>
+      <div className='nav-heading'>
+         Query
+         </div>
+         <div className='nav-subheading'>
+         {`Dispatch query with your ${activeContract} contract`}
+           </div> 
  
       </div>
       </button>
@@ -65,7 +109,12 @@ function Home() {
 
       <div className='execute'>
      
-      <Headlines heading='Execute' subheading=''></Headlines>
+      <div className='nav-heading'>
+         Execute
+         </div>
+         <div className='nav-subheading'>
+         {`Execute ${activeContract} contract actions`}
+           </div> 
       
       </div>
       </button>

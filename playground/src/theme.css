@@ -84,6 +84,7 @@
   --secondary-font-color: black;
   --faded-subtitle-color:rgb(164, 164, 164);
   --faded-subtitle-color: #cce1f4;
+  --logo-img:url(./assets/img/wasm_kit_logo_6_white.png)
 }
 
 .lighttheme {
@@ -104,4 +105,5 @@
   --secondary-font-color: white;
   --faded-subtitle-color: black;
   --accent-color-4: black;
+  --logo-img:url(./assets/img/wasm_kit_logo_6_dark.png)
 }

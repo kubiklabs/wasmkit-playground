@@ -45,12 +45,13 @@ export const useConnectWallet = () => {
 
   const { network } = useRecoilValue(networkState);
   const baseDenom = networkConstants[network].baseDenom;
-  // const toaster = useMessageToaster();
+  const toaster = useMessageToaster();
 
   return async () => {
-    // const tid = toast.loading("Connecting to wallet");
+    const tid = toast.loading("Connecting to wallet");
     try {
       setIsLoggingIn(true);
+      console.log("here i am")
       while (
         !(window as any).keplr ||
         !(window as any).getEnigmaUtils ||
@@ -79,12 +80,12 @@ export const useConnectWallet = () => {
 
       const walletName = await (window as any).keplr.getKey(chainInfo.getChainId());
 
-      // toast.update(tid, {
-      //   type: "success",
-      //   render: `Keplr is connected!`,
-      //   isLoading: false,
-      //   autoClose: 5000,
-      // });
+      toast.update(tid, {
+        type: "success",
+        render: `Keplr is connected!`,
+        isLoading: false,
+        autoClose: 5000,
+      });
 
       /* successfully update the wallet state */
       setWalletState({

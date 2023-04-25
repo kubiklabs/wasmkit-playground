@@ -135,7 +135,7 @@ function Execute(contractName: any) {
            }
          </div> */}
       <div className="menubar">
-        <label htmlFor="menu">Select an item:</label>
+        <label htmlFor="menu">Select to execute: </label>
         <select id="menu" value={selectedItem} onChange={handleSelect}>
           <option value="" selected disabled>
             Choose an option

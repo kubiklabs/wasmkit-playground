@@ -104,17 +104,18 @@ const temp = new Contract(val.client as SigningCosmWasmClient,val.client as Cosm
            <></>
            }
          </div> */}
-
-         <label htmlFor="menu">Select an item:</label>
-      <select id="menu" value={selectedItem} onChange={handleSelect}>
+          <div className="menubar">
+         <label htmlFor="menu">Select your query : </label>
+      <select id="menu" className='query-menu' value={selectedItem} onChange={handleSelect}>
       <option value="" selected disabled>Choose an option</option>
            {prop.map((item) => (
-            <option key={item}>{item}</option>
-          ))}
+             <option key={item}>{item}</option>
+             ))}
         
       </select>
+    
       <p>You have selected: {selectedItem === "" ? "None" : selectedItem}</p>
-
+      </div>
     </div>
   )
 }
