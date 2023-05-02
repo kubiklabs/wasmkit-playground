@@ -72,53 +72,55 @@ function Home() {
               </div>
             ))}
           </div>
-          <HeaderSocials></HeaderSocials>
+          {/* <HeaderSocials></HeaderSocials> */}
         </div>
+        <div className="container">
         <NetSwitch></NetSwitch>
         <div className="navbar">
           <div className="description">{activeContract}</div>
           <button
             onClick={() => handleNavClick("instantiate")}
-            className={`navbar-item ${
+            className={`${
               activeSection !== "query" && activeSection !== "execute"
-                ? "active"
-                : ""
+                ? "nav-active"
+                : "navbar-item"
             }`}
           >
-            <div className="instantiate">
+            {/* <div className="instantiate"> */}
               <div className="nav-heading">Instantiate</div>
               <div className="nav-subheading">
                 {`Create new ${activeContract}`}
               </div>
-            </div>
+            {/* </div> */}
           </button>
           <button
             onClick={() => handleNavClick("query")}
-            className={`navbar-item ${
-              activeSection === "query" ? "active" : ""
+            className={`${
+              activeSection === "query" ? "nav-active" : "navbar-item"
             }`}
           >
-            <div className="query">
+            {/* <div className="query"> */}
               <div className="nav-heading">Query</div>
               <div className="nav-subheading">
                 {`Dispatch query with your ${activeContract} contract`}
-              </div>
+              {/* </div> */}
             </div>
           </button>
           <button
             onClick={() => handleNavClick("execute")}
-            className={`navbar-item ${
-              activeSection === "execute" ? "active" : ""
+            className={` ${
+              activeSection === "execute" ? "nav-active" : "navbar-item"
             }`}
           >
-            <div className="execute">
+            {/* <div className="execute"> */}
               <div className="nav-heading">Execute</div>
               <div className="nav-subheading">
                 {`Execute ${activeContract} contract actions`}
               </div>
-            </div>
+            {/* </div> */}
           </button>
         </div>
+         </div>
 
         <div className="playground">
           {activeSection !== "instantiate" &&
@@ -134,6 +136,7 @@ function Home() {
           )}
           {activeSection === "query" && <Query contractName={activeContract} />}
         </div>
+      
       </div>
     </>
   );

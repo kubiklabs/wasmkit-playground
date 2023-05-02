@@ -46,7 +46,7 @@ export const useConnectWallet = () => {
   const { network } = useRecoilValue(networkState);
   const baseDenom = networkConstants[network].baseDenom;
   const toaster = useMessageToaster();
-
+//  console.log(network,"netcons");
   return async () => {
     const tid = toast.loading("Connecting to wallet");
     try {

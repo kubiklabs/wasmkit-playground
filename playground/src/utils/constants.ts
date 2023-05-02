@@ -48,7 +48,42 @@ export const networkConstants: Record<string, any> = {
       bTokenDenom: "bjuno",
     },
   },
-  JunoTestnet: {},
+  JunoTestnet: {
+    baseDenom: "ujunox",
+    baseSymbol: "JUNOX",
+    networkType: "Testnet",
+    mintscanPrefix: "https://testnet.mintscan.io/juno-testnet/txs/",
+
+    defaultGas: {
+      native_swap: "225000",
+      snip_swap: "255000",
+      add_liquidity: "265000",
+      remove_liquidity: "225000",
+      ibc_deposit: "95000",
+      ibc_withdraw: "95000",
+      snip_transfer: "55000",
+      snip_send: "75000",
+      snip_allowance: "55000",
+      create_viewing_key: "55000",
+      native_transfer: "25000",
+    },
+
+    VALIDATORS: {
+      injvalcons156wnzfr0kul2ftuqwz6339fafv9a3jnr03v25d: "SG-1",
+      injvalcons1xml3ew93xmjtuf5zwpcl9jzznphte30hvdre9a: "SG-1",
+      injvalcons1xwg7xkmpqp8q804c37sa4dzyfwgnh4a74ll9pz: "SG-1",
+      injvalcons18x63wcw5hjxlf535lgn4qy20yer7mm0qedu0la: "SG-1",
+    },
+
+    denomConst: {
+      tokenSymbol: "UJUNOX",
+      seTokenSymbol: "seJUNOX",
+      bTokenSymbol: "bUJUNOX",
+      tokenDenom: "ujunox",
+      seTokenDenom: "seujunox",
+      bTokenDenom: "bujunox",
+    },
+  },
   InjectiveTestnet: {
     baseDenom: "uinj",
     baseSymbol: "INJ",

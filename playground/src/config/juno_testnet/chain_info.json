@@ -4,8 +4,8 @@
   "rpc": "https://rpc.uni.juno.deuslabs.fi/",
   "rest": "https://api.uni.junonetwork.io/",
   "stakeCurrency": {
-    "coinDenom": "JUNO",
-    "coinMinimalDenom": "ujuno",
+    "coinDenom": "JUNOX",
+    "coinMinimalDenom": "ujunox",
     "coinDecimals": 6
   },
   "bip44": {
@@ -21,15 +21,15 @@
   },
   "currencies": [
     {
-      "coinDenom": "JUNO",
-      "coinMinimalDenom": "ujuno",
+      "coinDenom": "JUNOX",
+      "coinMinimalDenom": "ujunox",
       "coinDecimals": 6
     }
   ],
   "feeCurrencies": [
     {
-    "coinDenom": "JUNO",
-    "coinMinimalDenom": "ujuno",
+    "coinDenom": "JUNOX",
+    "coinMinimalDenom": "ujunox",
     "coinDecimals": 6
     }
   ],

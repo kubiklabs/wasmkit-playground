@@ -3,12 +3,15 @@ import {
   SigningCosmWasmClient,
   SigningCosmWasmClientOptions,
 } from "@cosmjs/cosmwasm-stargate";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { walletState } from "../context/walletState";
 import { Contract } from "../hooks/clients/contract";
 import contractInfo from "../../src/counter.json";
 import { ClassStructure, Property, Coin } from "../types/configTypes";
+import Preview from "./preview";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 const clas = require("../../src/counterInf.json");
 const stk = "StakingContract";
@@ -29,6 +32,19 @@ function Query(contractName: any) {
   const [queryres, setqueryRes] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
 
+  // const CustomSelect = (item:any) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState("");
+    useEffect(() => {
+      console.log("s");
+      setSelectedOption("");
+      setqueryRes("");
+     // Reset the selected option when the options prop changes
+    },[contractName]);
+ 
+  
+  
+
   let propertiesJsx = null;
   let prop: string[] = [];
   if (!classStructure) {
@@ -44,32 +60,40 @@ function Query(contractName: any) {
     get_count: {},
   };
 
+  const toggleDropdown = () => setIsOpen(!isOpen);
+  
+  const handleOptionClick = (item :string) => {
+    setSelectedOption(item);
+    setIsOpen(false);
+  };
+
   const temp = new Contract(
     val.client as SigningCosmWasmClient,
     val.client as CosmWasmClient,
     contractInfo.counter.testnet.instantiateInfo.contractAddress
   );
 
-  // const query = async ()=>{
-  //   console.log("response", contractInfo.counter.testnet.instantiateInfo.contractAddress,temp);
-  //  const ans = await temp.queryMsg({
-  //   get_count: {}
-  // });
-  //  console.log("query response", ans, contractInfo.counter.testnet.instantiateInfo.contractAddress);
-  //  return ans;
-  // }
-  // query();
+  const query = async ()=>{
+    console.log("response", contractInfo.counter.testnet.instantiateInfo.contractAddress,temp);
+   const ans = await temp.queryMsg({
+    get_count: {}
+  });
+   console.log("query response", ans, contractInfo.counter.testnet.instantiateInfo.contractAddress);
+   return ans;
+  }
+  query();
 
-  // const handlebtnclick = async()=>{
-  //   const res = await query();
-  //   setqueryRes(res.count as string);
-  // }
+  const handlebtnclick = async()=>{
+    const res = await query();
+    setqueryRes(res.count as string);
+  }
 
   function handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedItem(event.target.value);
   }
 
   return (
+    <>
     <div className="query-page">
       {/* <p>Class ${className} found in JSON file.</p> */}
       {/* {propertiesJsx} */}
@@ -86,7 +110,8 @@ function Query(contractName: any) {
          </div> */}
       <div className="menubar">
         <label htmlFor="menu">Select your query : </label>
-        <select
+        
+        {/* <select
           id="menu"
           className="query-menu"
           value={selectedItem}
@@ -98,11 +123,50 @@ function Query(contractName: any) {
           {prop.map((item) => (
             <option key={item}>{item}</option>
           ))}
-        </select>
-
-        <p>You have selected: {selectedItem === "" ? "None" : selectedItem}</p>
+        </select> */}
+        <div className="custom-select">
+      <div className="select-selected" onClick={toggleDropdown}>
+        {selectedOption ? selectedOption : "Select an option"}
+        <div className="angleDown">
+        <FontAwesomeIcon icon={faAngleDown} size="lg" />
+        </div>
       </div>
+      {isOpen && (
+        <div className="select-items">
+          {prop.map((item) => (
+            <div
+              key={item}
+              className="select-item"
+              onClick={() => handleOptionClick(item)}
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
+    
+
+
+        <p>You have selected: {selectedOption === "" ? "None" : selectedOption}</p>
+         <div className="result">
+         <button className="btn primary-btn" onClick={handlebtnclick}>Click to query </button>
+         {queryres && (
+        <div className="output-area">
+          <label htmlFor="output">Query Outcome: </label>
+          <input id="output" value={queryres} readOnly />
+        </div>
+      )}
+        
+         </div>
+
+      </div>
+      <Preview msg={msg}></Preview>
+     
+
+
+    </div>
+    </>
   );
 }
 

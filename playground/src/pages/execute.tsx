@@ -3,13 +3,16 @@ import {
   SigningCosmWasmClient,
   SigningCosmWasmClientOptions,
 } from "@cosmjs/cosmwasm-stargate";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Contract } from "../hooks/clients/contract";
 import contractInfo from "../../src/counter.json";
 import { walletState } from "../context/walletState";
 import Preview from "./preview";
 import { ClassStructure, Property, Coin } from "../types/configTypes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 const clas = require("../../src/counterInf.json");
 function Execute(contractName: any) {
@@ -20,8 +23,10 @@ function Execute(contractName: any) {
     contract === "counter" ? "CounterInterface" : "StakingContractInterface";
   const classInfo = clas[contract] as ClassStructure[];
   const val = useRecoilValue(walletState);
-  const [increres, setincreRes] = useState("");
+  const [exeRes, setexeRes] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
   const classStructure = classInfo.find((structure) => {
     return structure.kind === "class" && structure.name === className;
   });
@@ -30,6 +35,12 @@ function Execute(contractName: any) {
   });
   console.log("class ", interfaceStructure);
   // console.log("class srinc", classStructure?.properties,"\n");
+  useEffect(() => {
+    console.log("s");
+    setSelectedOption("");
+   // Reset the selected option when the options prop changes
+  },[contractName]);
+
 
   let propertiesJsx = null;
   let prop: string[] = [];
@@ -77,12 +88,13 @@ function Execute(contractName: any) {
       amount: "1",
     },
   ];
+  const msg = {
+    increment: { },
+  };
   const incre = async () => {
     // console.log("response", contractInfo.counter.testnet.instantiateInfo.contractAddress,temp);
     const ans = await temp.executeMsg(
-      {
-        reset: { count: 103 },
-      },
+      msg,
       val.address as string
     );
     //  console.log("increment response", ans, contractInfo.counter.testnet.instantiateInfo.contractAddress);
@@ -92,15 +104,22 @@ function Execute(contractName: any) {
 
   const handlebtnclick = async () => {
     const res = await incre();
-    setincreRes(res.increment as string);
+    // console.log("sss");
+    // console.log("as",res["transactionHash"]);
+    setexeRes(res["transactionHash"] as string);
   };
 
   function handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedItem(event.target.value);
   }
-  const msg = {
-    reset: { count: 103 },
+ 
+  const toggleDropdown = () => setIsOpen(!isOpen);
+  
+  const handleOptionClick = (item :string) => {
+    setSelectedOption(item);
+    setIsOpen(false);
   };
+  // console.log(exeRes);
   return (
     <div className="execute-page">
       {/* <p>Class ${className} found in JSON file.</p> */}
@@ -116,7 +135,7 @@ function Execute(contractName: any) {
            <></>
            }
          </div> */}
-      <div className="menubar">
+      {/* <div className="menubar">
         <label htmlFor="menu">Select to execute: </label>
         <select id="menu" value={selectedItem} onChange={handleSelect}>
           <option value="" selected disabled>
@@ -127,6 +146,54 @@ function Execute(contractName: any) {
           ))}
         </select>
         <p>You have selected: {selectedItem === "" ? "None" : selectedItem}</p>
+      </div> */}
+        <div className="menubar">
+        <label htmlFor="menu">Select command to execute : </label>
+        {/* <select
+          id="menu"
+          className="query-menu"
+          value={selectedItem}
+          onChange={handleSelect}
+        >
+          <option value="" selected disabled>
+            Choose an option
+          </option>
+          {prop.map((item) => (
+            <option key={item}>{item}</option>
+          ))}
+        </select> */}
+          <div className="custom-select">
+      <div className="select-selected" onClick={toggleDropdown}>
+        {selectedOption ? selectedOption : "Select an option"}
+        <div className="angleDown">
+        <FontAwesomeIcon icon={faAngleDown} size="lg" />
+        </div>
+      </div>
+      {isOpen && (
+        <div className="select-items">
+          {prop.map((item) => (
+            <div
+              key={item}
+              className="select-item"
+              onClick={() => handleOptionClick(item)}
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+        <p>You have selected: {selectedOption === "" ? "None" : selectedOption}</p>
+        <div className="result">
+           <button className="btn primary-btn" onClick={handlebtnclick}>Click to increment </button>
+           {exeRes && (
+        <div className="output-area">
+          <label htmlFor="output" >Transaction Hash: </label>
+          <input id="output" className="exe-op" value={exeRes} readOnly />
+        </div>
+      )}
+         </div>
       </div>
 
       <Preview msg={msg}></Preview>

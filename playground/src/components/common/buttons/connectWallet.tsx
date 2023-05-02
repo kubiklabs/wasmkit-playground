@@ -33,7 +33,7 @@ const ConnectWalletButton = () => {
   const connectHandler = async () => {
     setIsLoading(true);
     if (address !== undefined) {
-      window.open(`https://www.mintscan.io/secret/account/${address}`);
+      window.open(`https://www.mintscan.io/juno/account/${address}`);
     } else {
       await connectWallet();
     }
@@ -46,6 +46,7 @@ const ConnectWalletButton = () => {
     navigator.clipboard.writeText(address || "");
     Success("Address copied to clipboard!");
   };
+  // console.log(balance?.denom);
 
   return (
     <div
@@ -95,7 +96,8 @@ const ConnectWalletButton = () => {
             {" | "}
             {/* <FontAwesomeIcon rotate={"20deg"} icon={faWallet} size="1x" /> */}
             <div className="scrt-value">
-              JUNOX{" "}
+               {/* <span>{balance?.denom }</span> */}
+               JUNOX{" "}
               <span>{coinConvert(balance?.amount as string, 6, "human")}</span>
             </div>
           </div>
@@ -130,8 +132,9 @@ const ConnectWalletButton = () => {
           </div>
         </div>
       )}
+      
     </div>
-
+     
     // <div className="connect-wallet-container">
     //   <div className="wallet-button wb-top">
     //     {isLoading ? (
