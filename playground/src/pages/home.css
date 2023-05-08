@@ -6,6 +6,11 @@
   /* overflow: hidden; */
 }
 /* Set the width and background color of the sidebar */
+.handle-side{
+  float: left;
+  color: aliceblue;
+  text-align: center;
+}
 .sidebar {
   /* width: 20%;
     background-color: #ccc; */
@@ -436,4 +441,67 @@
 }
 .exe-op{
   width: 33rem !important;
+}
+.menuIcon{
+  display: none;
+}
+@media (max-width: 768px) {
+  .sidebar {
+    /* left: -300px; */
+		display: none;
+		/* transition: 0.3s ease-in-out;
+		z-index: 2; */
+  }
+  .sidebar.active{
+		left: 0;
+		display: block;
+		width: 60vw;
+		overflow-y: scroll;
+		z-index: 2;
+		margin-top: 40px;
+    position: absolute;
+  top: 0%; /* position the element just below the current screen */
+  left: 0;
+  width: 50%;
+  height: -webkit-fill-available;
+  /* background-color: #fff; */
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(var(--primary-bg-color), var(--primary-bg-color))
+  padding-box,
+linear-gradient(to right, var(--multicolor-left), var(--multicolor-right))
+  border-box;
+  /* opacity: 90%; */
+	}
+  .playground{
+    padding-left: 0;
+    overflow-x: scroll;
+  }
+  .container{
+    margin-left: 0;
+  }
+  .home-page{
+    min-height: fit-content;
+    /* height: -webkit-fill-available; */
+  }
+  .menuIcon{
+    display: contents;
+    height: 40px;
+    align-items: center;
+    text-align: center;
+    color: var(--primary-font-color);
+    z-index: 2;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: x-large;
+    position: fixed;
+    width: 100%;
+    float: left;
+    background-color: var(--primary-bg-color);
+   }
+   .menuIcon-icon{
+    z-index: 3;
+  }
+  
+  
 }

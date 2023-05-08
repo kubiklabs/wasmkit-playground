@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import "./netswitch.css";
 import { configState } from "../context/configState";
 
-import { faCaretDown, faSort } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCaretDown, faSort, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import mainnetChainInfo from "../config/juno_mainnet/chain_info.json";
 
@@ -35,6 +35,7 @@ const NetSwitch = () => {
   const [config, setConfigState] = useRecoilState(configState);
   let { network } = useRecoilValue(networkState);
   const [open, setOpen] = useState(false);
+
   // console.log("am i being called again and again(netswitch)");
 
   // use this when mainnet is ready too

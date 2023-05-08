@@ -5,15 +5,17 @@ import {
 } from "@cosmjs/cosmwasm-stargate";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import PulseLoader from "react-spinners/PulseLoader";
 import { Contract } from "../hooks/clients/contract";
 import contractInfo from "../../src/counter.json";
 import { walletState } from "../context/walletState";
 import Preview from "./preview";
 import { ClassStructure, Property, Coin } from "../types/configTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-
+import { toast,ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { CircleLoader, FadeLoader } from "react-spinners";
 const clas = require("../../src/counterInf.json");
 function Execute(contractName: any) {
   const contract = contractName["contractName"];
@@ -26,6 +28,7 @@ function Execute(contractName: any) {
   const [exeRes, setexeRes] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const classStructure = classInfo.find((structure) => {
     return structure.kind === "class" && structure.name === className;
@@ -38,8 +41,15 @@ function Execute(contractName: any) {
   useEffect(() => {
     console.log("s");
     setSelectedOption("");
+    setexeRes("");
    // Reset the selected option when the options prop changes
   },[contractName]);
+  useEffect(() => {
+    console.log("s");
+   // setSelectedOption("");
+    setexeRes("");
+   // Reset the selected option when the options prop changes
+  },[selectedOption]);
 
 
   let propertiesJsx = null;
@@ -103,10 +113,13 @@ function Execute(contractName: any) {
   // incre();
 
   const handlebtnclick = async () => {
+    setIsLoading(true);
     const res = await incre();
     // console.log("sss");
     // console.log("as",res["transactionHash"]);
+    toast.success('Output is now displayed!');
     setexeRes(res["transactionHash"] as string);
+    setIsLoading(false);
   };
 
   function handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -186,17 +199,42 @@ function Execute(contractName: any) {
 
         <p>You have selected: {selectedOption === "" ? "None" : selectedOption}</p>
         <div className="result">
-           <button className="btn primary-btn" onClick={handlebtnclick}>Click to increment </button>
-           {exeRes && (
+           {/* <button className="btn primary-btn" onClick={handlebtnclick}>Click to increment </button> */}
+           {/* {exeRes && (
         <div className="output-area">
           <label htmlFor="output" >Transaction Hash: </label>
           <input id="output" className="exe-op" value={exeRes} readOnly />
         </div>
+      )} */}
+      {isLoading ? (
+        <FadeLoader
+          color="#1790FF"
+          loading={true}
+          // cssOverride={override}
+          //size={100}
+          height={10}
+          width={5}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : exeRes !== "" ? (
+        <>
+           <div className="output-area">
+          <label htmlFor="output" >Transaction Hash: </label>
+          <input id="output" className="exe-op" value={exeRes} readOnly />
+        </div>
+        </>
+      ) : (
+        <> 
+       <button className="btn primary-btn" onClick={handlebtnclick}>Click to increment </button>
+
+        </>
       )}
          </div>
       </div>
 
       <Preview msg={msg}></Preview>
+      {/* <ToastContainer /> */}
     </div>
   );
 }
