@@ -13,8 +13,8 @@ import Preview from "./preview";
 import { ClassStructure, Property, Coin } from "../types/configTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { toast,ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { CircleLoader, FadeLoader } from "react-spinners";
 const clas = require("../../src/counterInf.json");
 function Execute(contractName: any) {
@@ -30,6 +30,9 @@ function Execute(contractName: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
+  const [askInp, setAskInp] = useState(false);
+  const [askArr, setAskArr] = useState<{ name: string, type: string }[]>([]);
+  // let askArr: { name: string, type: string }[] = [];
   const classStructure = classInfo.find((structure) => {
     return structure.kind === "class" && structure.name === className;
   });
@@ -37,20 +40,72 @@ function Execute(contractName: any) {
     return structure.kind === "interface" && structure.name === interfaceName;
   });
   console.log("class ", interfaceStructure);
+
+  const handleOutput = (item: string) =>{
+    if (interfaceStructure && interfaceStructure.properties) {
+      let indexx = 0;
+      interfaceStructure.properties.forEach((val, index)=>{
+        if(val.name === item){
+          indexx = index
+        }
+      })      
+      const str = interfaceStructure.properties[indexx].type;
+      // const parameterNames =
+      //   str
+      //     .match(/\{\s*([\w,\s]+)\s*\}/)?.[1]
+      //     .replace(/\s/g, "")
+      //     .split(",") ?? [];
+  
+      const match = str.match(/\{([^}]*)\}\s*:\s*\{([^}]*)\}/);
+  
+      if (match) {
+        setAskInp(true);
+        const [, paramNames, paramTypes] = match;
+  
+        const props = paramNames.trim().split(/,\s+/);
+        const types = paramTypes.trim().split(/;\s+/);
+  
+        const paramTypesArr: { name: string, type: string }[] = [];
+  
+        props.forEach((prop, i) => {
+          const propName = prop.trim();
+          const propType = types[i].trim().replace(/\?$/, "");
+  
+          paramTypesArr.push({ name: propName, type: propType });
+        });
+  
+        console.log(paramTypesArr);
+        setAskArr(paramTypesArr);
+        // askArr = paramTypesArr;
+        paramTypesArr.forEach((val)=>{
+  
+          const isOptional = val.type.includes("?");
+          const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
+          console.log("val", val.name, isOptional, typeName);
+        })
+  
+      } else {
+        console.log("Could not extract parameter object type string from input.");
+      }
+      
+  // console.log(`${isOptional ? "optional " : "compulsary "}${typeName}`);
+  
+    }
+  }
+
   // console.log("class srinc", classStructure?.properties,"\n");
   useEffect(() => {
     console.log("s");
     setSelectedOption("");
     setexeRes("");
-   // Reset the selected option when the options prop changes
-  },[contractName]);
+    // Reset the selected option when the options prop changes
+  }, [contractName]);
   useEffect(() => {
     console.log("s");
-   // setSelectedOption("");
+    // setSelectedOption("");
     setexeRes("");
-   // Reset the selected option when the options prop changes
-  },[selectedOption]);
-
+    // Reset the selected option when the options prop changes
+  }, [selectedOption]);
 
   let propertiesJsx = null;
   let prop: string[] = [];
@@ -87,6 +142,8 @@ function Execute(contractName: any) {
     }
   }
   // console.log("valaddresss", val.address, val.client)
+  console.log("something", propertiesJsx);
+  // console.log("something 2", propertiesJsx['increment'])
   const temp = new Contract(
     val.client as SigningCosmWasmClient,
     val.client as CosmWasmClient,
@@ -99,14 +156,11 @@ function Execute(contractName: any) {
     },
   ];
   const msg = {
-    increment: { },
+    increment: {},
   };
   const incre = async () => {
     // console.log("response", contractInfo.counter.testnet.instantiateInfo.contractAddress,temp);
-    const ans = await temp.executeMsg(
-      msg,
-      val.address as string
-    );
+    const ans = await temp.executeMsg(msg, val.address as string);
     //  console.log("increment response", ans, contractInfo.counter.testnet.instantiateInfo.contractAddress);
     return ans;
   };
@@ -117,7 +171,7 @@ function Execute(contractName: any) {
     const res = await incre();
     // console.log("sss");
     // console.log("as",res["transactionHash"]);
-    toast.success('Output is now displayed!');
+    toast.success("Output is now displayed!");
     setexeRes(res["transactionHash"] as string);
     setIsLoading(false);
   };
@@ -125,11 +179,13 @@ function Execute(contractName: any) {
   function handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedItem(event.target.value);
   }
- 
+
   const toggleDropdown = () => setIsOpen(!isOpen);
-  
-  const handleOptionClick = (item :string) => {
+
+  const handleOptionClick = (item: string) => {
     setSelectedOption(item);
+    console.log("item", item);
+    handleOutput(item);
     setIsOpen(false);
   };
   // console.log(exeRes);
@@ -160,7 +216,7 @@ function Execute(contractName: any) {
         </select>
         <p>You have selected: {selectedItem === "" ? "None" : selectedItem}</p>
       </div> */}
-        <div className="menubar">
+      <div className="menubar">
         <label htmlFor="menu">Select command to execute : </label>
         {/* <select
           id="menu"
@@ -175,62 +231,89 @@ function Execute(contractName: any) {
             <option key={item}>{item}</option>
           ))}
         </select> */}
-          <div className="custom-select">
-      <div className="select-selected" onClick={toggleDropdown}>
-        {selectedOption ? selectedOption : "Select an option"}
-        <div className="angleDown">
-        <FontAwesomeIcon icon={faAngleDown} size="lg" />
-        </div>
-      </div>
-      {isOpen && (
-        <div className="select-items">
-          {prop.map((item) => (
-            <div
-              key={item}
-              className="select-item"
-              onClick={() => handleOptionClick(item)}
-            >
-              {item}
+        <div className="custom-select">
+          <div className="select-selected" onClick={toggleDropdown}>
+            {selectedOption ? selectedOption : "Select an option"}
+            <div className="angleDown">
+              <FontAwesomeIcon icon={faAngleDown} size="lg" />
             </div>
-          ))}
+          </div>
+          {isOpen && (
+            <div className="select-items">
+              {prop.map((item) => (
+                <div
+                  key={item}
+                  className="select-item"
+                  onClick={() => handleOptionClick(item)}
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
-    </div>
 
-        <p>You have selected: {selectedOption === "" ? "None" : selectedOption}</p>
+        <p>
+          You have selected: {selectedOption === "" ? "None" : selectedOption}
+        </p>
         <div className="result">
-           {/* <button className="btn primary-btn" onClick={handlebtnclick}>Click to increment </button> */}
-           {/* {exeRes && (
+          {/* {askInp? */}
+          <div>
+            {askInp ?
+              <div>
+                  {
+              askArr.map((val)=>{
+                const isOptional = val.type.includes("?");
+                const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
+                return <div className="input-field">
+                <div className="input-field-name">{val.name }</div>
+                <div>{isOptional ? "(Optional)":""}</div>
+                <input placeholder={typeName}></input>
+                </div>
+              })
+              
+            }
+                </div>
+              :
+              <></>
+            }
+          </div>
+          {/* :
+          <></>
+          } */}
+          {/* <button className="btn primary-btn" onClick={handlebtnclick}>Click to increment </button> */}
+          {/* {exeRes && (
         <div className="output-area">
           <label htmlFor="output" >Transaction Hash: </label>
           <input id="output" className="exe-op" value={exeRes} readOnly />
         </div>
       )} */}
-      {isLoading ? (
-        <FadeLoader
-          color="#1790FF"
-          loading={true}
-          // cssOverride={override}
-          //size={100}
-          height={10}
-          width={5}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
-      ) : exeRes !== "" ? (
-        <>
-           <div className="output-area">
-          <label htmlFor="output" >Transaction Hash: </label>
-          <input id="output" className="exe-op" value={exeRes} readOnly />
+          {isLoading ? (
+            <FadeLoader
+              color="#1790FF"
+              loading={true}
+              // cssOverride={override}
+              //size={100}
+              height={10}
+              width={5}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : exeRes !== "" ? (
+            <>
+              <div className="output-area">
+                <label htmlFor="output">Transaction Hash: </label>
+                <input id="output" className="exe-op" value={exeRes} readOnly />
+              </div>
+            </>
+          ) : (
+            <>
+              <button className="btn primary-btn" onClick={handlebtnclick}>
+                Click to increment{" "}
+              </button>
+            </>
+          )}
         </div>
-        </>
-      ) : (
-        <> 
-       <button className="btn primary-btn" onClick={handlebtnclick}>Click to increment </button>
-
-        </>
-      )}
-         </div>
       </div>
 
       <Preview msg={msg}></Preview>
