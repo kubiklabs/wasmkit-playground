@@ -18,6 +18,8 @@ const stk = "StakingContract";
 const count = "Counter";
 function Query(contractName: any) {
   const contract = contractName["contractName"];
+  const interfaceName =
+    contract === "counter" ? "CounterInterface" : "StakingContractInterface";
   // console.log(clas[contract]);
   const classInfo = clas[contract] as ClassStructure[];
   //  console.log(contract);
@@ -27,6 +29,9 @@ function Query(contractName: any) {
       : "StakingContractQueryContract";
   const classStructure = classInfo.find((structure) => {
     return structure.kind === "class" && structure.name === className;
+  });
+  const interfaceStructure = classInfo.find((structure) => {
+    return structure.kind === "interface" && structure.name === interfaceName;
   });
   const val = useRecoilValue(walletState);
   const [queryres, setqueryRes] = useState("");
@@ -47,6 +52,7 @@ function Query(contractName: any) {
 
   let propertiesJsx = null;
   let prop: string[] = [];
+  console.log("hehe", interfaceStructure)
   if (!classStructure) {
     return <div>Class {className} not found in JSON file.</div>;
   } else {

@@ -513,6 +513,6 @@ linear-gradient(to right, var(--multicolor-left), var(--multicolor-right))
   flex-direction: row;
   gap: 10px;
   justify-content: space-between;
-  width: 50%;
+  width: 80%;
   margin-top: 5px;
 }

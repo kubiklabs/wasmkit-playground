@@ -56,23 +56,43 @@ function Execute(contractName: any) {
       //     .replace(/\s/g, "")
       //     .split(",") ?? [];
   
-      const match = str.match(/\{([^}]*)\}\s*:\s*\{([^}]*)\}/);
+      // const match = str.match(/\{([^}]*)\}\s*:\s*\{([^}]*)\}/);
+      const match = str.match(/\{([^}]*)\}\s*:\s*\{([^}]*)\}[\s,]*?(?=,|\))/g);
   
+      // if (match) {
+      //   setAskInp(true);
+      //   const [, paramNames, paramTypes] = match;
+  
+      //   const props = paramNames.trim().split(/,\s+/);
+      //   const types = paramTypes.trim().split(/;\s+/);
+  
+      //   const paramTypesArr: { name: string, type: string }[] = [];
+  
+      //   props.forEach((prop, i) => {
+      //     const propName = prop.trim();
+      //     const propType = types[i].trim().replace(/\?$/, "");
+  
+      //     paramTypesArr.push({ name: propName, type: propType });
+      //   });
+
       if (match) {
         setAskInp(true);
-        const [, paramNames, paramTypes] = match;
-  
-        const props = paramNames.trim().split(/,\s+/);
-        const types = paramTypes.trim().split(/;\s+/);
-  
-        const paramTypesArr: { name: string, type: string }[] = [];
-  
-        props.forEach((prop, i) => {
-          const propName = prop.trim();
-          const propType = types[i].trim().replace(/\?$/, "");
-  
-          paramTypesArr.push({ name: propName, type: propType });
+        const paramTypesArr: any[] = [];
+      
+        match.forEach((paramMatch: any) => {
+          const [, paramNames, paramTypes] = paramMatch.match(/\{([^}]*)\}\s*:\s*\{([^}]*)\}/);
+      
+          const props = paramNames.trim().split(/,\s+/);
+          const types = paramTypes.trim().split(/;\s+/);
+      
+          props.forEach((prop:any, i:any) => {
+            const propName = prop.trim();
+            const propType = types[i].trim().replace(/\?$/, '');
+      
+            paramTypesArr.push({name: propName, type: propType});
+          });
         });
+      
   
         console.log(paramTypesArr);
         setAskArr(paramTypesArr);
@@ -92,6 +112,7 @@ function Execute(contractName: any) {
   
     }
   }
+  
 
   // console.log("class srinc", classStructure?.properties,"\n");
   useEffect(() => {
@@ -155,9 +176,27 @@ function Execute(contractName: any) {
       amount: "1",
     },
   ];
-  const msg = {
-    increment: {},
-  };
+
+let obj = askArr.reduce((acc:any, value:any, index: any) => {
+  const isOptional = value.type.includes("?");
+  if(!isOptional && value.name !== "account"){
+    acc[value.name] = "";
+  }
+  return acc;
+}, {});
+console.log(askArr)
+  // let msg = {
+  //   // askArr.forEach((val)=>{
+  
+  //   //   const isOptional = val.type.includes("?");
+  //   //   const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
+  //   //   console.log("val", val.name, isOptional, typeName);
+  //     [selectedOption]: selectedOption,
+  //   // })
+  // };
+  let msg = {
+    [selectedOption] : obj
+  }
   const incre = async () => {
     // console.log("response", contractInfo.counter.testnet.instantiateInfo.contractAddress,temp);
     const ans = await temp.executeMsg(msg, val.address as string);
