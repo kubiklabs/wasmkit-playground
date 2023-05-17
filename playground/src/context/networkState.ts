@@ -5,7 +5,8 @@ export const networkState = atom<{
 }>({
   key: "networkState",
   default: {
-    network: (localStorage.getItem("networkState") !== null)? localStorage.getItem("networkState") as string: "JunoMainnet",
+    // network: (localStorage.getItem("networkState") !== null)? localStorage.getItem("networkState") as string: "JunoTestnet",
+    network:  "JunoTestnet",
   },
   dangerouslyAllowMutability: true,
 });
