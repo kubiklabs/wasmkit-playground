@@ -154,7 +154,7 @@ function Home() {
           {activeSection === "query" && <Query contractName={activeContract} />}
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer className="toastcustom_style"/>
     </>
   );
 }

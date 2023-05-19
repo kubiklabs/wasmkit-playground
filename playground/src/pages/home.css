@@ -516,3 +516,9 @@ linear-gradient(to right, var(--multicolor-left), var(--multicolor-right))
   width: 80%;
   margin-top: 5px;
 }
+
+
+.toastcustom_style{
+  top: 4.5em !important;
+  text-align: left !important;
+}
