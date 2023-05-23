@@ -33,6 +33,16 @@ function Execute(contractName: any) {
   const [askInp, setAskInp] = useState(false);
   const [askArr, setAskArr] = useState<{ name: string, type: string }[]>([]);
   // let askArr: { name: string, type: string }[] = [];
+
+  interface MsgObject {
+    [key: string]: {
+      [key: string]: any;
+    };
+  }
+  const [msg, setMsg] = useState<MsgObject>({
+    [selectedOption]: {}
+  });
+
   const classStructure = classInfo.find((structure) => {
     return structure.kind === "class" && structure.name === className;
   });
@@ -50,31 +60,9 @@ function Execute(contractName: any) {
         }
       })      
       const str = interfaceStructure.properties[indexx].type;
-      // const parameterNames =
-      //   str
-      //     .match(/\{\s*([\w,\s]+)\s*\}/)?.[1]
-      //     .replace(/\s/g, "")
-      //     .split(",") ?? [];
-  
-      // const match = str.match(/\{([^}]*)\}\s*:\s*\{([^}]*)\}/);
+
       const match = str.match(/\{([^}]*)\}\s*:\s*\{([^}]*)\}[\s,]*?(?=,|\))/g);
   
-      // if (match) {
-      //   setAskInp(true);
-      //   const [, paramNames, paramTypes] = match;
-  
-      //   const props = paramNames.trim().split(/,\s+/);
-      //   const types = paramTypes.trim().split(/;\s+/);
-  
-      //   const paramTypesArr: { name: string, type: string }[] = [];
-  
-      //   props.forEach((prop, i) => {
-      //     const propName = prop.trim();
-      //     const propType = types[i].trim().replace(/\?$/, "");
-  
-      //     paramTypesArr.push({ name: propName, type: propType });
-      //   });
-
       if (match) {
         setAskInp(true);
         const paramTypesArr: any[] = [];
@@ -103,6 +91,29 @@ function Execute(contractName: any) {
           const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
           console.log("val", val.name, isOptional, typeName);
         })
+
+        let obj = paramTypesArr.reduce((acc:any, value:any, index: any) => {
+          const isOptional = value.type.includes("?");
+          const typeName = value.type.split(":")[1].replace(/;$/, "").trim();
+          if(!isOptional && value.name !== "account"){
+            let convertedString2 = (value.name).replace(/([A-Z])/g, '_$1').toLowerCase();
+            console.log("check me out too", typeName, value.name)
+            if(typeName === "number"){
+              acc[convertedString2] = 0;
+            }
+            else acc[convertedString2] = "";
+          }
+          
+          return acc;
+        }, {});
+
+        let convertedString = item.replace(/([A-Z])/g, '_$1').toLowerCase();
+
+        const updatedMsg: MsgObject = {
+          // ...msg,
+          [convertedString]: obj
+        };
+        setMsg(updatedMsg);
   
       } else {
         console.log("Could not extract parameter object type string from input.");
@@ -165,10 +176,11 @@ function Execute(contractName: any) {
   // console.log("valaddresss", val.address, val.client)
   console.log("something", propertiesJsx);
   // console.log("something 2", propertiesJsx['increment'])
+
   const temp = new Contract(
     val.client as SigningCosmWasmClient,
     val.client as CosmWasmClient,
-    contractInfo.counter.testnet.instantiateInfo.contractAddress
+    contract === "counter" ? contractInfo.counter.testnet.instantiateInfo.contractAddress : contractInfo.staking.testnet.instantiateInfo.contractAddress
   );
   const transferAmt: readonly Coin[] = [
     {
@@ -176,40 +188,51 @@ function Execute(contractName: any) {
       amount: "1",
     },
   ];
-
-let obj = askArr.reduce((acc:any, value:any, index: any) => {
-  const isOptional = value.type.includes("?");
-  if(!isOptional && value.name !== "account"){
-    acc[value.name] = "";
-  }
-  return acc;
-}, {});
 console.log(askArr)
-  // let msg = {
-  //   // askArr.forEach((val)=>{
-  
-  //   //   const isOptional = val.type.includes("?");
-  //   //   const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
-  //   //   console.log("val", val.name, isOptional, typeName);
-  //     [selectedOption]: selectedOption,
-  //   // })
-  // };
-  let msg = {
-    [selectedOption] : obj
-  }
+
   const incre = async () => {
-    // console.log("response", contractInfo.counter.testnet.instantiateInfo.contractAddress,temp);
+
     const ans = await temp.executeMsg(msg, val.address as string);
-    //  console.log("increment response", ans, contractInfo.counter.testnet.instantiateInfo.contractAddress);
     return ans;
   };
-  // incre();
+
+
+  const handleInputChange = (name: any, value: any, typeName: any) => {
+
+    console.log("check it out", name, typeName, Number(value), typeof(value))
+    let convertedString3 = name.replace(/([A-Z])/g, '_$1').toLowerCase();
+
+let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
+
+    if(typeName === "number"){
+      const updatedMsg: MsgObject = {
+        // ...msg,
+        [convertedString]: {
+          ...msg[convertedString],
+          [convertedString3]: Number(value)
+        }
+      };
+      setMsg(updatedMsg);
+    }
+    else {
+      const updatedMsg: MsgObject = {
+        // ...msg,
+        [convertedString]: {
+          ...msg[convertedString],
+          [convertedString3]: value
+        }
+      };
+      setMsg(updatedMsg);
+    }
+
+  };
 
   const handlebtnclick = async () => {
     setIsLoading(true);
     const res = await incre();
+    console.log("response", res)
     // console.log("sss");
-    // console.log("as",res["transactionHash"]);
+
     toast.success("Output is now displayed!");
     setexeRes(res["transactionHash"] as string);
     setIsLoading(false);
@@ -223,6 +246,17 @@ console.log(askArr)
 
   const handleOptionClick = (item: string) => {
     setSelectedOption(item);
+
+    let convertedString = item.replace(/([A-Z])/g, '_$1').toLowerCase();
+    
+    const updatedMsg: MsgObject = {
+      // ...msg,
+      [convertedString]: {
+        // ...msg[selectedOption],
+        "": ""
+      }
+    };
+    setMsg(updatedMsg);
     console.log("item", item);
     handleOutput(item);
     setIsOpen(false);
@@ -299,15 +333,29 @@ console.log(askArr)
           {/* {askInp? */}
           <div>
             {askInp ?
-              <div>
+              <div className="input-field-container">
                   {
-              askArr.map((val)=>{
-                const isOptional = val.type.includes("?");
-                const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
+              askArr.map((valu)=>{
+                const isOptional = valu.type.includes("?");
+                const typeName = valu.type.split(":")[1].replace(/;$/, "").trim();
                 return <div className="input-field">
-                <div className="input-field-name">{val.name }</div>
-                <div>{isOptional ? "(Optional)":""}</div>
-                <input placeholder={typeName}></input>
+                <div className="input-field-name">{valu.name }{isOptional ? " (Optional)":""}</div>
+                {/* <div></div> */}
+                {
+                valu.name === "account" ?
+                // <div>{val.shortAddress}</div>
+                <div className="poolSearch">
+                <input placeholder={typeName} value={val.address} disabled></input>
+                </div>
+                :
+                <div className="poolSearch">
+                <input placeholder={typeName}
+                onChange={(e) => handleInputChange(valu.name, e.target.value, typeName)}
+                >
+
+                </input>
+                </div>
+                }
                 </div>
               })
               
@@ -342,13 +390,16 @@ console.log(askArr)
             <>
               <div className="output-area">
                 <label htmlFor="output">Transaction Hash: </label>
-                <input id="output" className="exe-op" value={exeRes} readOnly />
+                {/* <input className="" value={exeRes} readOnly /> */}
+                <div id="outputquery" className="preview-box queryOutcome">
+                  {exeRes}
+                </div>
               </div>
             </>
           ) : (
             <>
               <button className="btn primary-btn" onClick={handlebtnclick}>
-                Click to increment{" "}
+                Execute{" "}
               </button>
             </>
           )}

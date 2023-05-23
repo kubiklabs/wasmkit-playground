@@ -3,7 +3,7 @@
     padding-right: 10px;
     margin-right: 30px;
     background-color: var(--preview-background);
-    height: 50vh;
+    height: fit-content;
     width: 30vw;
     
     display: flex;
