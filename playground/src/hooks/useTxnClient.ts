@@ -85,6 +85,7 @@ export const useConnectWallet = () => {
         render: `Keplr is connected!`,
         isLoading: false,
         autoClose: 5000,
+        closeButton: true,
       });
 
       /* successfully update the wallet state */

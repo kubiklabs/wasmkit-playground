@@ -16,6 +16,9 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CircleLoader, FadeLoader } from "react-spinners";
+import LoadingModal from "../common/loading-modal/LoadingModal";
+import { useMessageToaster } from "../hooks/useMessageToaster";
+import { TxnLinkComp } from "../utils/common";
 const clas = require("../../src/counterInf.json");
 function Execute(contractName: any) {
   const contract = contractName["contractName"];
@@ -32,6 +35,7 @@ function Execute(contractName: any) {
   const [selectedOption, setSelectedOption] = useState("");
   const [askInp, setAskInp] = useState(false);
   const [askArr, setAskArr] = useState<{ name: string, type: string }[]>([]);
+  const toaster =  useMessageToaster();
   // let askArr: { name: string, type: string }[] = [];
 
   interface MsgObject {
@@ -191,38 +195,89 @@ function Execute(contractName: any) {
 console.log(askArr)
 
   const incre = async () => {
+    const tid = "Request Rejected";
 
-    const ans = await temp.executeMsg(msg, val.address as string);
-    return ans;
-  };
+    try {
+      const executeResponse = await temp.executeMsg(msg, val.address as string);
+      if(executeResponse.code || executeResponse===undefined){
+        toaster.Error("Failed to Execute.");
+        toaster.Error((executeResponse.rawLog).substr(0,100) + "...");
+      }
+      else {toast.success(`Executed Successfully`,{
+      type: "success",
+    });
+    if(executeResponse){
+      toast.info(
+        executeResponse.transactionHash
+        ? TxnLinkComp(executeResponse.transactionHash)
+        : "No hash",
+        {
+          closeOnClick: false,
+        }
+        );
+      }
+    }
+    console.log("execResponse", executeResponse);
+    return executeResponse;
+  } catch (error) {
+    console.log("error while exec", error);
+    
+    if (error instanceof Error) {
+      console.log("beacuse of this")
+      toaster.Error(error.message);
+      if((error.message).includes("out of gas")){
+        toast.info(("gas is less than required"), {
+          type: "error",
+          closeOnClick: true,
+          autoClose: 5000,
+        });
+      }
+      // if((error.message).includes("out of gas")){
+      //   toast.info(("gas is less than required"), {
+      //     type: "error",
+      //     closeOnClick: true,
+      //     autoClose: 5000,
+      //   });
+      // }
+    }
+    else{
+      toaster.Error(error as string);
+    }
+  }
+};
 
 
-  const handleInputChange = (name: any, value: any, typeName: any) => {
+  const handleInputChange = (name: any, value: any, typeName: any, isOptional: any) => {
 
     console.log("check it out", name, typeName, Number(value), typeof(value))
     let convertedString3 = name.replace(/([A-Z])/g, '_$1').toLowerCase();
 
 let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
 
-    if(typeName === "number"){
-      const updatedMsg: MsgObject = {
-        // ...msg,
-        [convertedString]: {
-          ...msg[convertedString],
-          [convertedString3]: Number(value)
-        }
-      };
-      setMsg(updatedMsg);
+    if(!isOptional){
+      if(typeName === "number"){
+        const updatedMsg: MsgObject = {
+          // ...msg,
+          [convertedString]: {
+            ...msg[convertedString],
+            [convertedString3]: Number(value)
+          }
+        };
+        setMsg(updatedMsg);
+      }
+      else {
+        const updatedMsg: MsgObject = {
+          // ...msg,
+          [convertedString]: {
+            ...msg[convertedString],
+            [convertedString3]: value
+          }
+        };
+        setMsg(updatedMsg);
+      }
     }
-    else {
-      const updatedMsg: MsgObject = {
-        // ...msg,
-        [convertedString]: {
-          ...msg[convertedString],
-          [convertedString3]: value
-        }
-      };
-      setMsg(updatedMsg);
+    else{
+
     }
 
   };
@@ -233,9 +288,11 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
     console.log("response", res)
     // console.log("sss");
 
-    toast.success("Output is now displayed!");
-    setexeRes(res["transactionHash"] as string);
+    // toast.success("Output is now displayed!");
     setIsLoading(false);
+    if(res["transactionHash"]){
+      setexeRes(res["transactionHash"] as string);
+    }
   };
 
   function handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -350,7 +407,7 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
                 :
                 <div className="poolSearch">
                 <input placeholder={typeName}
-                onChange={(e) => handleInputChange(valu.name, e.target.value, typeName)}
+                onChange={(e) => handleInputChange(valu.name, e.target.value, typeName, isOptional)}
                 >
 
                 </input>
@@ -408,6 +465,10 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
 
       <Preview msg={msg}></Preview>
       {/* <ToastContainer /> */}
+      <LoadingModal
+        content={["", `Executing ${selectedOption}`]}
+        isOpen={isLoading}
+      />
     </div>
   );
 }

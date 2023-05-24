@@ -29,6 +29,7 @@
     "react": "^18.2.0",
     "react-app-rewired": "^2.2.1",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-scripts": "^5.0.1",
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.2",
@@ -66,6 +67,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node-dir": "0.0.34"
+    "@types/node-dir": "0.0.34",
+    "@types/react-modal": "^3.16.0"
   }
 }
