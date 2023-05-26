@@ -167,7 +167,7 @@ function Execute(contractName: any) {
           {interfaceStructure?.properties.map((property) => (
             <div key={property.name}>
               <p>Property name: {property.name}</p>
-              <p>Property type: {property["type"][4]}</p>
+              <p>Property type: {property["type"]}</p>
               {property.modifiers && property.modifiers.length > 0 && (
                 <p>Property modifiers: {property.modifiers.join(", ")}</p>
               )}
