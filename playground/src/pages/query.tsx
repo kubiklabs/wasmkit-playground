@@ -7,13 +7,15 @@ import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { walletState } from "../context/walletState";
 import { Contract } from "../hooks/clients/contract";
-import contractInfo from "../../src/counter.json";
+// import contractInfo from "../../src/counter.json";
+import contractInfo from "../contracts/instantiateInfo/contractList.json";
 import { ClassStructure, Property, Coin } from "../types/configTypes";
 import Preview from "./preview";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
-const clas = require("../../src/counterInf.json");
+// const clas = require("../../src/counterInf.json");
+const clas = require("../contracts/schema/contractSchema.json");
 const stk = "StakingContract";
 const count = "Counter";
 function Query(contractName: any) {
@@ -24,26 +26,48 @@ function Query(contractName: any) {
   const [selectedItem, setSelectedItem] = useState("");
   const [askInp, setAskInp] = useState(false);
   const [askArr, setAskArr] = useState<{ name: string, type: string }[]>([]);
+
   
 
   // const CustomSelect = (item:any) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState("");
+    
+    interface MsgObject {
+      [key: string]: {
+        [key: string]: any;
+      };
+    }
+    const [msg, setMsg] = useState<MsgObject>({
+      [selectedOption]: {}
+    });
     useEffect(() => {
       console.log("s");
       setSelectedOption("");
       setqueryRes("");
      // Reset the selected option when the options prop changes
     },[contractName]);
-  const interfaceName =
-    contract === "counter" ? "CounterInterface" : "StakingContractInterface";
+  // const interfaceName =
+  //   contract === "counter" ? "CounterInterface" : "StakingContractInterface";
+  const interfaceName = contract.charAt(0).toUpperCase() + contract.slice(1)+"Interface"
   // console.log(clas[contract]);
-  const classInfo = clas[contract] as ClassStructure[];
-  //  console.log(contract);
-  const className =
-    contract === "counter"
-      ? "CounterQueryContract"
-      : "StakingContractQueryContract";
+  // const classInfo = clas[contract] as ClassStructure[];
+
+  if(Object.keys(contractInfo).length === 0 || Object.keys(clas).length === 0){
+    return(
+      <>
+        No contracts compiled
+      </>
+    )
+  }
+
+  const classInfo = clas[contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"]["schemaData"] as ClassStructure[];
+   console.log("contract check", classInfo);
+  // const className =
+  //   contract === "counter"
+  //     ? "CounterQueryContract"
+  //     : "StakingContractQueryContract";
+  const className = contract.charAt(0).toUpperCase() + contract.slice(1)+"QueryContract";
   const classStructure = classInfo.find((structure) => {
     return structure.kind === "class" && structure.name === className;
   });
@@ -123,18 +147,6 @@ function Query(contractName: any) {
   
     }
   }
-
-
-
-
-    interface MsgObject {
-      [key: string]: {
-        [key: string]: any;
-      };
-    }
-    const [msg, setMsg] = useState<MsgObject>({
-      [selectedOption]: {}
-    });
   
   
 
@@ -198,20 +210,25 @@ function Query(contractName: any) {
     setIsOpen(false);
   };
 
-  const temp = new Contract(
-    val.client as SigningCosmWasmClient,
-    val.client as CosmWasmClient,
-    contract === "counter" ? contractInfo.counter.testnet.instantiateInfo.contractAddress : contractInfo.staking.testnet.instantiateInfo.contractAddress
-  );
+  
 
   const query = async ()=>{
-    console.log("response", contractInfo.counter.testnet.instantiateInfo.contractAddress,temp);
+    // console.log("response", contractInfo.counter.codeAddress,temp);
   //  const ans = await temp.queryMsg({
   //   get_count: {}
   // });
-   const ans = await temp.queryMsg(msg);
-   console.log("query response", ans, contractInfo.counter.testnet.instantiateInfo.contractAddress);
-   return ans;
+    if(JSON.stringify(contractInfo) !== '{}'){
+      const temp = new Contract(
+        val.client as SigningCosmWasmClient,
+        val.client as CosmWasmClient,
+        (Object.keys(contractInfo).length === 0) ? "" :(contractInfo as Record<string, any>)[contract]?.codeAddress ,
+      );
+      const ans = await temp.queryMsg(msg);
+      return ans;
+    }
+    return ""
+
+  //  console.log("query response", ans, contractInfo.counter.codeAddress );
   }
   query();
 
@@ -223,6 +240,14 @@ function Query(contractName: any) {
 
   function handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedItem(event.target.value);
+  }
+
+  if(Object.keys(contractInfo).length === 0 || Object.keys(clas).length === 0){
+    return(
+      <>
+        No contracts compiled
+      </>
+    )
   }
 
   return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import contractName from "../../src/contracts.json";
+// import contractName from "../../src/contracts.json";
 import Instantiate from "./instantiate";
 import Execute from "./execute";
 import Query from "./query";
@@ -17,10 +17,12 @@ import { useConnectWallet } from "../hooks/useTxnClient";
 import { walletState } from "../context/walletState";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ContrctNameJson from "../contracts/instantiateInfo/contractList.json"
 function Home() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [active, setActive] = useState(false);
+  const contractName = Object.keys(ContrctNameJson);
   const [activeContract, setActiveContract] = useState<string>(
     contractName[activeIndex]
   );
