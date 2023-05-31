@@ -52,6 +52,7 @@ const NetSwitch = () => {
   const readConfig = () => {
     // const poolsList =
     //   network === "mainnet" ? mainnetPoolsList : testnetPoolsList;
+    console.log("network state", network);
     const chainInfo =
       network === "mainnet" ? mainnetChainInfo : testnetChainInfo;
 

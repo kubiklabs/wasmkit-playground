@@ -47,34 +47,35 @@ export const useConnectWallet = () => {
   const baseDenom = networkConstants[network].baseDenom;
   const toaster = useMessageToaster();
 //  console.log(network,"netcons");
-  return async () => {
-    const tid = toast.loading("Connecting to wallet");
-    try {
-      setIsLoggingIn(true);
-      console.log("here i am")
-      while (
-        !(window as any).keplr ||
-        !(window as any).getEnigmaUtils ||
-        !(window as any).getOfflineSignerOnlyAmino
+return async () => {
+  const tid = toast.loading("Connecting to wallet");
+  try {
+    setIsLoggingIn(true);
+    console.log("here i am")
+    while (
+      !(window as any).keplr ||
+      !(window as any).getEnigmaUtils ||
+      !(window as any).getOfflineSignerOnlyAmino
       ) {
         await sleep(0.5);
       }
-
+      
       await (window as any).keplr.experimentalSuggestChain(
         chainInfo.getChainInfoData()
-      );
-      await (window as any).keplr.enable(chainInfo.getChainId());
-
-      const offlineSigner = (window as any).keplr.getOfflineSignerOnlyAmino(
-        chainInfo.getChainId()
-      );
-
-      const [{ address }] = await offlineSigner.getAccounts();
-
-      const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-        chainInfo.getRpcUrl(),
-        offlineSigner
-      );
+        );
+        await (window as any).keplr.enable(chainInfo.getChainId());
+        
+        const offlineSigner = (window as any).keplr.getOfflineSignerOnlyAmino(
+          chainInfo.getChainId()
+          );
+          
+          const [{ address }] = await offlineSigner.getAccounts();
+          
+          // console.log("reached here")
+          const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
+            chainInfo.getRpcUrl(),
+            offlineSigner
+            );
 
       const balance = await wasmChainClient.getBalance(address, baseDenom);
 

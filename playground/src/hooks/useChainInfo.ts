@@ -8,6 +8,7 @@ export const useChainInfo = () => {
    * Returns the chainInfo data of secret chain
    */
   const getChainInfoData = () => {
+    console.log("chaininfooo", chainInfo)
     return chainInfo;
   };
 

@@ -22,6 +22,8 @@ const readConfig = () => {
   // which updates the config recoil state on network selection
   // that reads the network variable from recoil and it reflected in the app
 
+  console.log("network in configstate", network);
+
   const chainInfo = (network === "JunoMainnet")? junoMainnetChainInfo: junoTestnetChainInfo;
   const otherContracts = (network === "JunoMainnet")? junoMainnetOtherContracts: junoMainnetOtherContracts;
 
