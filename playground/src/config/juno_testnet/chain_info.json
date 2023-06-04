@@ -1,8 +1,8 @@
 {
   "chainId": "uni-6",
   "chainName": "Juno Uni Testnet",
-  "rpc": "https://rpc.uni.juno.deuslabs.fi/",
-  "rest": "https://api.uni.junonetwork.io/",
+  "rpc": "https://juno-testnet-rpc.polkachu.com/",
+  "rest": "https://juno-testnet-api.polkachu.com/",
   "stakeCurrency": {
     "coinDenom": "JUNOX",
     "coinMinimalDenom": "ujunox",
@@ -40,6 +40,8 @@
     "high": 0.9
   },
   "features": [
-    "cosmwasm"
+    "ibc-transfer",
+    "cosmwasm",
+    "ibc-go"
   ]
 }

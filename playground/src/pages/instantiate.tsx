@@ -1,8 +1,10 @@
 import React from "react";
-import contractInfo from "../../src/counter.json";
+// import contractInfo from "../../src/counter.json";
+import contractInfo from "../contracts/instantiateInfo/contractList.json";
 import { contractInformation } from "../types/configTypes";
 import Headlines from "./headlines";
-const info: contractInformation = contractInfo;
+// const info: contractInformation = contractInfo;
+const info: any = contractInfo;
 function Instantiate(contractName: any = "counter") {
   //  console.log(contractName);
   //  let t  = "counter";
@@ -17,7 +19,8 @@ function Instantiate(contractName: any = "counter") {
 
       <Headlines
         heading="Code ID"
-        subheading={info[contract]["testnet"]["deployInfo"]["codeId"]}
+        // subheading={info[contract]["codeId"]}
+        subheading={(Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.codeId}
       ></Headlines>
 
       <br></br>
@@ -25,7 +28,7 @@ function Instantiate(contractName: any = "counter") {
       <Headlines
         heading="Contract Address"
         subheading={
-          info[contract]["testnet"]["instantiateInfo"]["contractAddress"]
+          (Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.codeAddress
         }
       ></Headlines>
     </div>

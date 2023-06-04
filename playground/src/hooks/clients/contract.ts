@@ -29,6 +29,8 @@
 
 
 import { SigningCosmWasmClient ,CosmWasmClient, MigrateResult } from "@cosmjs/cosmwasm-stargate";
+import { toast } from "react-toastify";
+import { useMessageToaster } from "../useMessageToaster";
 
 export interface Coin {
   readonly denom: string;
@@ -94,12 +96,14 @@ export class Contract {
     this.signClient = signClient;
   }
 
-async queryMsg (
+  
+  async queryMsg (
     msgData: Record<string, unknown>
-  ): Promise<any> { // eslint-disable-line  @typescript-eslint/no-explicit-any
-    
-    // Query the contract
-    console.log('Querying', this.contractAddress, '=>', Object.keys(msgData)[0]);
+    ): Promise<any> { // eslint-disable-line  @typescript-eslint/no-explicit-any
+      
+      // Query the contract
+      console.log('Querying', this.contractAddress, '=>', Object.keys(msgData)[0]);
+
     // const msgData: { [key: string]: Record<string, unknown> } = {};
     // msgData[methodName] = callArgs;
     console.log("i am in query", this.contractAddress, msgData);
@@ -118,15 +122,15 @@ async queryMsg (
     console.log('Executing', this.contractAddress, '=>', Object.keys(msgData)[0]);
     //const incre=
     // Send the same handleMsg to increment multiple times
-    return await this.signClient.execute(
-    //   accountVal.address,
-    //   this.senAddr,
-      userAddr,
-      this.contractAddress,
-      msgData,
-      defaultFees.exec,
-      memo === undefined ? "executing" : memo,
-      transferAmount
-    );
+       return await this.signClient.execute(
+        //   accountVal.address,
+        //   this.senAddr,
+          userAddr,
+          this.contractAddress,
+          msgData,
+          defaultFees.exec,
+          memo === undefined ? "executing" : memo,
+          transferAmount
+        );
   }
 }

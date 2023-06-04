@@ -1,0 +1,10 @@
+{
+  "counter": {
+    "codeId": 1914,
+    "codeAddress": "juno1kskevqhghnm46kgq6lm257xsyqukja5uvv05n08q8tg46ggupews0w9hd2"
+  },
+  "StakingContract": {
+    "codeId": 870,
+    "codeAddress": "juno1q4lm5xhxqhx4d693qqwjqhyqlvzp9kvapmduuhkd87p92wt579nqedh43c"
+  }
+}
