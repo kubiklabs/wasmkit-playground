@@ -214,7 +214,7 @@ console.log(askArr)
       const temp = new Contract(
         val.client as SigningCosmWasmClient,
         val.client as CosmWasmClient,
-        (Object.keys(contractInfo).length === 0) ? "" :(contractInfo as Record<string, any>)[contract]?.codeAddress ,
+        (Object.keys(contractInfo).length === 0) ? "" :(contractInfo as Record<string, any>)[contract]?.contractAddress ,
       );
       const executeResponse = await temp.executeMsg(msg, val.address as string);
       if(executeResponse.code || executeResponse===undefined){

@@ -213,7 +213,7 @@ function Query(contractName: any) {
   
 
   const query = async ()=>{
-    // console.log("response", contractInfo.counter.codeAddress,temp);
+    // console.log("response", contractInfo.counter.contractAddress,temp);
   //  const ans = await temp.queryMsg({
   //   get_count: {}
   // });
@@ -221,14 +221,14 @@ function Query(contractName: any) {
       const temp = new Contract(
         val.client as SigningCosmWasmClient,
         val.client as CosmWasmClient,
-        (Object.keys(contractInfo).length === 0) ? "" :(contractInfo as Record<string, any>)[contract]?.codeAddress ,
+        (Object.keys(contractInfo).length === 0) ? "" :(contractInfo as Record<string, any>)[contract]?.contractAddress ,
       );
       const ans = await temp.queryMsg(msg);
       return ans;
     }
     return ""
 
-  //  console.log("query response", ans, contractInfo.counter.codeAddress );
+  //  console.log("query response", ans, contractInfo.counter.contractAddress );
   }
   query();
 
