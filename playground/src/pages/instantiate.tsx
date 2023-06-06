@@ -28,7 +28,7 @@ function Instantiate(contractName: any = "counter") {
       <Headlines
         heading="Contract Address"
         subheading={
-          (Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.codeAddress
+          (Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.contractAddress
         }
       ></Headlines>
     </div>

@@ -145,7 +145,7 @@ function Home() {
           {activeSection !== "instantiate" &&
             activeSection !== "execute" &&
             activeSection !== "query" && (
-              <Instantiate contractName={activeContract} />
+              <Instantiate contractName={activeContract} handleNavClick={handleNavClick}/>
             )}
           {activeSection === "instantiate" && (
             <Instantiate contractName={activeContract}></Instantiate>
