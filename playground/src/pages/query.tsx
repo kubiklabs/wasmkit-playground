@@ -59,15 +59,20 @@ function Query(contractName: any) {
       </>
     )
   }
-  const interfaceName = contract.charAt(0).toUpperCase() + contract.slice(1)+"Interface"
+  
+  let words = contract.split('_');
+  let capitalizedWords = words.map((word:any) => word.charAt(0).toUpperCase() + word.slice(1));
+  let finalContractName = capitalizedWords.join('');
 
-  const classInfo = clas[contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"]["schemaData"] as ClassStructure[];
+
+  const interfaceName = finalContractName+"Interface";
+  const classInfo = clas[finalContractName+"Contract"]["schemaData"] as ClassStructure[];
    console.log("contract check", classInfo);
   // const className =
   //   contract === "counter"
   //     ? "CounterQueryContract"
   //     : "StakingContractQueryContract";
-  const className = contract.charAt(0).toUpperCase() + contract.slice(1)+"QueryContract";
+  const className = finalContractName+"QueryContract";
   const classStructure = classInfo.find((structure) => {
     return structure.kind === "class" && structure.name === className;
   });

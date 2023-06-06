@@ -70,12 +70,19 @@ function Execute(contractName: any) {
       </>
     )
   }
-  const className = contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"
+
+
+  let words = contract.split('_');
+  let capitalizedWords = words.map((word:any) => word.charAt(0).toUpperCase() + word.slice(1));
+  let finalContractName = capitalizedWords.join('');
+
+
+  const className = finalContractName+"Contract"
   // const interfaceName =
   //   contract === "counter" ? "CounterInterface" : "StakingContractInterface";
-  const interfaceName = contract.charAt(0).toUpperCase() + contract.slice(1)+"Interface"
+  const interfaceName = finalContractName+"Interface"
 
-  const classInfo = clas[contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"]["schemaData"] as ClassStructure[];
+  const classInfo = clas[finalContractName+"Contract"]["schemaData"] as ClassStructure[];
 
   const classStructure = classInfo.find((structure) => {
     return structure.kind === "class" && structure.name === className;
