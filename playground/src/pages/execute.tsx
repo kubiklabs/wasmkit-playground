@@ -26,10 +26,7 @@ function Execute(contractName: any) {
   const contract = contractName["contractName"];
   // const className =
   //   contract === "counter" ? "CounterContract" : "StakingContractContract";
-  const className = contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"
-  // const interfaceName =
-  //   contract === "counter" ? "CounterInterface" : "StakingContractInterface";
-  const interfaceName = contract.charAt(0).toUpperCase() + contract.slice(1)+"Interface"
+
   // const classInfo = clas[contract] as ClassStructure[];
   const val = useRecoilValue(walletState);
   const [exeRes, setexeRes] = useState("");
@@ -73,6 +70,10 @@ function Execute(contractName: any) {
       </>
     )
   }
+  const className = contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"
+  // const interfaceName =
+  //   contract === "counter" ? "CounterInterface" : "StakingContractInterface";
+  const interfaceName = contract.charAt(0).toUpperCase() + contract.slice(1)+"Interface"
 
   const classInfo = clas[contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"]["schemaData"] as ClassStructure[];
 

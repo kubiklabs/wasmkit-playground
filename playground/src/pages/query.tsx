@@ -49,10 +49,9 @@ function Query(contractName: any) {
     },[contractName]);
   // const interfaceName =
   //   contract === "counter" ? "CounterInterface" : "StakingContractInterface";
-  const interfaceName = contract.charAt(0).toUpperCase() + contract.slice(1)+"Interface"
   // console.log(clas[contract]);
   // const classInfo = clas[contract] as ClassStructure[];
-
+  
   if(Object.keys(contractInfo).length === 0 || Object.keys(clas).length === 0){
     return(
       <>
@@ -60,6 +59,7 @@ function Query(contractName: any) {
       </>
     )
   }
+  const interfaceName = contract.charAt(0).toUpperCase() + contract.slice(1)+"Interface"
 
   const classInfo = clas[contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"]["schemaData"] as ClassStructure[];
    console.log("contract check", classInfo);
