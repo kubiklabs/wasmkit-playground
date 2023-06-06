@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import logo from "../../assets/img/wasm_kit_logo_6_white.png"
+import logo from "../../assets/img/logoLight.png"
 import "./LoadingModal.css";
 import LoaderContent from "./LoaderContent"; 
 
