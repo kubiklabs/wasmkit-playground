@@ -10,13 +10,13 @@ function Instantiate(contractName: any = "counter") {
   //  let t  = "counter";
 
   // console.log(info);
-
+  console.log("checking here", (contractName))
   const contract: string = contractName["contractName"];
   //  console.log(info[contract]["testnet"]["deployInfo"]["codeId"]);
   return (
     <div className="instantiate-page">
       <br></br>
-
+      
       <Headlines
         heading="Code ID"
         // subheading={info[contract]["codeId"]}
@@ -30,7 +30,23 @@ function Instantiate(contractName: any = "counter") {
         subheading={
           (Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.contractAddress
         }
-      ></Headlines>
+        ></Headlines>
+
+
+        <br></br>
+
+
+        <div className="two-button-wrapper">
+
+          <div onClick={(e) => ((contractName["triggerPage"])("query"))} className="button-1-div">
+            Query
+          </div>
+
+          <div onClick={(e) => ((contractName["triggerPage"])("execute"))} className="button-1-div">
+            Execute
+          </div>
+
+        </div>
     </div>
   );
 }

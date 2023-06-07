@@ -5,6 +5,16 @@
 
   /* overflow: hidden; */
 }
+
+.blank-home-page{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-font-color);
+  height: 100vh;
+}
+
+
 /* Set the width and background color of the sidebar */
 .handle-side{
   float: left;
@@ -202,7 +212,7 @@
   font-weight: 300;
   font-size: 1rem;
   /* width: calc(100vh-300px); */
-  height: calc(100vh - 200px);
+  /* height: calc(100vh - 200px); */
   /* width: 80%; */
   /* float: right; add this line to float the fillup div to the right */
   /* background-color: rgb(13, 4, 134); */
@@ -530,6 +540,38 @@ linear-gradient(to right, var(--multicolor-left), var(--multicolor-right))
   width: 40%;
   margin-top: 5px;
   min-width: 20vw;
+}
+
+
+.two-button-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* gap: 20px; */
+}
+
+.button-1-div{
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    to right,
+    var(--gradient-left),
+    var(--gradient-right)
+  );
+  height: 5vh;
+  font-weight: bold;
+  flex-wrap: wrap;
+}
+
+.button-1-div:hover{
+  cursor: pointer;
+  background: linear-gradient(
+    to right,
+    var(--gradient-right),
+    var(--gradient-left)
+  );
 }
 
 
