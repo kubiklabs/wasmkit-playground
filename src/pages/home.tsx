@@ -51,13 +51,13 @@ function Home() {
     }
   }, []);
 
-  if(!activeContract){
-    return(
-      <h1 className="blank-home-page">
-        No contract Compiled
-      </h1>
-    )
-  }
+  // if(!activeContract){
+  //   return(
+  //     <h1 className="blank-home-page">
+  //       No contract Compiled
+  //     </h1>
+  //   )
+  // }
   return (
     <>
       <div className="home-page">
@@ -153,10 +153,10 @@ function Home() {
           {activeSection !== "instantiate" &&
             activeSection !== "execute" &&
             activeSection !== "query" && (
-              <Instantiate contractName={activeContract} handleNavClick={handleNavClick}/>
+              <Instantiate contractName={activeContract}/>
             )}
           {activeSection === "instantiate" && (
-            <Instantiate contractName={activeContract}></Instantiate>
+            <Instantiate contractName={activeContract} triggerPage={handleNavClick}></Instantiate>
           )}
           {activeSection === "execute" && (
             <Execute contractName={activeContract} />
