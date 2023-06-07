@@ -5,6 +5,17 @@
 
   /* overflow: hidden; */
 }
+
+.blank-home-page{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-font-color);
+  height: 90vh;
+
+}
+
+
 /* Set the width and background color of the sidebar */
 .handle-side{
   float: left;
