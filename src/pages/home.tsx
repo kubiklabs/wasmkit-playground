@@ -19,7 +19,7 @@ import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ContrctNameJson from "../contracts/instantiateInfo/contractList.json"
 function Home() {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<string>("instantiate");
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [active, setActive] = useState(false);
   const contractName = Object.keys(ContrctNameJson);
@@ -150,11 +150,11 @@ function Home() {
         </div>
 
         <div className="playground">
-          {activeSection !== "instantiate" &&
+          {/* {activeSection !== "instantiate" &&
             activeSection !== "execute" &&
             activeSection !== "query" && (
-              <Instantiate contractName={activeContract}/>
-            )}
+              <Instantiate contractName={activeContract} triggerPage={handleNavClick}/>
+            )} */}
           {activeSection === "instantiate" && (
             <Instantiate contractName={activeContract} triggerPage={handleNavClick}></Instantiate>
           )}
