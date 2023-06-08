@@ -50,6 +50,14 @@ function Home() {
       }
     }
   }, []);
+
+  // if(!activeContract){
+  //   return(
+  //     <h1 className="blank-home-page">
+  //       No contract Compiled
+  //     </h1>
+  //   )
+  // }
   return (
     <>
       <div className="home-page">
@@ -106,9 +114,9 @@ function Home() {
               }`}
             >
               {/* <div className="instantiate"> */}
-              <div className="nav-heading">Instantiate</div>
+              <div className="nav-heading">Contract Details</div>
               <div className="nav-subheading">
-                {`Create new ${activeContract}`}
+                {` ${activeContract}`}
               </div>
               {/* </div> */}
             </button>
@@ -145,10 +153,10 @@ function Home() {
           {activeSection !== "instantiate" &&
             activeSection !== "execute" &&
             activeSection !== "query" && (
-              <Instantiate contractName={activeContract} />
+              <Instantiate contractName={activeContract}/>
             )}
           {activeSection === "instantiate" && (
-            <Instantiate contractName={activeContract}></Instantiate>
+            <Instantiate contractName={activeContract} triggerPage={handleNavClick}></Instantiate>
           )}
           {activeSection === "execute" && (
             <Execute contractName={activeContract} />

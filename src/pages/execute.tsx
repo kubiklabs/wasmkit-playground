@@ -26,10 +26,7 @@ function Execute(contractName: any) {
   const contract = contractName["contractName"];
   // const className =
   //   contract === "counter" ? "CounterContract" : "StakingContractContract";
-  const className = contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"
-  // const interfaceName =
-  //   contract === "counter" ? "CounterInterface" : "StakingContractInterface";
-  const interfaceName = contract.charAt(0).toUpperCase() + contract.slice(1)+"Interface"
+
   // const classInfo = clas[contract] as ClassStructure[];
   const val = useRecoilValue(walletState);
   const [exeRes, setexeRes] = useState("");
@@ -74,7 +71,18 @@ function Execute(contractName: any) {
     )
   }
 
-  const classInfo = clas[contract.charAt(0).toUpperCase() + contract.slice(1)+"Contract"]["schemaData"] as ClassStructure[];
+
+  let words = contract.split('_');
+  let capitalizedWords = words.map((word:any) => word.charAt(0).toUpperCase() + word.slice(1));
+  let finalContractName = capitalizedWords.join('');
+
+
+  const className = finalContractName+"Contract"
+  // const interfaceName =
+  //   contract === "counter" ? "CounterInterface" : "StakingContractInterface";
+  const interfaceName = finalContractName+"Interface"
+
+  const classInfo = clas[finalContractName+"Contract"]["schemaData"] as ClassStructure[];
 
   const classStructure = classInfo.find((structure) => {
     return structure.kind === "class" && structure.name === className;
@@ -213,7 +221,7 @@ console.log(askArr)
       const temp = new Contract(
         val.client as SigningCosmWasmClient,
         val.client as CosmWasmClient,
-        (Object.keys(contractInfo).length === 0) ? "" :(contractInfo as Record<string, any>)[contract]?.codeAddress ,
+        (Object.keys(contractInfo).length === 0) ? "" :(contractInfo as Record<string, any>)[contract]?.contractAddress ,
       );
       const executeResponse = await temp.executeMsg(msg, val.address as string);
       if(executeResponse.code || executeResponse===undefined){
