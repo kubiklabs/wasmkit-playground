@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import logo from "../../assets/img/logoLight.png"
 import "./LoadingModal.css";
 import LoaderContent from "./LoaderContent"; 
+import { Bars } from "react-loader-spinner";
 
 const LoadingModal = ({
   isOpen,
@@ -25,7 +26,15 @@ const LoadingModal = ({
           Txn in progress. Please do not press back button or refresh the page.
         </div>
         <div className="loading-modal-content-wrapper">
-          <img src={logo} />
+        <Bars
+  height="80"
+  width="80"
+  color="#8041D2"
+  ariaLabel="bars-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  visible={true}
+/>
           <div>
             <LoaderContent action={content[0]} message={content[1]} />
           </div>

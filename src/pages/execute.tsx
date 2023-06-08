@@ -204,7 +204,9 @@ function Execute(contractName: any) {
   // console.log("valaddresss", val.address, val.client)
   console.log("something", propertiesJsx);
   // console.log("something 2", propertiesJsx['increment'])
-
+  // const NoSelectionPromt = () => {
+  //     window.alert('No option selected');
+  //   }
  
   const transferAmt: readonly Coin[] = [
     {
@@ -308,6 +310,10 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
   };
 
   const handlebtnclick = async () => {
+    if(selectedOption === ""){
+      window.alert('No option selected');
+    }
+    else{
     setIsLoading(true);
     const res = await incre();
     console.log("response", res)
@@ -318,6 +324,7 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
     if(res["transactionHash"]){
       setexeRes(res["transactionHash"] as string);
     }
+  }
   };
 
   function handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -466,18 +473,7 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
           <input id="output" className="exe-op" value={exeRes} readOnly />
         </div>
       )} */}
-          {isLoading ? (
-            <FadeLoader
-              color="#1790FF"
-              loading={true}
-              // cssOverride={override}
-              //size={100}
-              height={10}
-              width={5}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          ) : exeRes !== "" ? (
+          {exeRes !== "" ? (
             <>
               <div className="output-area">
                 <label htmlFor="output">Transaction Hash: </label>
@@ -489,6 +485,7 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
             </>
           ) : (
             <>
+            
               <button className="btn primary-btn" onClick={handlebtnclick}>
                 Execute{" "}
               </button>

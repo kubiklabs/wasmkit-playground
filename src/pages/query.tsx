@@ -32,7 +32,10 @@ function Query(contractName: any) {
   // const CustomSelect = (item:any) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState("");
-    
+
+    // const NoSelectionPromt = () => {
+    //   window.alert('No option selected');
+    // }
     interface MsgObject {
       [key: string]: {
         [key: string]: any;
@@ -238,9 +241,16 @@ function Query(contractName: any) {
   query();
 
   const handlebtnclick = async()=>{
+    if(selectedOption === "")
+    {
+      window.alert('No option selected');
+    }
+    else
+    {
     const res = await query();
     console.log("res", res);
     setqueryRes(JSON.stringify(res, null, 2));
+    }
   }
 
   function handleSelect(event: React.ChangeEvent<HTMLSelectElement>) {
