@@ -19,6 +19,38 @@
         border-box;
     /* transition: 1s; */
   }
+
+  .net-toggle-dropdown {
+    position: absolute;
+    background-color: var(--primary-bg-color);
+    width: 100%;
+    border-radius: 10px;
+    top: 100%;
+    border: 1px solid var(--card-background);
+    z-index: 10;
+  }
+
+  .sortby-input {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: 7vh;
+    color: var(--faded-subtitle-color);
+    position: relative;
+  
+  }
+  .sortby-input:hover {
+    background-color: var(--card-background);
+    border-radius: 10px;
+  }
+  .sortby-input__active {
+    color: var(--extra-color);
+  }
+  .sortby-menu-To{
+    top: 60% !important;
+  }
+
   
   .dropdown-div {
     display: flex;
@@ -246,5 +278,6 @@
   .network-button {
     /* padding: 0 15px; */
     width: 6rem !important;
+    cursor: pointer;
   }
   

@@ -37,13 +37,18 @@ function Instantiate(contractName: any = "counter") {
 
 
         <div className="two-button-wrapper">
-
-          <div onClick={(e) => ((contractName["triggerPage"])("query"))} className="button-1-div">
+           
+          
+          <div onClick={(e) => (contractName["triggerPage"]?(contractName["triggerPage"])("query") : ()=>{})} className="button-1-div">
+          <button className="btn primary-btn">
             Query
+            </button>
           </div>
-
-          <div onClick={(e) => ((contractName["triggerPage"])("execute"))} className="button-1-div">
+          
+          <div onClick={(e) => (contractName["triggerPage"] ? (contractName["triggerPage"])("execute") : ()=>{})} className="button-1-div">
+          <button className="btn primary-btn">
             Execute
+            </button>
           </div>
 
         </div>

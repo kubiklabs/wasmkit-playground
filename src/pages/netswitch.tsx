@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { networkState } from "../context/networkState";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import "./netswitch.css";
 import { configState } from "../context/configState";
 
-import { faBars, faCaretDown, faSort, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faCaretDown,
+  faSort,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import mainnetChainInfo from "../config/juno_mainnet/chain_info.json";
 
@@ -80,16 +85,19 @@ const NetSwitch = () => {
 
   const handleChange = async (event: string) => {
     setValue(event);
-    localStorage.setItem("networkState", event);
-    setNetState({
-      network: event,
-    });
+    window.location.reload();
+    // localStorage.setItem("networkState", event);
+    // setNetState({
+    //   network: event,
+    // });
 
     // navigate("/");
-    window.location.reload();
   };
   const handleopen = () => {
-    setOpen(!open);
+    if(open === false){
+      setOpen(true);
+    }
+    else setOpen(false);
   };
   useEffect(() => {
     // todo later: remove interval, find effiecient method for userMap
@@ -102,19 +110,33 @@ const NetSwitch = () => {
     // }, [network, queryClient, nowCheck, walletState]);
   }, [network, nowCheck, walletState]);
 
+  const refthree = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (e: any) =>{
+    if (refthree.current && !refthree.current.contains(e.target as Node)) {
+      // setOpen(false);
+      setOpen(false);
+    }
+  }
+
+  useEffect(()=>{
+    document.addEventListener("click", handleClickOutside, true)
+  }, [])
+
   return (
     <div className="dropdown-div">
       <div className="">
         <ConnectWalletButton />
       </div>
       <ThemeToggle />
-      <div className="poolSort network-button disabled-btn" onClick={() => {}}>
+      {/* use classname for disabling btn----> disabled-btn */}
+      <div className="poolSort network-button" onClick={handleopen} ref = {refthree}>
         <div>{value === "mainnet" ? "Mainnet" : "Testnet"}</div>
         <div>
           <FontAwesomeIcon icon={faCaretDown} />
         </div>
         {open ? (
-          <div className="sortby-menu">
+          <div className="net-toggle-dropdown">
             <div
               onClick={() => handleChange("mainnet")}
               className={`sortby-input${
@@ -122,6 +144,14 @@ const NetSwitch = () => {
               }`}
             >
               Mainnet
+            </div>
+            <div
+              onClick={() => handleChange("Testnet")}
+              className={`sortby-input ${
+                value === "Testnet" ? "sortby-input__active" : ""
+              }`}
+            >
+              Testnet
             </div>
           </div>
         ) : (

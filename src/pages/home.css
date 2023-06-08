@@ -549,9 +549,13 @@ linear-gradient(to right, var(--multicolor-left), var(--multicolor-right))
   justify-content: space-around;
   /* gap: 20px; */
 }
+.two-button-wrapper .btn{
+   width: 100%;
+}
 
 .button-1-div{
-  width: 40%;
+  width: 10rem;
+  height: 10rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -563,6 +567,10 @@ linear-gradient(to right, var(--multicolor-left), var(--multicolor-right))
   height: 5vh;
   font-weight: bold;
   flex-wrap: wrap;
+  border-radius: 50px;
+  /* padding: 14px 0; */
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .button-1-div:hover{
