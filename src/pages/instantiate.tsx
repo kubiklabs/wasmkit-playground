@@ -5,7 +5,7 @@ import { contractInformation } from "../types/configTypes";
 import Headlines from "./headlines";
 // const info: contractInformation = contractInfo;
 const info: any = contractInfo;
-function Instantiate(contractName: any = "counter") {
+function Instantiate(contractName: any) {
   //  console.log(contractName);
   //  let t  = "counter";
 
@@ -20,7 +20,7 @@ function Instantiate(contractName: any = "counter") {
       <Headlines
         heading="Code ID"
         // subheading={info[contract]["codeId"]}
-        subheading={(Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.codeId}
+        subheading={(Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.["testnet"]?.codeId}
       ></Headlines>
 
       <br></br>
@@ -28,7 +28,7 @@ function Instantiate(contractName: any = "counter") {
       <Headlines
         heading="Contract Address"
         subheading={
-          (Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.contractAddress
+          (Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.["testnet"]?.contractAddress
         }
         ></Headlines>
 
