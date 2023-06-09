@@ -1,8 +1,8 @@
 {
-  "chainId": "pion-1",
+  "chainId": "neutron-1",
   "chainName": "neutron",
-  "rpc": "https://rpc-palvus.pion-1.ntrn.tech/",
-  "rest": "https://rest-palvus.pion-1.ntrn.tech",
+  "rpc": "https://rpc-kralum.neutron-1.neutron.org",
+  "rest": "https://rest-kralum.neutron-1.neutron.org",
   "stakeCurrency": {
     "coinDenom": "NTRN",
     "coinMinimalDenom": "untrn",
