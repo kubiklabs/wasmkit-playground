@@ -11,13 +11,13 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import mainnetChainInfo from "../config/juno_mainnet/chain_info.json";
+import mainnetChainInfo from "../config/uni-6/chain_info.json";
 
-import mainnetOtherContracts from "../config/juno_mainnet/other_contracts.json";
+import mainnetOtherContracts from "../config/uni-6/chain_info.json";
 
-import testnetChainInfo from "../config/juno_testnet/chain_info.json";
+import testnetChainInfo from "../config/uni-6/chain_info.json";
 
-import testnetOtherContracts from "../config/juno_testnet/other_contracts.json";
+import testnetOtherContracts from "../config/uni-6/chain_info.json";
 import {
   ChainInfo,
   contractInfo,
@@ -66,7 +66,7 @@ const NetSwitch = () => {
 
     let otherContractsMap: Record<string, contractInfo> = {};
     Object.entries(otherContracts).forEach(([contractName, value]) => {
-      otherContractsMap[contractName] = value;
+      // otherContractsMap[contractName] = value;
     });
 
     let userMap: Record<string, boolean> = {};
