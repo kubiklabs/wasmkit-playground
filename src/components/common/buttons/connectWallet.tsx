@@ -1,6 +1,6 @@
 import { accessSync } from "fs";
 import { toast } from "react-toastify";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faWallet } from "@fortawesome/free-solid-svg-icons";
@@ -15,14 +15,32 @@ import { coinConvert } from "../../../utils/common";
 import "./buttons.css";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useMessageToaster } from "../../../hooks/useMessageToaster";
+import { networkState } from "../../../context/networkState";
+import { useChainInfo } from "../../../hooks/useChainInfo";
 
 const ConnectWalletButton = () => {
+  const network = useRecoilValue(networkState);
+  const switchNetwork = async ()=>{
+    await connectWallet();
+  }
+
+  useEffect(()=>{
+    console.log("part1", network.network);
+    // switchNetwork();
+
+
+  }, [network]);
+  
+  
   const { isLoggingIn } = useContext(UserContext);
+  // const { address, client, balance, shortAddress, nickName } =
+  // useRecoilValue(walletState);
   const { address, client, balance, shortAddress, nickName } =
-    useRecoilValue(walletState);
+  useRecoilValue(walletState);
   const connectWallet = useConnectWallet();
   const { Success } = useMessageToaster();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {getDenomName} = useChainInfo();
 
   let buttonName =
     shortAddress === undefined ? "Connect Wallet" : (shortAddress as string);
@@ -39,6 +57,7 @@ const ConnectWalletButton = () => {
     }
     setIsLoading(false);
   };
+
 
   const resetUserData = useDisconnetWallet();
 
@@ -97,7 +116,7 @@ const ConnectWalletButton = () => {
             {/* <FontAwesomeIcon rotate={"20deg"} icon={faWallet} size="1x" /> */}
             <div className="scrt-value">
                {/* <span>{balance?.denom }</span> */}
-               JUNOX{" "}
+               {getDenomName()}{" "}
               <span>{coinConvert(balance?.amount as string, 6, "human")}</span>
             </div>
           </div>

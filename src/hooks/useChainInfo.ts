@@ -33,10 +33,15 @@ export const useChainInfo = () => {
     return chainInfo.rest;
   };
 
+  const getDenomName = () =>{
+    return chainInfo.stakeCurrency.coinDenom
+  }
+
   return {
     getChainInfoData,
     getChainId,
     getRpcUrl,
     getRestUrl,
+    getDenomName,
   };
 };

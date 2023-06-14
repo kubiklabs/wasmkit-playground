@@ -1,10 +1,10 @@
+import React, {useState, useEffect, useContext} from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
 import { walletState } from "../context/walletState";
 import { networkConstants } from "../utils/constants";
 import { coinConvert, sleep } from "../utils/common";
-import { useContext } from "react";
 import { UserContext } from "../context/userState";
 import { useMessageToaster } from "./useMessageToaster";
 import { toast } from "react-toastify";
@@ -42,9 +42,18 @@ export const useConnectWallet = () => {
   const chainInfo = useChainInfo();
   const { setIsLoggingIn } = useContext(UserContext);
   const setWalletState = useSetRecoilState(walletState);
+  const somethingsomething = useRecoilValue(walletState)
+  
 
   const { network } = useRecoilValue(networkState);
-  const baseDenom = networkConstants[network].baseDenom;
+  console.log("i am in txnclient", network);
+  const [baseDenom, setBaseDenom] = useState(networkConstants[network.replace(/-/g,'')]?.baseDenom);
+
+  // useEffect(()=>{
+  //   const newNet = networkConstants[network.replace(/-/g,'')].baseDenom;
+  //   setBaseDenom(newNet)
+  // }, [network])
+
   const toaster = useMessageToaster();
 //  console.log(network,"netcons");
 return async () => {

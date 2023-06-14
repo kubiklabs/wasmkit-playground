@@ -54,7 +54,7 @@ export const TxnLinkComp = (hash: string) => (
     <span>Transaction hash </span>
     <a
       style={{ color: "black" }}
-      href={`${networkConstants["JunoTestnet"].mintscanPrefix}${hash}`}
+      href={`${networkConstants["uni6"].mintscanPrefix}${hash}`}
       target="_blank"
     >
       {hash}

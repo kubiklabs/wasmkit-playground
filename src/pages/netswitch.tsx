@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { networkState } from "../context/networkState";
+import { networkArrayState, networkState } from "../context/networkState";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import "./netswitch.css";
 import { configState } from "../context/configState";
@@ -11,11 +11,11 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import mainnetChainInfo from "../config/uni-6/chain_info.json";
+import uni6 from "../config/uni-6/chain_info.json";
 
 import mainnetOtherContracts from "../config/uni-6/chain_info.json";
 
-import testnetChainInfo from "../config/uni-6/chain_info.json";
+import pion1 from "../config/pion-1/chain_info.json";
 
 import testnetOtherContracts from "../config/uni-6/chain_info.json";
 import {
@@ -46,7 +46,7 @@ const NetSwitch = () => {
   // use this when mainnet is ready too
   // const [value, setValue] = useState<any>(localStorage.getItem("networkState"));
 
-  const [value, setValue] = useState<any>("testnet");
+  const [value, setValue] = useState<any>((localStorage.getItem("WKnetworkState") !== null)? localStorage.getItem("WKnetworkState") as string: "uni6");
   //   const { getPoolUserAmount } = useLiquidity();
   const [nowCheck, setNowcheck] = useState(false);
   //   const { queryClient } = useRecoilValue(queryClientState);
@@ -59,8 +59,8 @@ const NetSwitch = () => {
     //   network === "mainnet" ? mainnetPoolsList : testnetPoolsList;
     console.log("network state", network);
     const chainInfo =
-      network === "mainnet" ? mainnetChainInfo : testnetChainInfo;
-
+      network === "uni6" ? uni6 : pion1;
+    console.log("changed to ", network)
     const otherContracts =
       network === "mainnet" ? mainnetOtherContracts : testnetOtherContracts;
 
@@ -83,13 +83,15 @@ const NetSwitch = () => {
     };
   };
 
+  console.log("checking", network)
+
   const handleChange = async (event: string) => {
     setValue(event);
+    localStorage.setItem("WKnetworkState", event);
     window.location.reload();
-    // localStorage.setItem("networkState", event);
-    // setNetState({
-    //   network: event,
-    // });
+    setNetState({
+      network: event,
+    });
 
     // navigate("/");
   };
@@ -110,6 +112,10 @@ const NetSwitch = () => {
     // }, [network, queryClient, nowCheck, walletState]);
   }, [network, nowCheck, walletState]);
 
+  useEffect(()=>{
+    setConfigState(readConfig());
+  }, [network])
+
   const refthree = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (e: any) =>{
@@ -118,6 +124,9 @@ const NetSwitch = () => {
       setOpen(false);
     }
   }
+
+  const netArray = useRecoilValue(networkArrayState);
+  
 
   useEffect(()=>{
     document.addEventListener("click", handleClickOutside, true)
@@ -131,28 +140,27 @@ const NetSwitch = () => {
       <ThemeToggle />
       {/* use classname for disabling btn----> disabled-btn */}
       <div className="poolSort network-button" onClick={handleopen} ref = {refthree}>
-        <div>{value === "mainnet" ? "Mainnet" : "Testnet"}</div>
+        <div>{value}</div>
         <div>
           <FontAwesomeIcon icon={faCaretDown} />
         </div>
         {open ? (
+
           <div className="net-toggle-dropdown">
-            <div
-              onClick={() => handleChange("mainnet")}
+            {
+              netArray.networkArray.map((items)=>{
+                return <>
+                  <div
+              onClick={() => handleChange(items)}
               className={`sortby-input${
-                value === "mainnet" ? "sortby-input__active" : ""
+                value === items ? "sortby-input__active" : ""
               }`}
             >
-              Mainnet
+              {items}
             </div>
-            <div
-              onClick={() => handleChange("Testnet")}
-              className={`sortby-input ${
-                value === "Testnet" ? "sortby-input__active" : ""
-              }`}
-            >
-              Testnet
-            </div>
+                </>
+              })
+            }
           </div>
         ) : (
           <></>

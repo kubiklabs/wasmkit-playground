@@ -3,6 +3,8 @@ import React from "react";
 import contractInfo from "../contracts/instantiateInfo/contractList.json";
 import { contractInformation } from "../types/configTypes";
 import Headlines from "./headlines";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { networkState } from "../context/networkState";
 // const info: contractInformation = contractInfo;
 const info: any = contractInfo;
 function Instantiate(contractName: any) {
@@ -11,6 +13,10 @@ function Instantiate(contractName: any) {
 
   // console.log(info);
   console.log("checking here", (contractName))
+
+  const network = useRecoilValue(networkState);
+  let chainNet = network.network;
+
   const contract: string = contractName["contractName"];
   //  console.log(info[contract]["testnet"]["deployInfo"]["codeId"]);
   return (
@@ -20,7 +26,7 @@ function Instantiate(contractName: any) {
       <Headlines
         heading="Code ID"
         // subheading={info[contract]["codeId"]}
-        subheading={(Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.["testnet"]?.codeId}
+        subheading={(Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.[contractName.myMap.get(chainNet)]?.codeId}
       ></Headlines>
 
       <br></br>
@@ -28,7 +34,7 @@ function Instantiate(contractName: any) {
       <Headlines
         heading="Contract Address"
         subheading={
-          (Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.["testnet"]?.contractAddress
+          (Object.keys(contractInfo).length === 0) ? "nothing here" :(info as Record<string, any>)[contract]?.[contractName.myMap.get(chainNet)]?.contractAddress
         }
         ></Headlines>
 
