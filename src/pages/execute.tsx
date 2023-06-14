@@ -20,6 +20,7 @@ import { CircleLoader, FadeLoader } from "react-spinners";
 import LoadingModal from "../common/loading-modal/LoadingModal";
 import { useMessageToaster } from "../hooks/useMessageToaster";
 import { TxnLinkComp } from "../utils/common";
+import { networkState } from "../context/networkState";
 // const clas = require("../../src/counterInf.json");
 const clas = require("../contracts/schema/contractSchema.json");
 function Execute(contractName: any) {
@@ -29,6 +30,8 @@ function Execute(contractName: any) {
 
   // const classInfo = clas[contract] as ClassStructure[];
   const val = useRecoilValue(walletState);
+  const network = useRecoilValue(networkState);
+  let chainNet = network.network;
   const [exeRes, setexeRes] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -223,8 +226,10 @@ console.log(askArr)
       const temp = new Contract(
         val.client as SigningCosmWasmClient,
         val.client as CosmWasmClient,
-        (Object.keys(contractInfo).length === 0) ? "" :(contractInfo as Record<string, any>)[contract]?.contractAddress ,
+        
+        (Object.keys(contractInfo).length === 0) ? "nothing here" :(contractInfo as Record<string, any>)[contract]?.[contractName.myMap.get(chainNet)]?.contractAddress
       );
+      console.log("check execute", msg, val.address)
       const executeResponse = await temp.executeMsg(msg, val.address as string);
       if(executeResponse.code || executeResponse===undefined){
         toaster.Error("Failed to Execute.");

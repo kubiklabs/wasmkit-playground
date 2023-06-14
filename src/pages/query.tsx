@@ -13,6 +13,7 @@ import { ClassStructure, Property, Coin } from "../types/configTypes";
 import Preview from "./preview";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { networkState } from "../context/networkState";
 
 // const clas = require("../../src/counterInf.json");
 const clas = require("../contracts/schema/contractSchema.json");
@@ -22,6 +23,8 @@ function Query(contractName: any) {
   const contract = contractName["contractName"];
   
   const val = useRecoilValue(walletState);
+  const network = useRecoilValue(networkState);
+  let chainNet = network.network;
   const [queryres, setqueryRes] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
   const [askInp, setAskInp] = useState(false);
@@ -229,7 +232,7 @@ function Query(contractName: any) {
       const temp = new Contract(
         val.client as SigningCosmWasmClient,
         val.client as CosmWasmClient,
-        (Object.keys(contractInfo).length === 0) ? "" :(contractInfo as Record<string, any>)[contract]?.contractAddress ,
+        (Object.keys(contractInfo).length === 0) ? "nothing here" :(contractInfo as Record<string, any>)[contract]?.[contractName.myMap.get(chainNet)]?.contractAddress
       );
       const ans = await temp.queryMsg(msg);
       return ans;
