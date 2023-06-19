@@ -15,6 +15,7 @@ const HeaderSocials = (props: any) => {
       <div className={`social-header`}>
         <div className="social-header-icon ">
           <a target="_blank" href="https://discord.gg/gKjzApDstD">
+            heloooooooooooooooo
             <FontAwesomeIcon icon={faDiscord} size="lg" />
           </a>
         </div>

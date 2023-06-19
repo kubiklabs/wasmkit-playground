@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 // import contractName from "../../src/contracts.json";
-import Instantiate from "./instantiate";
-import Execute from "./execute";
-import Query from "./query";
+import Instantiate from "../components/instantiate";
+import Execute from "../components/execute";
+import Query from "../components/query";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import HeaderSocials from "./socials/socials";
+import HeaderSocials from "../components/socials/socials";
 import "./home.css";
 import "../components/common/buttons/buttons.css";
-import NetSwitch from "./netswitch";
+import NetSwitch from "../components/netswitch";
 import logolight from "../assets/img/logoLight.png";
 import logodark from "../assets/img/logoDark.png";
 import { themeState } from "../context/themeState";
@@ -19,6 +19,7 @@ import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ContrctNameJson from "../contracts/instantiateInfo/contractList.json"
 import { networkArrayState, networkState } from "../context/networkState";
+import ProjectMenu from "../components/projectMenu";
 function Home() {
   const [activeSection, setActiveSection] = useState<string>("instantiate");
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -147,13 +148,6 @@ console.log("final array", outerKeysArray);
             </div>
           </div>
           <div className={active ? "sidebar active" : "sidebar"}>
-            <div className="text-logo-container">
-              <img
-                className="text-logo-img"
-                src={theme === "Light" ? logodark : logolight}
-              />
-              <h2>Playground</h2>
-            </div>
 
             <div className="sidebar-menu">
               {outerKeysArray.map((name, index) => (
@@ -176,8 +170,8 @@ console.log("final array", outerKeysArray);
         </div>
         <div className="container">
           <NetSwitch></NetSwitch>
+          <ProjectMenu />
           <div className="navbar">
-            <div className="description">{activeContract}</div>
             <button
               onClick={() => handleNavClick("instantiate")}
               className={`${
