@@ -148,8 +148,9 @@ console.log("final array", outerKeysArray);
             </div>
           </div>
           <div className={active ? "sidebar active" : "sidebar"}>
+         
 
-            <div className="sidebar-menu">
+            {/* <div className="sidebar-menu">
               {outerKeysArray.map((name, index) => (
                 <div
                   className={`${
@@ -164,56 +165,13 @@ console.log("final array", outerKeysArray);
                   </button>
                 </div>
               ))}
-            </div>
-            {/* <HeaderSocials></HeaderSocials> */}
+            </div> */}
           </div>
         </div>
         <div className="container">
           <NetSwitch></NetSwitch>
           <ProjectMenu />
-          <div className="navbar">
-            <button
-              onClick={() => handleNavClick("instantiate")}
-              className={`${
-                activeSection !== "query" && activeSection !== "execute"
-                  ? "nav-active"
-                  : "navbar-item"
-              }`}
-            >
-              {/* <div className="instantiate"> */}
-              <div className="nav-heading">Contract Details</div>
-              <div className="nav-subheading">
-                {` ${activeContract}`}
-              </div>
-              {/* </div> */}
-            </button>
-            <button
-              onClick={() => handleNavClick("query")}
-              className={`${
-                activeSection === "query" ? "nav-active" : "navbar-item"
-              }`}
-            >
-              {/* <div className="query"> */}
-              <div className="nav-heading">Query</div>
-              <div className="nav-subheading">
-                {`Dispatch query with your ${activeContract} contract`}
-                {/* </div> */}
-              </div>
-            </button>
-            <button
-              onClick={() => handleNavClick("execute")}
-              className={` ${
-                activeSection === "execute" ? "nav-active" : "navbar-item"
-              }`}
-            >
-              {/* <div className="execute"> */}
-              <div className="nav-heading">Execute</div>
-              <div className="nav-subheading">
-                {`Execute ${activeContract} contract actions`}
-              </div>
-              {/* </div> */}
-            </button>
-          </div>
+        
         </div>
 
         <div className="playground">

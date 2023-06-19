@@ -97,7 +97,7 @@
 }
 .container{
   flex-grow: 1;
-  height: fit-content;
+  height: 18rem;
   overflow: auto;
   padding-left: 2rem;
   padding-right: 2rem;
