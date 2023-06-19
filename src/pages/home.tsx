@@ -20,8 +20,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ContrctNameJson from "../contracts/instantiateInfo/contractList.json"
 import { networkArrayState, networkState } from "../context/networkState";
 import ProjectMenu from "../components/projectMenu";
+import Navbar from "../components/navbar";
+import { activeSection } from "../context/sectionState";
 function Home() {
-  const [activeSection, setActiveSection] = useState<string>("instantiate");
+  // const [activeSection, setActiveSection] = useState<string>("instantiate");
+  // const [activeSec, setActiveSec] = useSetRecoilState(activeSection)
+  const activeSec = useRecoilValue(activeSection);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [active, setActive] = useState(false);
   const contractName = Object.keys(ContrctNameJson);
@@ -31,15 +35,16 @@ function Home() {
     const network = useRecoilValue(networkState);
     const setnetworkArr = useSetRecoilState(networkArrayState);
 
-  const handleNavClick = (sectionName: string) => {
-    setActiveSection(sectionName);
-  };
+  // const handleNavClick = (sectionName: string) => {
+  //   setActiveSec(sectionName);
+  // };
 
   const handleSidebarClick = (index: number) => {
     setActiveIndex(index);
     setActiveContract(contractName[index]);
   };
   const { address } = useRecoilValue(walletState);
+  // const { activeSection } = useRecoilValue()
   const root = document.querySelector(":root");
   const theme = useRecoilValue(themeState);
   const connectWallet = useConnectWallet();
@@ -138,17 +143,43 @@ console.log("final array", outerKeysArray);
         {/* <div className='container'> */}
         <div className="handle-side">
           <div
-            className="menuIcon"
-            onClick={() => {
-              setActive(!active);
-            }}
-          >
-            <div className="menuIcon-icon">
+            className="menuIcon" >
+            {/* <div className="menuIcon-icon">
               <FontAwesomeIcon icon={active ? faXmark : faBars} />
-            </div>
+            </div> */}
           </div>
           <div className={active ? "sidebar active" : "sidebar"}>
-         
+            <Navbar></Navbar>
+          {/* <div className="navbar">
+            <button
+              onClick={() => handleNavClick("instantiate")}
+              className={`${
+                activeSection !== "query" && activeSection !== "execute"
+                  ? "nav-active"
+                  : "navbar-item"
+              }`}
+            >
+              <div className="nav-heading">Contract Details</div>
+            </button>
+            <button
+              onClick={() => handleNavClick("query")}
+              className={`${
+                activeSection === "query" ? "nav-active" : "navbar-item"
+              }`}
+            >
+              <div className="nav-heading">Query</div>
+            </button>
+            <button
+              onClick={() => handleNavClick("execute")}
+              className={` ${
+                activeSection === "execute" ? "nav-active" : "navbar-item"
+              }`}
+            >
+              
+              <div className="nav-heading">Execute</div>
+             
+            </button>
+          </div> */}
 
             {/* <div className="sidebar-menu">
               {outerKeysArray.map((name, index) => (
@@ -180,13 +211,14 @@ console.log("final array", outerKeysArray);
             activeSection !== "query" && (
               <Instantiate contractName={activeContract} triggerPage={handleNavClick}/>
             )} */}
-          {activeSection === "instantiate" && (
-            <Instantiate contractName={activeContract} triggerPage={handleNavClick} tempSubArray={tempSubArray} myMap={myMap}></Instantiate>
+          {activeSec === "instantiate" && (
+            // <Instantiate contractName={activeContract} triggerPage={handleNavClick} tempSubArray={tempSubArray} myMap={myMap}></Instantiate>
+            <Instantiate contractName={activeContract}  tempSubArray={tempSubArray} myMap={myMap}></Instantiate>
           )}
-          {activeSection === "execute" && (
+          {activeSec === "execute" && (
             <Execute contractName={activeContract} myMap={myMap}/>
           )}
-          {activeSection === "query" && <Query contractName={activeContract} myMap={myMap}/>}
+          {activeSec === "query" && <Query contractName={activeContract} myMap={myMap}/>}
         </div>
       </div>
       <ToastContainer className="toastcustom_style"/>
