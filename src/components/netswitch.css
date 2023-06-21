@@ -54,10 +54,9 @@
   
   .dropdown-div {
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     align-items: center;
-    padding: 12px 10px;
-    gap: 2%;
+    padding: 6px 10px;
     /* margin-top: 20px; */
     position: fixed;
     right: 0px;
@@ -66,6 +65,11 @@
     /* z-index: 500; */
     z-index: 299;
     background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  .navbar-right-wrapper{
+    display: flex;
+    gap: 2%;
   }
   
   .disabled-btn{
@@ -78,7 +82,7 @@
   }
   .poolSort{
     align-items: center;
-    background: linear-gradient(var(--primary-bg-color),var(--primary-bg-color)) padding-box,linear-gradient(to bottom,var(--multicolor-left),var(--multicolor-right)) border-box;
+    background-color: var(--bg-img);
     border: 2px solid transparent;
     border-radius: var(--standard-radius);
     color: var(--primary-font-color);
@@ -97,7 +101,8 @@
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       background-color: rgba(255, 255, 255, 0.08);
-      width: calc(100% - 15rem);
+      /* width: calc(100% - 15rem); */
+      width: 100%;
     }
   }
   
@@ -203,10 +208,8 @@
     height: 40px;
     position: relative;
     display: block;
-    background: #ebebeb;
+    background-color: var(--bg-img);
     border-radius: 10px;
-    box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4),
-      inset 0px -5px 15px rgba(255, 255, 255, 0.4);
     cursor: pointer;
   }
   
@@ -237,7 +240,7 @@
     left: 78px;
     transform: translateX(-100%);
     /* background: linear-gradient(180deg, #777, #3a3a3a); */
-    background: var(--secondary-bg-color);
+    background: var(--card-background);
   }
   .toggleSwitch label,
   .toggleSwitch label:after {
@@ -277,7 +280,7 @@
   
   .network-button {
     /* padding: 0 15px; */
-    width: 6rem !important;
+    width: 10rem !important;
     cursor: pointer;
   }
   

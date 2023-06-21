@@ -66,9 +66,10 @@
   --preview-background:#14063f;
   --dropdown-background:#14063f;
   --percent-input: #021a36;
-  --bg-img: url(./assets/img/backgroundDark.png);
-  --gradient-left: #8A32C7;
-  --gradient-right: #6B5DE4;
+  /* --bg-img: url(./assets/img/backgroundDark.png); */
+  --bg-img: #171821;
+  --gradient-left: #A9DFD8;
+  --gradient-right: #A9DFD8;
   --accent-color-1: #11066e;
   --accent-color-2: #da6e4f;
   --accent-color-3: #962f22;
@@ -86,9 +87,9 @@
   --secondary-font-color: black;
   --faded-subtitle-color:rgb(164, 164, 164);
   --faded-subtitle-color: #cce1f4;
-  --multicolor-left: #a500a8;
+  --multicolor-left: #A9DFD8;
   --multicolor-mid: #6046d2;
-  --multicolor-right: #1790ff;
+  --multicolor-right: #A9DFD8;
   --logo-img:url(./assets/img/logoLight.png)
 }
 
@@ -102,7 +103,8 @@
   --dropdown-background:#cc8d7b;;
   --gradient-left: #D3C2AD;
   --gradient-right: #EFEBDC;
-  --bg-img: url(./assets/img/backgroundLight.png);
+  /* --bg-img: url(./assets/img/backgroundLight.png); */
+  --bg-img: #171821;
   --accent-color-1: #D3C2AD;
   --percent-input: #c7defa;
   --multicolor-left: #a500a8;

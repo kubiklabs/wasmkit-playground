@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 // import contractName from "../../src/contracts.json";
-import Instantiate from "./instantiate";
-import Execute from "./execute";
-import Query from "./query";
+import Instantiate from "../components/instantiate";
+import Execute from "../components/execute";
+import Query from "../components/query";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import HeaderSocials from "./socials/socials";
+import HeaderSocials from "../components/socials/socials";
 import "./home.css";
 import "../components/common/buttons/buttons.css";
-import NetSwitch from "./netswitch";
+import NetSwitch from "../components/netswitch";
 import logolight from "../assets/img/logoLight.png";
 import logodark from "../assets/img/logoDark.png";
 import { themeState } from "../context/themeState";
@@ -19,8 +19,13 @@ import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ContrctNameJson from "../contracts/instantiateInfo/contractList.json"
 import { networkArrayState, networkState } from "../context/networkState";
+import ProjectMenu from "../components/projectMenu";
+import Navbar from "../components/navbar";
+import { activeSection } from "../context/sectionState";
 function Home() {
-  const [activeSection, setActiveSection] = useState<string>("instantiate");
+  // const [activeSection, setActiveSection] = useState<string>("instantiate");
+  // const [activeSec, setActiveSec] = useSetRecoilState(activeSection)
+  const activeSec = useRecoilValue(activeSection);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [active, setActive] = useState(false);
   const contractName = Object.keys(ContrctNameJson);
@@ -30,15 +35,16 @@ function Home() {
     const network = useRecoilValue(networkState);
     const setnetworkArr = useSetRecoilState(networkArrayState);
 
-  const handleNavClick = (sectionName: string) => {
-    setActiveSection(sectionName);
-  };
+  // const handleNavClick = (sectionName: string) => {
+  //   setActiveSec(sectionName);
+  // };
 
   const handleSidebarClick = (index: number) => {
     setActiveIndex(index);
     setActiveContract(contractName[index]);
   };
   const { address } = useRecoilValue(walletState);
+  // const { activeSection } = useRecoilValue()
   const root = document.querySelector(":root");
   const theme = useRecoilValue(themeState);
   const connectWallet = useConnectWallet();
@@ -137,25 +143,45 @@ console.log("final array", outerKeysArray);
         {/* <div className='container'> */}
         <div className="handle-side">
           <div
-            className="menuIcon"
-            onClick={() => {
-              setActive(!active);
-            }}
-          >
-            <div className="menuIcon-icon">
+            className="menuIcon" >
+            {/* <div className="menuIcon-icon">
               <FontAwesomeIcon icon={active ? faXmark : faBars} />
-            </div>
+            </div> */}
           </div>
           <div className={active ? "sidebar active" : "sidebar"}>
-            <div className="text-logo-container">
-              <img
-                className="text-logo-img"
-                src={theme === "Light" ? logodark : logolight}
-              />
-              <h2>Playground</h2>
-            </div>
+            <Navbar></Navbar>
+          {/* <div className="navbar">
+            <button
+              onClick={() => handleNavClick("instantiate")}
+              className={`${
+                activeSection !== "query" && activeSection !== "execute"
+                  ? "nav-active"
+                  : "navbar-item"
+              }`}
+            >
+              <div className="nav-heading">Contract Details</div>
+            </button>
+            <button
+              onClick={() => handleNavClick("query")}
+              className={`${
+                activeSection === "query" ? "nav-active" : "navbar-item"
+              }`}
+            >
+              <div className="nav-heading">Query</div>
+            </button>
+            <button
+              onClick={() => handleNavClick("execute")}
+              className={` ${
+                activeSection === "execute" ? "nav-active" : "navbar-item"
+              }`}
+            >
+              
+              <div className="nav-heading">Execute</div>
+             
+            </button>
+          </div> */}
 
-            <div className="sidebar-menu">
+            {/* <div className="sidebar-menu">
               {outerKeysArray.map((name, index) => (
                 <div
                   className={`${
@@ -170,56 +196,13 @@ console.log("final array", outerKeysArray);
                   </button>
                 </div>
               ))}
-            </div>
-            {/* <HeaderSocials></HeaderSocials> */}
+            </div> */}
           </div>
         </div>
         <div className="container">
           <NetSwitch></NetSwitch>
-          <div className="navbar">
-            <div className="description">{activeContract}</div>
-            <button
-              onClick={() => handleNavClick("instantiate")}
-              className={`${
-                activeSection !== "query" && activeSection !== "execute"
-                  ? "nav-active"
-                  : "navbar-item"
-              }`}
-            >
-              {/* <div className="instantiate"> */}
-              <div className="nav-heading">Contract Details</div>
-              <div className="nav-subheading">
-                {` ${activeContract}`}
-              </div>
-              {/* </div> */}
-            </button>
-            <button
-              onClick={() => handleNavClick("query")}
-              className={`${
-                activeSection === "query" ? "nav-active" : "navbar-item"
-              }`}
-            >
-              {/* <div className="query"> */}
-              <div className="nav-heading">Query</div>
-              <div className="nav-subheading">
-                {`Dispatch query with your ${activeContract} contract`}
-                {/* </div> */}
-              </div>
-            </button>
-            <button
-              onClick={() => handleNavClick("execute")}
-              className={` ${
-                activeSection === "execute" ? "nav-active" : "navbar-item"
-              }`}
-            >
-              {/* <div className="execute"> */}
-              <div className="nav-heading">Execute</div>
-              <div className="nav-subheading">
-                {`Execute ${activeContract} contract actions`}
-              </div>
-              {/* </div> */}
-            </button>
-          </div>
+          <ProjectMenu />
+        
         </div>
 
         <div className="playground">
@@ -228,13 +211,14 @@ console.log("final array", outerKeysArray);
             activeSection !== "query" && (
               <Instantiate contractName={activeContract} triggerPage={handleNavClick}/>
             )} */}
-          {activeSection === "instantiate" && (
-            <Instantiate contractName={activeContract} triggerPage={handleNavClick} tempSubArray={tempSubArray} myMap={myMap}></Instantiate>
+          {activeSec === "instantiate" && (
+            // <Instantiate contractName={activeContract} triggerPage={handleNavClick} tempSubArray={tempSubArray} myMap={myMap}></Instantiate>
+            <Instantiate contractName={activeContract}  tempSubArray={tempSubArray} myMap={myMap}></Instantiate>
           )}
-          {activeSection === "execute" && (
+          {activeSec === "execute" && (
             <Execute contractName={activeContract} myMap={myMap}/>
           )}
-          {activeSection === "query" && <Query contractName={activeContract} myMap={myMap}/>}
+          {activeSec === "query" && <Query contractName={activeContract} myMap={myMap}/>}
         </div>
       </div>
       <ToastContainer className="toastcustom_style"/>

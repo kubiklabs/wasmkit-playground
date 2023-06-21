@@ -3,9 +3,11 @@ body {
   font-family:var(--standard-font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: var(--bg-img);
+  /* background-image: var(--bg-img); */
+  background-color: var(--bg-img);
   background-repeat: no-repeat;
   background-size: cover;
+  letter-spacing: 0.1em;
   /* padding-top: 10px; */
   /* overflow: hidden;
   overflow-y: scroll; */

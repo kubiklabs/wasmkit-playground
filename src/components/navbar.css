@@ -1,0 +1,37 @@
+/* Set the height and background color of the navbar divs */
+.navbar {
+    text-align: center;
+  }
+
+  
+.navbar button {
+    text-decoration: none;
+    height: 100%;
+    background-color: transparent;
+    color: var(--primary-font-color);
+transform: capitalize; 
+  
+    cursor: pointer;
+  }
+  /* Set the background color of each navbar item */
+  .nav-item {
+    text-align: center;
+    width: 100%;
+    height: 4rem !important;
+    letter-spacing: 0.1em;
+text-transform: capitalize;
+font-weight: 300;
+font-size: 1rem;
+line-height: 1.5rem;
+  }
+  .active {
+    text-align: center;
+    background-color: #A9DFD8 !important;
+    border-radius: 0px 10px 10px 0px;
+    width: 102% !important;
+  }
+  .nav-heading
+  {
+    text-align: center !important;
+  }
+    

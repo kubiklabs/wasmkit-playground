@@ -3,6 +3,7 @@ import React from "react";
 import ConnectWalletButton from "./common/buttons/connectWallet";
 import ContrctNameJson from "../contracts/instantiateInfo/contractList.json"
 import "./sidebar.css";
+import HeaderSocials from "./socials/socials";
 function SideNavbar(): JSX.Element {
   const contractName = Object.keys(ContrctNameJson);
   return (
@@ -14,6 +15,8 @@ function SideNavbar(): JSX.Element {
           <li key={index}>{name}</li>
         ))}
       </ul>
+
+      <HeaderSocials />
     </div>
   );
 }

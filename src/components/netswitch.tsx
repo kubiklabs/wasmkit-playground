@@ -22,7 +22,6 @@ import pion1 from "../config/pion-1/chain_info.json";
 
 import mainnetOtherContracts from "../config/uni-6/chain_info.json";
 
-
 import testnetOtherContracts from "../config/uni-6/chain_info.json";
 import {
   ChainInfo,
@@ -31,13 +30,16 @@ import {
   TokenInfo,
 } from "../types/configTypes";
 
-import ThemeToggle from "./themeToggle";
+import ThemeToggle from "../components/themeToggle";
 import { sleep } from "../utils/common";
 
 import { showUsershowState } from "../context/showUserState";
 
 import { walletState } from "../context/walletState";
-import ConnectWalletButton from "../components/common/buttons/connectWallet";
+import ConnectWalletButton from "./common/buttons/connectWallet";
+import logolight from "../assets/img/logoLight.png";
+import logodark from "../assets/img/logoDark.png";
+import { themeState } from "../context/themeState";
 
 const NetSwitch = () => {
   //   const ref = useDetectClickOutside({ onTriggered: () => setOpen(false) });
@@ -46,13 +48,18 @@ const NetSwitch = () => {
   const [config, setConfigState] = useRecoilState(configState);
   let { network } = useRecoilValue(networkState);
   const [open, setOpen] = useState(false);
+  const theme = useRecoilValue(themeState);
 
   // console.log("am i being called again and again(netswitch)");
 
   // use this when mainnet is ready too
   // const [value, setValue] = useState<any>(localStorage.getItem("networkState"));
 
-  const [value, setValue] = useState<any>((localStorage.getItem("WKnetworkState") !== null)? localStorage.getItem("WKnetworkState") as string: "uni6");
+  const [value, setValue] = useState<any>(
+    localStorage.getItem("WKnetworkState") !== null
+      ? (localStorage.getItem("WKnetworkState") as string)
+      : "uni6"
+  );
   //   const { getPoolUserAmount } = useLiquidity();
   const [nowCheck, setNowcheck] = useState(false);
   //   const { queryClient } = useRecoilValue(queryClientState);
@@ -64,32 +71,25 @@ const NetSwitch = () => {
     // const poolsList =
     //   network === "mainnet" ? mainnetPoolsList : testnetPoolsList;
     let chainInfo = uni6;
-    if(network === "uni6"){
+    if (network === "uni6") {
       chainInfo = uni6;
-    }
-    else if(network === "pion1"){
+    } else if (network === "pion1") {
       chainInfo = pion1;
-    }
-    else if(network === "osmosis1"){
+    } else if (network === "osmosis1") {
       chainInfo = osmosis1;
-    }
-    else if(network === "osmotest4"){
+    } else if (network === "osmotest4") {
       chainInfo = osmotest4;
-    }
-    else if(network === "neutron1"){
+    } else if (network === "neutron1") {
       chainInfo = neutron1;
-    }
-    else if(network === "juno1"){
+    } else if (network === "juno1") {
       chainInfo = juno1;
-    }
-    else if(network === "injective888"){
+    } else if (network === "injective888") {
       chainInfo = injective888;
-    }
-    else if(network === "constantine2"){
+    } else if (network === "constantine2") {
       chainInfo = constantine2;
     }
-    
-    console.log("changed to ", network)
+
+    console.log("changed to ", network);
 
     let otherContractsMap: Record<string, contractInfo> = {};
 
@@ -107,7 +107,7 @@ const NetSwitch = () => {
     };
   };
 
-  console.log("checking", network)
+  console.log("checking", network);
 
   const handleChange = async (event: string) => {
     setValue(event);
@@ -120,10 +120,9 @@ const NetSwitch = () => {
     // navigate("/");
   };
   const handleopen = () => {
-    if(open === false){
+    if (open === false) {
       setOpen(true);
-    }
-    else setOpen(false);
+    } else setOpen(false);
   };
   useEffect(() => {
     // todo later: remove interval, find effiecient method for userMap
@@ -136,59 +135,70 @@ const NetSwitch = () => {
     // }, [network, queryClient, nowCheck, walletState]);
   }, [network, nowCheck, walletState]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setConfigState(readConfig());
-  }, [network])
+  }, [network]);
 
   const refthree = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (e: any) =>{
+  const handleClickOutside = (e: any) => {
     if (refthree.current && !refthree.current.contains(e.target as Node)) {
       // setOpen(false);
       setOpen(false);
     }
-  }
+  };
 
   const netArray = useRecoilValue(networkArrayState);
-  
 
-  useEffect(()=>{
-    document.addEventListener("click", handleClickOutside, true)
-  }, [])
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+  }, []);
 
   return (
     <div className="dropdown-div">
-      <div className="">
-        <ConnectWalletButton />
+      <div className="text-logo-container">
+        <img
+          className="text-logo-img"
+          src={theme === "Light" ? logodark : logolight}
+        />
+        <h2>Playground</h2>
       </div>
-      <ThemeToggle />
-      {/* use classname for disabling btn----> disabled-btn */}
-      <div className="poolSort network-button" onClick={handleopen} ref = {refthree}>
-        <div>{value}</div>
-        <div>
-          <FontAwesomeIcon icon={faCaretDown} />
+      <div className="navbar-right-wrapper">
+        <div className="">
+          <ConnectWalletButton />
         </div>
-        {open ? (
-
-          <div className="net-toggle-dropdown">
-            {
-              netArray.networkArray.map((items)=>{
-                return <>
-                  <div
-              onClick={() => handleChange(items)}
-              className={`sortby-input${
-                value === items ? "sortby-input__active" : ""
-              }`}
-            >
-              {items}
-            </div>
-                </>
-              })
-            }
+        <ThemeToggle />
+        {/* use classname for disabling btn----> disabled-btn */}
+        <div
+          className="poolSort network-button"
+          onClick={handleopen}
+          ref={refthree}
+        >
+          <div>{value}</div>
+          <div>
+            <FontAwesomeIcon icon={faCaretDown} />
           </div>
-        ) : (
-          <></>
-        )}
+          {open ? (
+            <div className="net-toggle-dropdown">
+              {netArray.networkArray.map((items) => {
+                return (
+                  <>
+                    <div
+                      onClick={() => handleChange(items)}
+                      className={`sortby-input${
+                        value === items ? "sortby-input__active" : ""
+                      }`}
+                    >
+                      {items}
+                    </div>
+                  </>
+                );
+              })}
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </div>
   );

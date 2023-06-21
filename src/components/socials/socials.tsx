@@ -28,11 +28,6 @@ const HeaderSocials = (props: any) => {
             <FontAwesomeIcon icon={faTelegram} size="lg" />
           </a>
         </div>
-        <div className="social-header-icon ">
-          <a target="_blank" href="https://discord.gg/gKjzApDstD">
-            <FontAwesomeIcon icon={faBug} size="lg" />
-          </a>
-        </div>
       </div>
     </div>
   );

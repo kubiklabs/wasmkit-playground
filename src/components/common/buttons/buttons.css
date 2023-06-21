@@ -37,9 +37,9 @@ color: var(--primary-font-color);
 
 .connect-wallet-container{
   color: var(--primary-font-color);
-  background-color: var(--percent-input);
+  background-color: var(--bg-img);
   width: 100%;
-  border: solid 1px var(--accent-color-1) ;
+  border: solid 1px var(--bg-img) ;
   display: flex;
   /* flex-direction: column; */
   border-radius: var(--standard-radius);

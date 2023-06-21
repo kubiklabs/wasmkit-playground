@@ -1,0 +1,69 @@
+.menu-item {
+  padding: 0 40px;
+  margin: 5px 10px;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+}
+.menu-item-wrapper.active {
+  border: 1px blue solid;
+}
+.menu-item.active {
+  border: 1px green solid;
+}
+
+.scroll-menu-arrow {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.menuProject{
+  position: relative;
+  top: 80px;
+  color: white;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.projectCard{
+  background-color: 
+  #21222D;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  width: fit-content;
+  font-size: x-large;
+}
+
+.projectCard:hover{
+  cursor: pointer;
+  background-color: black;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.arrowBtn{
+  transition: all 0.2s ease-in-out;
+  background-color: var(--gradient-left);
+  font-weight: bolder;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px transparent;
+}
+.arrowBtn:hover{
+  cursor: pointer;
+}
+
+.disabled{
+  display: none;
+}
+
+.arrowCenter{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: bolder;
+}
