@@ -21,6 +21,8 @@
   position: relative;
   top: 80px;
   color: white;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 .projectCard{
@@ -30,7 +32,12 @@
   margin: 10px;
   border-radius: 5px;
   width: fit-content;
-  
+  font-size: x-large;
+}
+
+.projectCard:hover{
+  cursor: pointer;
+  background-color: black;
 }
 
 ::-webkit-scrollbar {
@@ -44,6 +51,10 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  border: 1px transparent;
+}
+.arrowBtn:hover{
+  cursor: pointer;
 }
 
 .disabled{

@@ -48,6 +48,7 @@ const Navbar = () => {
               
             </button>
           </div>
+          <div>
           <HeaderSocials></HeaderSocials>
           <div className="log-out">
             <div className="log-out-text">
@@ -65,6 +66,7 @@ const Navbar = () => {
                   Logout!
                 </div>
             </div>
+          </div>
           </div>
     </>
   )

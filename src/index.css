@@ -7,6 +7,7 @@ body {
   background-color: var(--bg-img);
   background-repeat: no-repeat;
   background-size: cover;
+  letter-spacing: 0.1em;
   /* padding-top: 10px; */
   /* overflow: hidden;
   overflow-y: scroll; */

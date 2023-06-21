@@ -4,7 +4,7 @@ import 'react-horizontal-scrolling-menu/dist/styles.css';
 import './projectmenu.css';
 
 const getItems = () =>
-  Array(20)
+  Array(7)
     .fill(0)
     .map((_, ind) => ({ id: `SampleProject_${ind}` }));
 
@@ -85,21 +85,11 @@ function Card({ onClick, selected, title, itemId }:any) {
   const visibility = React.useContext(VisibilityContext);
 
   return (
-    <div
-      onClick={() => onClick(visibility)}
-      style={{
-        width: '160px',
-        marginTop: '10px',
-        color: 'white'
-      }}
-      tabIndex={0}
-    >
-      <div className="card projectCard">
+      <div className="card projectCard" tabIndex={0} onClick={() => onClick(visibility)}>
         <div>{title}</div>
         {/* <div>visible: {JSON.stringify(!!visibility.isItemVisible(itemId))}</div> */}
         {/* <div>selected: {JSON.stringify(!!selected)}</div> */}
       </div>
-    </div>
   );
 }
 
