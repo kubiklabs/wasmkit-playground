@@ -2,7 +2,10 @@ import React from 'react';
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import 'react-horizontal-scrolling-menu/dist/styles.css';
 import './projectmenu.css';
+import ContractList from "../contracts/instantiateInfo/contractList.json";
 
+const contractList = Object.keys(ContractList);
+console.log("con", contractList);
 const getItems = () =>
   Array(20)
     .fill(0)
