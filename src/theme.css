@@ -90,7 +90,8 @@
   --multicolor-left: #A9DFD8;
   --multicolor-mid: #6046d2;
   --multicolor-right: #A9DFD8;
-  --logo-img:url(./assets/img/logoLight.png)
+  --logo-img:url(./assets/img/logoLight.png);
+  --navbar-bg: rgba(255, 255, 255, 0.08);
 }
 
 .lighttheme {
@@ -98,23 +99,24 @@
   --primary-bg-color: #E9D4C4;
   --secondary-bg-color: #F1EFFE;
   --input-component:#F1F1E6;
-  --card-background: #F0EDDF;
+  --card-background: #4F837D;
   --preview-background: #ad5ba2;
   --dropdown-background:#cc8d7b;;
-  --gradient-left: #D3C2AD;
-  --gradient-right: #EFEBDC;
+  --gradient-left: #4F837D;
+  --gradient-right: #4F837D;
   /* --bg-img: url(./assets/img/backgroundLight.png); */
-  --bg-img: #171821;
+  --bg-img: #FBFBFB;
   --accent-color-1: #D3C2AD;
   --percent-input: #c7defa;
-  --multicolor-left: #a500a8;
+  --multicolor-left: #4F837D;
   --multicolor-mid: #6046d2;
-  --multicolor-right: #1790ff;
+  --multicolor-right: #4F837D;
   --primary-font-color: black;
   --secondary-font-color: white;
   --faded-subtitle-color: black;
   --accent-color-4: black;
   --logo-img:url(./assets/img/logoDark.png);
+  --navbar-bg: #4F837D;
   --standard-font-family: "Rajdhani", Manrope, Poppins, Inter,
     PingFangSC-Regular, "Microsoft YaHei", sans-serif;
     

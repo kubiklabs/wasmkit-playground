@@ -19,7 +19,7 @@
 /* Set the width and background color of the sidebar */
 .handle-side{
   /* float: left; */
-  height: calc(100vh - 19rem);
+  height: 60vh;
   position: absolute;
   bottom: 0;
   color: aliceblue;
@@ -29,7 +29,7 @@
 .sidebar {
   /* width: 20%;
     background-color: #ccc; */
-  /* height: calc(100vh - 19rem); */
+    height: 100%;
   width: 15rem;
   /* padding-left: 1rem; */
   /* padding-right: 1rem; */

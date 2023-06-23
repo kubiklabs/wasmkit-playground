@@ -144,7 +144,7 @@ console.log("final array", outerKeysArray);
         
         <div className="container">
           <NetSwitch></NetSwitch>
-          <ProjectMenu />
+          <ProjectMenu handleSidebarClick={handleSidebarClick}/>
         
         </div>
         <div className="handle-side">

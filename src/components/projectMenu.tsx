@@ -6,13 +6,13 @@ import ContractList from "../contracts/instantiateInfo/contractList.json";
 
 const contractList = Object.keys(ContractList);
 console.log("con", contractList);
-const getItems = () =>
-  Array(7)
-    .fill(0)
-    .map((_, ind) => ({ id: `SampleProject_${ind}` }));
+// const getItems = () =>
+//   Array(7)
+//     .fill(0)
+//     .map((_, ind) => ({ id: `SampleProject_${ind}` }));
 
-function ProjectMenu() {
-  const [items, setItems] = React.useState(getItems);
+const ProjectMenu = ({handleSidebarClick}:any)=> {
+  // const [items, setItems] = React.useState(getItems);
   const [selected, setSelected] = React.useState([]);
   const [position, setPosition] = React.useState(0);
 
@@ -22,7 +22,7 @@ function ProjectMenu() {
     (id:any) =>
     ({ getItemById, scrollToItem }:any) => {
       const itemSelected = isItemSelected(id);
-
+      handleSidebarClick(id);
       setSelected((currentSelected) =>
         itemSelected
           ? currentSelected.filter((el) => el !== id)
@@ -36,13 +36,14 @@ function ProjectMenu() {
             Your Projects
           </h1>
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-      {items.map(({ id }) => (
+      {contractList
+      .map((data, index) => (
         <Card
-          itemId={id} // NOTE: itemId is required for track items
-          title={id}
-          key={id}
-          onClick={handleClick(id)}
-          selected={isItemSelected(id)}
+          itemId={index} // NOTE: itemId is required for track items
+          title={data}
+          key={index}
+          onClick={handleClick(index)}
+          selected={isItemSelected(data)}
           />
           ))}
     </ScrollMenu>
