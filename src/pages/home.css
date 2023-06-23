@@ -19,16 +19,17 @@
 /* Set the width and background color of the sidebar */
 .handle-side{
   /* float: left; */
-  height: 60vh;
+  height: calc(100vh - 19rem);
   position: absolute;
   bottom: 0;
   color: aliceblue;
   text-align: center;
+  border-right: 1px solid var(--primary-font-color);
 }
 .sidebar {
   /* width: 20%;
     background-color: #ccc; */
-    height: 100%;
+  /* height: calc(100vh - 19rem); */
   width: 15rem;
   /* padding-left: 1rem; */
   /* padding-right: 1rem; */
@@ -36,7 +37,7 @@
   /* background-color: rgb(19, 40, 161); */
   font-size: 1rem;
   float: left; /* add this line to float the sidebar to the left */
-  border-right: 1px solid var(--primary-font-color);
+  /* border-right: 1px solid var(--primary-font-color); */
   text-transform: capitalize;
   /* overflow-y: auto; */
   color: aliceblue;
