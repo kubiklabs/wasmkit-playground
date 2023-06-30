@@ -8,9 +8,19 @@ type headings = {
 const Headlines: FC<headings> = ({ heading, subheading }) => {
   return (
     <div className="heading">
-      {heading}
-      <br></br>
-      {subheading}
+      {
+        heading ==="Code ID" ?
+        <>
+        {heading}- {subheading}
+        </>
+        :
+        <div>
+        {heading}
+        <div className="subheading-forAddress">
+        {subheading}
+        </div>
+      </div>
+      }
     </div>
   );
 };

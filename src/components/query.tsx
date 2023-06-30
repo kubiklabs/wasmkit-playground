@@ -268,6 +268,10 @@ function Query(contractName: any) {
     )
   }
 
+  const addresss = (Object.keys(contractInfo).length === 0) ? "nothing here" :((contractInfo as Record<string, any>)[contract]?.[contractName.myMap.get(chainNet)]?.contractAddress)
+
+  const shrtaddrss = addresss.substr(0, 15) + "..." + addresss.substr(addresss.length - 5,5)
+
   return (
     <>
     <div className="query-page">
@@ -285,21 +289,14 @@ function Query(contractName: any) {
            }
          </div> */}
       <div className="menubar">
-        <label htmlFor="menu">Select your query : </label>
+        <div className="query-selectwrapper">
+          <div className="flexbox">
+            <div>Your selected address: </div>
+            <div className="bold">{shrtaddrss}</div>
+          </div>
+        <label htmlFor="menu"className="heading-font bold">Select your query : </label>
         
-        {/* <select
-          id="menu"
-          className="query-menu"
-          value={selectedItem}
-          onChange={handleSelect}
-        >
-          <option value="" selected disabled>
-            Choose an option
-          </option>
-          {prop.map((item) => (
-            <option key={item}>{item}</option>
-          ))}
-        </select> */}
+       
         <div className="custom-select">
       <div className="select-selected" onClick={toggleDropdown}>
         {selectedOption ? selectedOption : "Select an option"}
@@ -321,23 +318,22 @@ function Query(contractName: any) {
         </div>
       )}
     </div>
-    
+    </div>
 
 
         <p>You have selected: {selectedOption === "" ? "None" : selectedOption}</p>
          <div className="result">
          <button className="btn primary-btn" onClick={handlebtnclick}>Query </button>
-         {queryres && (
+        
+         </div>
+
         <div className="output-area">
           <label htmlFor="output">Query Outcome: </label>
           {/* <input id="output" value={queryres} readOnly /> */}
           <div id="outputquery" className="preview-box queryOutcome">
-          <pre>{queryres}</pre>
+          <pre>{queryres ? queryres : "-"}</pre>
             </div>
         </div>
-      )}
-        
-         </div>
 
       </div>
       <Preview msg={msg}></Preview>

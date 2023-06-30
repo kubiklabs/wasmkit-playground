@@ -126,7 +126,7 @@ a {
   border-radius: var(--standard-radius);
   outline: none;
   border: none;
-  background-color: var(--primary-bg-color);
+  background-color: var(--accent-color-1);
   /* width: 50%;
   max-width: 400px; */
   padding: 20px;

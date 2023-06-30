@@ -365,6 +365,10 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
     )
   }
 
+  const addresss = (Object.keys(contractInfo).length === 0) ? "nothing here" :((contractInfo as Record<string, any>)[contract]?.[contractName.myMap.get(chainNet)]?.contractAddress)
+
+  const shrtaddrss = addresss.substr(0, 15) + "..." + addresss.substr(addresss.length - 5,5)
+
   return (
     <div className="execute-page">
       {/* <p>Class ${className} found in JSON file.</p> */}
@@ -393,20 +397,19 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
         <p>You have selected: {selectedItem === "" ? "None" : selectedItem}</p>
       </div> */}
       <div className="menubar">
-        <label htmlFor="menu">Select command to execute : </label>
-        {/* <select
-          id="menu"
-          className="query-menu"
-          value={selectedItem}
-          onChange={handleSelect}
-        >
-          <option value="" selected disabled>
-            Choose an option
-          </option>
-          {prop.map((item) => (
-            <option key={item}>{item}</option>
-          ))}
-        </select> */}
+        <div className="bold">
+          Account
+        </div>
+        <div className="address-wrapper">
+        {val.address}
+        </div>
+      <div className="query-selectwrapper">
+      <div className="flexbox padding-custom">
+            <div>Your selected address: </div>
+            <div className="bold">{shrtaddrss}</div>
+          </div>
+        <label htmlFor="menu" className="bold">Select command to execute : </label>
+
         <div className="custom-select">
           <div className="select-selected" onClick={toggleDropdown}>
             {selectedOption ? selectedOption : "Select an option"}
@@ -428,11 +431,12 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
             </div>
           )}
         </div>
+        </div>
 
         <p>
           You have selected: {selectedOption === "" ? "None" : selectedOption}
         </p>
-        <div className="result">
+        <div className={askInp ? "result leftzero": "result"}>
           {/* {askInp? */}
           <div>
             {askInp ?
@@ -441,16 +445,13 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
               askArr.map((valu)=>{
                 const isOptional = valu.type.includes("?");
                 const typeName = valu.type.split(":")[1].replace(/;$/, "").trim();
+                if(valu.name === "account"){
+                  return <></>
+                }
                 return <div className="input-field">
                 <div className="input-field-name">{valu.name }{isOptional ? " (Optional)":""}</div>
                 {/* <div></div> */}
-                {
-                valu.name === "account" ?
-                // <div>{val.shortAddress}</div>
-                <div className="poolSearch">
-                <input placeholder={typeName} value={val.address} disabled></input>
-                </div>
-                :
+                
                 <div className="poolSearch">
                 <input placeholder={typeName}
                 onChange={(e) => handleInputChange(valu.name, e.target.value, typeName, isOptional)}
@@ -458,7 +459,6 @@ let convertedString = selectedOption.replace(/([A-Z])/g, '_$1').toLowerCase();
 
                 </input>
                 </div>
-                }
                 </div>
               })
               
