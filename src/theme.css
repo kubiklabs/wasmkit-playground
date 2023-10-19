@@ -62,15 +62,15 @@
   --primary-bg-color: #1A1B3D;
 
   --accent-color-1: #8041D2;
-  --card-background:#423B5A;
-  --preview-background:#14063f;
+  --card-background:rgba(169, 223, 216, 1);
+  --preview-background:black;
   --dropdown-background:#14063f;
   --percent-input: #021a36;
   /* --bg-img: url(./assets/img/backgroundDark.png); */
   --bg-img: #171821;
   --gradient-left: #A9DFD8;
   --gradient-right: #A9DFD8;
-  --accent-color-1: #11066e;
+  --accent-color-1: rgba(33, 34, 45, 1);
   --accent-color-2: #da6e4f;
   --accent-color-3: #962f22;
   --accent-color-4: #b1d6f9;
@@ -90,7 +90,8 @@
   --multicolor-left: #A9DFD8;
   --multicolor-mid: #6046d2;
   --multicolor-right: #A9DFD8;
-  --logo-img:url(./assets/img/logoLight.png)
+  --logo-img:url(./assets/img/logoLight.png);
+  --navbar-bg: rgba(255, 255, 255, 0.08);
 }
 
 .lighttheme {
@@ -98,23 +99,24 @@
   --primary-bg-color: #E9D4C4;
   --secondary-bg-color: #F1EFFE;
   --input-component:#F1F1E6;
-  --card-background: #F0EDDF;
-  --preview-background: #ad5ba2;
+  --card-background: #4F837D;
+  --preview-background: #131417;
   --dropdown-background:#cc8d7b;;
-  --gradient-left: #D3C2AD;
-  --gradient-right: #EFEBDC;
+  --gradient-left: #4F837D;
+  --gradient-right: #4F837D;
   /* --bg-img: url(./assets/img/backgroundLight.png); */
-  --bg-img: #171821;
-  --accent-color-1: #D3C2AD;
+  --bg-img: #FBFBFB;
+  --accent-color-1: #E2F3F1;
   --percent-input: #c7defa;
-  --multicolor-left: #a500a8;
+  --multicolor-left: #4F837D;
   --multicolor-mid: #6046d2;
-  --multicolor-right: #1790ff;
+  --multicolor-right: #4F837D;
   --primary-font-color: black;
   --secondary-font-color: white;
   --faded-subtitle-color: black;
   --accent-color-4: black;
   --logo-img:url(./assets/img/logoDark.png);
+  --navbar-bg: #E2F3F1;
   --standard-font-family: "Rajdhani", Manrope, Poppins, Inter,
     PingFangSC-Regular, "Microsoft YaHei", sans-serif;
     

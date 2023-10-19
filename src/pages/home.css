@@ -24,6 +24,7 @@
   bottom: 0;
   color: aliceblue;
   text-align: center;
+  border-right: 1px solid var(--primary-font-color);
 }
 .sidebar {
   /* width: 20%;
@@ -36,7 +37,7 @@
   /* background-color: rgb(19, 40, 161); */
   font-size: 1rem;
   float: left; /* add this line to float the sidebar to the left */
-  border-right: 1px solid var(--primary-font-color);
+  /* border-right: 1px solid var(--primary-font-color); */
   text-transform: capitalize;
   /* overflow-y: auto; */
   color: aliceblue;
@@ -157,7 +158,7 @@
   font-weight: 300;
   font-size: 1rem;
   /* width: calc(100vh-300px); */
-  /* height: calc(100vh - 200px); */
+  height: calc(100vh - 300px);
   /* width: 80%; */
   /* float: right; add this line to float the fillup div to the right */
   /* background-color: rgb(13, 4, 134); */
@@ -206,16 +207,31 @@
 .execute-page {
   display: flex;
   flex-direction: row;
-  overflow: hidden;
+  overflow: scroll;
   width: 100%;
   height: 100%;
 }
 .query-page{
   display: flex;
   flex-direction: row;
-  overflow: hidden;
+  overflow: scroll;
   width: 100%;
   height: 100%;
+  padding: 20px;
+}
+.bold{
+  font-weight: 400;
+}
+.flexbox{
+  display: flex;
+}
+.padding-custom{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.heading-font{
+  font-size: 2em;
+  margin-top: 1.5rem;
 }
 .menubar {
   width: 50%;
@@ -223,6 +239,12 @@
   color: var(--primary-font-color);
  
 }
+
+.query-selectwrapper{
+  display: flex;
+  flex-direction: column;
+}
+
 /* 
 #menu {
   width: fit-content;
@@ -267,7 +289,6 @@
 
 /* Style the custom select container */
 .custom-select {
-  padding-top: 2rem;
   position: relative;
   display: inline-block;
   width: 60%;
@@ -275,7 +296,7 @@
 
 /* Style the custom select text */
 .select-selected {
-  background-color: var(--gradient-right);
+  background-color: var(--accent-color-1);
   padding: 0.8rem 1.6rem;
   border: 1px solid var(--primary-font-color);
   border-radius: 4px;
@@ -292,7 +313,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  background-color: var(--dropdown-background);
+  background-color: var(--card-background);
   overflow: auto;
   max-height: 14rem;
   border-radius: 4px;
@@ -361,8 +382,8 @@
   font-weight: 300;
   background: linear-gradient(
     to right,
-    var(--gradient-left),
-    var(--gradient-right)
+    var(--card-background),
+    var(--card-background)
   ) !important;
 }
 /* @media only screen and (max-width: 414px) {
@@ -380,6 +401,18 @@
 .result{
   height: fit-content;
   color: var(--primary-font-color);
+  position: relative;
+  left: 45%;
+}
+.leftzero{
+  left: 0 !important;
+}
+.address-wrapper{
+  padding: 10px;
+  background-color: var(--accent-color-1);
+  border-radius: 10px;
+  width: fit-content;
+  font-weight: bold;
 }
 .output-area{
   font-size: 1rem;
@@ -390,10 +423,10 @@
 }
 
 .queryOutcome{
-  min-width: 40vw !important;
+  min-width: 30vw !important;
   width: fit-content !important;
   max-height: 35vh !important;
-
+  min-height: 10vh !important;
 }
 #output{
  
@@ -535,7 +568,7 @@ linear-gradient(to right, var(--multicolor-left), var(--multicolor-right))
 
 .poolSearch {
   align-items: center;
-  background: linear-gradient(var(--primary-bg-color),var(--primary-bg-color)) padding-box,linear-gradient(to bottom,var(--multicolor-left),var(--multicolor-right)) border-box;
+  background: linear-gradient(var(--accent-color-1),var(--accent-color-1)) padding-box,linear-gradient(to bottom,var(--multicolor-left),var(--multicolor-right)) border-box;
   border: 2px solid transparent;
   border-radius: var(--standard-radius);
   color: var(--primary-font-color);
@@ -559,4 +592,13 @@ linear-gradient(to right, var(--multicolor-left), var(--multicolor-right))
   padding-left: 5%;
   padding-right: 5%;
   width: 100%;
+}
+
+.subheading-forAddress{
+  display: flex;
+  background-color: var(--accent-color-1);
+  width: 70vw;
+  padding: 10px;
+  word-break: break-all;
+  border-radius: 10px;
 }

@@ -1,11 +1,11 @@
 .preview-box {
-    padding-left: 10px;
-    padding-right: 10px;
+    /* padding-left: 10px;
+    padding-right: 10px; */
     margin-right: 30px;
     background-color: var(--preview-background);
     height: fit-content;
     width: 30vw;
-    
+    color: white;
     display: flex;
     flex-direction: column;
     float: left;
@@ -16,15 +16,18 @@
   }
   .prev-head{
       padding: 5px 0;
-   text-align: left;
+   text-align: center;
    font-size: 18px;
    font-weight: 500;
    border-bottom: 1px solid var(--primary-font-color);
+   color: var(--primary-font-color);
+   background-color: var(--accent-color-1);
   }
   .prev-content{
       padding: 15px 5px;
       font-size: 14px;
       font-weight: 200;
+      min-height: 40vh;
   }
   .exe-container{
       display: flex;

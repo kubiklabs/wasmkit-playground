@@ -141,6 +141,12 @@ console.log("final array", outerKeysArray);
     <>
       <div className="home-page">
         {/* <div className='container'> */}
+        
+        <div className="container">
+          <NetSwitch></NetSwitch>
+          <ProjectMenu handleSidebarClick={handleSidebarClick}/>
+        
+        </div>
         <div className="handle-side">
           <div
             className="menuIcon" >
@@ -199,12 +205,6 @@ console.log("final array", outerKeysArray);
             </div> */}
           </div>
         </div>
-        <div className="container">
-          <NetSwitch></NetSwitch>
-          <ProjectMenu />
-        
-        </div>
-
         <div className="playground">
           {/* {activeSection !== "instantiate" &&
             activeSection !== "execute" &&

@@ -22,7 +22,7 @@
 
   .net-toggle-dropdown {
     position: absolute;
-    background-color: var(--primary-bg-color);
+    background-color: var(--accent-color-1);
     width: 100%;
     border-radius: 10px;
     top: 100%;
@@ -100,7 +100,7 @@
     .dropdown-div {
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
-      background-color: rgba(255, 255, 255, 0.08);
+      background-color: var(--accent-color-1);
       /* width: calc(100% - 15rem); */
       width: 100%;
     }

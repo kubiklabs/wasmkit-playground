@@ -29,7 +29,7 @@ const LoadingModal = ({
         <Bars
   height="80"
   width="80"
-  color="#8041D2"
+  color="#4F837D"
   ariaLabel="bars-loading"
   wrapperStyle={{}}
   wrapperClass=""

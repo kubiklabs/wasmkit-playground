@@ -26,9 +26,10 @@ line-height: 1.5rem;
   }
   .active {
     text-align: center;
-    background-color: #A9DFD8 !important;
+    background-color: var(--card-background) !important;
     border-radius: 0px 10px 10px 0px;
-    width: 102% !important;
+    width: 100% !important;
+    color: var(--secondary-font-color) !important;
   }
   .nav-heading
   {
