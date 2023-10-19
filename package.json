@@ -1,6 +1,6 @@
 {
-  "name": "wasimkit-react-playground",
-  "version": "0.1.0",
+  "name": "wasimkit-playground",
+  "version": "0.2.6",
   "private": true,
   "dependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.30.1",

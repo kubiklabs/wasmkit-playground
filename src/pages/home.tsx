@@ -9,8 +9,8 @@ import HeaderSocials from "../components/socials/socials";
 import "./home.css";
 import "../components/common/buttons/buttons.css";
 import NetSwitch from "../components/netswitch";
-import logolight from "../assets/img/logoLight.png";
-import logodark from "../assets/img/logoDark.png";
+// import logolight from "../assets/img/logoLight.png";
+// import logodark from "../assets/img/logoDark.png";
 import { themeState } from "../context/themeState";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useConnectWallet } from "../hooks/useTxnClient";
@@ -92,29 +92,27 @@ function Home() {
 
   const outputMap = new Map<string, [string, string[]]>();
 
-Object.entries(ContrctNameJson).forEach(([outerKey, projectData]:any) => {
-  if(projectData === undefined || projectData === null){
-    projectData = {
+  Object.entries(ContrctNameJson).forEach(([outerKey, projectData]:any) => {
+    if(projectData === undefined || projectData === null){
+      projectData = {
 
+      }
     }
-  }
-  Object.entries(projectData).forEach(([innerKey, value]) => {
-    const chainId:any  = value;
-    if (outputMap.has(chainId["chainId"].replace(/-/g,''))) {
-      outputMap.get(chainId["chainId"].replace(/-/g,''))![1].push(outerKey);
-    } else {
-      outputMap.set(chainId["chainId"].replace(/-/g,''), [innerKey, [outerKey]]);
-    }
+    Object.entries(projectData).forEach(([innerKey, value]) => {
+      const chainId:any  = value;
+      if (outputMap.has(chainId["chainId"].replace(/-/g,''))) {
+        outputMap.get(chainId["chainId"].replace(/-/g,''))![1].push(outerKey);
+      } else {
+        outputMap.set(chainId["chainId"].replace(/-/g,''), [innerKey, [outerKey]]);
+      }
+    });
   });
-});
 
-const outerKeysArray = outputMap.get(network.network)?.[1] || [];
+  const outerKeysArray = outputMap.get(network.network)?.[1] || [];
 
-console.log("final array", outerKeysArray);
+  console.log("final array", outerKeysArray);
 
   // console.log("outputMap", outputMap.get(network.network)![1]);
-
-
   const tempinfo: any = ContrctNameJson;
   const tempSubArray = Object.keys(tempinfo[activeContract]);
 
