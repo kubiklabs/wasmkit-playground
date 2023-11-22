@@ -1,5 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Alata&family=Open+Sans:wght@800&family=Rajdhani:wght@300;400;500;600;700&display=swap");
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -28,6 +28,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #171821 !important;
+  font-family: "Rajdhani", sans-serif !important;
 }
 
 h1 {

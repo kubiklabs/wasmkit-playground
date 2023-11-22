@@ -1,18 +1,20 @@
-import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import { ChakraProvider } from "@chakra-ui/react";
+import SideBar from "./components/layout/SideBar";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <ChakraProvider>
       <BrowserRouter>
-        <Routes>
-          <Route />
-        </Routes>
+        <SideBar />
+        <div className="App">
+          Body
+          <Routes>
+            <Route />
+          </Routes>
+        </div>
       </BrowserRouter>
     </ChakraProvider>
   );
