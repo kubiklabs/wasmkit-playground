@@ -1,16 +1,21 @@
-import React from 'react';
-import { RecoilRoot } from 'recoil';
-import './App.css';
-import ConnectWalletButton from './components/common/buttons/connectWallet';
-import Home from './pages/home'
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import "./App.css";
+import { ChakraProvider } from "@chakra-ui/react";
+
 function App() {
+  const [count, setCount] = useState(0);
+
   return (
-    <RecoilRoot>
-    {/* <ConnectWalletButton></ConnectWalletButton> */}
-     {/* <div></div> */}
-     <Home></Home>
-    </RecoilRoot>
-  )
+    <ChakraProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route />
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider>
+  );
 }
 
 export default App;
