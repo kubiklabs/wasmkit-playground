@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import SideBar from "./components/layout/SideBar";
+import Navbar from "./components/layout/Navbar";
+import ContractDetails from "./pages/ContractDetails";
+import QueryContract from "./pages/QueryContract";
 
 function App() {
   return (
@@ -10,9 +13,14 @@ function App() {
       <BrowserRouter>
         <SideBar />
         <div className="App">
-          Body
+          <Navbar />
           <Routes>
-            <Route />
+            <Route
+              path="/:contractid/contracts"
+              element={<ContractDetails />}
+            />
+            <Route path="/:contractid/Query" element={<QueryContract />} />
+            <Route path="/:contractid/Execute" element={<ContractDetails />} />
           </Routes>
         </div>
       </BrowserRouter>

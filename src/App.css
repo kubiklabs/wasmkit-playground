@@ -11,6 +11,7 @@
 .App {
   /* background: white; */
   flex: 1;
+  padding: 40px;
 }
 
 .logo {
