@@ -14,6 +14,7 @@ const Sheet = (props: any) => {
       overflowY={"auto"}
       color={"white"}
       p={"60px"}
+      gap={"20px"}
     >
       <Box display={"flex"} fontSize={"1.3rem"}>
         <Text>Your selected address - </Text>

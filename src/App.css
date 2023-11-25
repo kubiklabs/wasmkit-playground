@@ -49,3 +49,7 @@
 .read-the-docs {
   color: #888;
 }
+option {
+  background: rgb(43, 42, 42) !important;
+  padding: 5px !important;
+}
