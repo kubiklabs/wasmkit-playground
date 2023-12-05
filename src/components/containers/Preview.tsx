@@ -1,5 +1,4 @@
-import { Box, Code, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import { Code, Flex, Text } from "@chakra-ui/react";
 
 const Preview = () => {
   return (
@@ -21,9 +20,15 @@ const Preview = () => {
         overflow={"auto"}
         colorScheme="black"
       >
-        {`{\n\n
-            \ngetCount:{}
-        }`}
+        <pre>
+          {JSON.stringify(
+            {
+              getCount: {},
+            },
+            null,
+            2
+          )}
+        </pre>
       </Code>
     </Flex>
   );

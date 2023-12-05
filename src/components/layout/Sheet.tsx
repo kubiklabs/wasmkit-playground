@@ -8,7 +8,7 @@ const Sheet = (props: any) => {
       flexDirection={"column"}
       borderRadius={"5px"}
       width={"100%"}
-      height={"88vh"}
+      height={"100%"}
       bg="rgba(255, 255, 255, 0.05)"
       mt={"20px"}
       overflowY={"auto"}

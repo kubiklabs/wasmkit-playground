@@ -5,7 +5,7 @@ const TextInput = ({ label }: { label: string }, props?: InputProps) => {
     <FormControl>
       <FormLabel
         color="#F5F5F5"
-        fontSize="32px"
+        fontSize="24px"
         fontWeight="600"
         letterSpacing="3.2px"
         mb={"0"}
