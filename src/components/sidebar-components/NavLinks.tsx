@@ -1,15 +1,23 @@
 import { Stack } from "@chakra-ui/react";
 import NavigationLink from "./NavigationLink";
 
+import { useNetworkConfig } from "../../hooks/useNetworkConfig";
+import { useRef } from "react";
+
 const NavLinks = () => {
+  const { getContractsList } = useNetworkConfig();
+  const contractList = useRef(getContractsList());
   return (
     <Stack mt={"20px"} gap={"0"}>
-      <NavigationLink name="Contract 1" path="/1" />
-      <NavigationLink name="Contract 2" path="/2" />
-
-      <NavigationLink name="Contract 3" path="/3" />
-      <NavigationLink name="Contract 4" path="/4" />
-      <NavigationLink name="Contract 5" path="/5" />
+      {contractList &&
+        contractList.current.map((contractName) => {
+          return (
+            <NavigationLink
+              name={contractName}
+              path={`/${contractName}/contracts`}
+            />
+          );
+        })}
     </Stack>
   );
 };
