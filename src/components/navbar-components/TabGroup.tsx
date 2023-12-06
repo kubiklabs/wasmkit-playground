@@ -1,17 +1,20 @@
 import { Flex } from "@chakra-ui/react";
 import GeneralButton from "../buttons/GeneralButton";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const TabGroup = () => {
+  const { contractid } = useParams();
+  console.log(contractid);
+
   return (
     <Flex gap={"20px"}>
-      <Link to={"/112/contracts"}>
+      <Link to={`/${contractid}/contracts`}>
         <GeneralButton name="Contract Details" />
       </Link>
-      <Link to={"/112/Query"}>
+      <Link to={`/${contractid}/Query`}>
         <GeneralButton name="Query" />
       </Link>
-      <Link to={"/112/Execute"}>
+      <Link to={`/${contractid}/Execute`}>
         <GeneralButton name="Execute" />
       </Link>
     </Flex>

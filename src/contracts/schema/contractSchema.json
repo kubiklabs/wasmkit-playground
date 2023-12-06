@@ -1,5 +1,5 @@
 {
-  "CounterContract": {
+  "NeutronVotingRegistryContract": {
     "schemaData": [
       {
         "kind": "typeAlias",
@@ -7,7 +7,7 @@
         "properties": [
           {
             "name": "type",
-            "type": "{\n  increment: {\n    [k: string]: unknown;\n  };\n} | {\n  reset: {\n    count: number;\n    [k: string]: unknown;\n  };\n}"
+            "type": "{\n  add_voting_vault: {\n    new_voting_vault_contract: string;\n    [k: string]: unknown;\n  };\n} | {\n  remove_voting_vault: {\n    old_voting_vault_contract: string;\n    [k: string]: unknown;\n  };\n} | {\n  update_config: {\n    owner: string;\n    [k: string]: unknown;\n  };\n}"
           }
         ]
       },
@@ -16,8 +16,12 @@
         "name": "InstantiateMsg",
         "properties": [
           {
-            "name": "count",
-            "type": "number"
+            "name": "owner",
+            "type": "string"
+          },
+          {
+            "name": "voting_vaults",
+            "type": "string[]"
           }
         ]
       },
@@ -27,54 +31,216 @@
         "properties": [
           {
             "name": "type",
-            "type": "{\n  get_count: {\n    [k: string]: unknown;\n  };\n}"
+            "type": "{\n  dao: {};\n} | {\n  config: {};\n} | {\n  voting_vaults: {};\n} | {\n  voting_power_at_height: {\n    address: string;\n    height?: number | null;\n  };\n} | {\n  total_power_at_height: {\n    height?: number | null;\n  };\n} | {\n  info: {};\n}"
+          }
+        ]
+      },
+      {
+        "kind": "typeAlias",
+        "name": "Addr",
+        "properties": [
+          {
+            "name": "type",
+            "type": "string"
           }
         ]
       },
       {
         "kind": "interface",
-        "name": "CounterReadOnlyInterface",
+        "name": "Config",
         "properties": [
           {
-            "name": "getCount",
+            "name": "owner",
+            "type": "Addr"
+          },
+          {
+            "name": "voting_vaults",
+            "type": "Addr[]"
+          }
+        ]
+      },
+      {
+        "kind": "interface",
+        "name": "InfoResponse",
+        "properties": [
+          {
+            "name": "info",
+            "type": "ContractVersion"
+          }
+        ]
+      },
+      {
+        "kind": "interface",
+        "name": "ContractVersion",
+        "properties": [
+          {
+            "name": "contract",
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "kind": "typeAlias",
+        "name": "Uint128",
+        "properties": [
+          {
+            "name": "type",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "kind": "interface",
+        "name": "TotalPowerAtHeightResponse",
+        "properties": [
+          {
+            "name": "height",
+            "type": "number"
+          },
+          {
+            "name": "power",
+            "type": "Uint128"
+          }
+        ]
+      },
+      {
+        "kind": "interface",
+        "name": "VotingPowerAtHeightResponse",
+        "properties": [
+          {
+            "name": "height",
+            "type": "number"
+          },
+          {
+            "name": "power",
+            "type": "Uint128"
+          }
+        ]
+      },
+      {
+        "kind": "typeAlias",
+        "name": "Array_of_VotingVault",
+        "properties": [
+          {
+            "name": "type",
+            "type": "VotingVault[]"
+          }
+        ]
+      },
+      {
+        "kind": "interface",
+        "name": "VotingVault",
+        "properties": [
+          {
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "kind": "interface",
+        "name": "NeutronVotingRegistryReadOnlyInterface",
+        "properties": [
+          {
+            "name": "dao",
+            "type": "() => Promise<any>"
+          },
+          {
+            "name": "config",
+            "type": "() => Promise<any>"
+          },
+          {
+            "name": "votingVaults",
+            "type": "() => Promise<any>"
+          },
+          {
+            "name": "votingPowerAtHeight",
+            "type": "({\n    address,\n    height\n  }: {\n    address: string;\n    height: number | null;\n  }) => Promise<any>"
+          },
+          {
+            "name": "totalPowerAtHeight",
+            "type": "({\n    height\n  }: {\n    height: number | null;\n  }) => Promise<any>"
+          },
+          {
+            "name": "info",
             "type": "() => Promise<any>"
           }
         ]
       },
       {
         "kind": "class",
-        "name": "CounterQueryContract",
+        "name": "NeutronVotingRegistryQueryContract",
         "properties": [
           {
-            "name": "getCount",
+            "name": "dao",
+            "type": "unknown"
+          },
+          {
+            "name": "config",
+            "type": "unknown"
+          },
+          {
+            "name": "votingVaults",
+            "type": "unknown"
+          },
+          {
+            "name": "votingPowerAtHeight",
+            "type": "unknown"
+          },
+          {
+            "name": "totalPowerAtHeight",
+            "type": "unknown"
+          },
+          {
+            "name": "info",
             "type": "unknown"
           }
         ]
       },
       {
         "kind": "interface",
-        "name": "CounterInterface",
+        "name": "NeutronVotingRegistryInterface",
         "properties": [
           {
-            "name": "increment",
-            "type": "({\n    account,\n    customFees,\n    memo,\n    transferAmount\n  }: {\n    account: wasmKitTypes.UserAccount;\n    customFees?: wasmKitTypes.TxnStdFee;\n    memo?: string;\n    transferAmount?: readonly Coin[];\n  }) => Promise<any>"
+            "name": "addVotingVault",
+            "type": "({\n    account,\n    customFees,\n    memo,\n    transferAmount\n  }: {\n    account: wasmKitTypes.UserAccount;\n    customFees?: wasmKitTypes.TxnStdFee;\n    memo?: string;\n    transferAmount?: readonly Coin[];\n  }, {\n    newVotingVaultContract\n  }: {\n    newVotingVaultContract: string;\n  }) => Promise<any>"
           },
           {
-            "name": "reset",
-            "type": "({\n    account,\n    customFees,\n    memo,\n    transferAmount\n  }: {\n    account: wasmKitTypes.UserAccount;\n    customFees?: wasmKitTypes.TxnStdFee;\n    memo?: string;\n    transferAmount?: readonly Coin[];\n  }, {\n    count\n  }: {\n    count: number;\n  }) => Promise<any>"
+            "name": "removeVotingVault",
+            "type": "({\n    account,\n    customFees,\n    memo,\n    transferAmount\n  }: {\n    account: wasmKitTypes.UserAccount;\n    customFees?: wasmKitTypes.TxnStdFee;\n    memo?: string;\n    transferAmount?: readonly Coin[];\n  }, {\n    oldVotingVaultContract\n  }: {\n    oldVotingVaultContract: string;\n  }) => Promise<any>"
+          },
+          {
+            "name": "updateConfig",
+            "type": "({\n    account,\n    customFees,\n    memo,\n    transferAmount\n  }: {\n    account: wasmKitTypes.UserAccount;\n    customFees?: wasmKitTypes.TxnStdFee;\n    memo?: string;\n    transferAmount?: readonly Coin[];\n  }, {\n    owner\n  }: {\n    owner: string;\n  }) => Promise<any>"
           }
         ]
       },
       {
         "kind": "class",
-        "name": "CounterContract",
+        "name": "NeutronVotingRegistryContract",
         "properties": [
           {
-            "name": "increment",
+            "name": "addVotingVault",
             "type": "unknown"
           },
           {
-            "name": "reset",
+            "name": "removeVotingVault",
+            "type": "unknown"
+          },
+          {
+            "name": "updateConfig",
             "type": "unknown"
           }
         ]

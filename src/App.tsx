@@ -31,7 +31,6 @@ function App() {
           <div className="App">
             <NavbarContainer />
             <Stack height={"100%"} overflowY={"auto"}>
-              <Navbar />
               <Routes>
                 <Route
                   path="/:contractid/contracts"

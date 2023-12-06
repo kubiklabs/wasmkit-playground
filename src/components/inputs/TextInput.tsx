@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, Input, InputProps } from "@chakra-ui/react";
 
-const TextInput = ({ label }: { label: string }, props?: InputProps) => {
+const TextInput = ({ label, ...props }: any) => {
   return (
     <FormControl>
       <FormLabel

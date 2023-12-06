@@ -1,8 +1,9 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const Sheet = (props: any) => {
-  const { address } = useParams();
+  const { contractid } = useParams();
   return (
     <Flex
       flexDirection={"column"}
@@ -14,11 +15,15 @@ const Sheet = (props: any) => {
       overflowY={"auto"}
       color={"white"}
       p={"60px"}
+      pt={"20px"}
       gap={"20px"}
+      position={"relative"}
     >
+      <Navbar />
+
       <Box display={"flex"} fontSize={"1.3rem"}>
         <Text>Your selected address - </Text>
-        <Text fontWeight={"bold"}>neutron1sen0mfa...ygk</Text>
+        <Text fontWeight={"bold"}>{contractid}</Text>
       </Box>
       {props.children}
     </Flex>

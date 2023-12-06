@@ -61,3 +61,12 @@ export const TxnLinkComp = (hash: string) => (
     </a>
   </div>
 );
+
+export const toContractName = (str: string) => {
+  let words = (str as string).split("_");
+  let capitalizedWords = words.map(
+    (word: any) => word.charAt(0).toUpperCase() + word.slice(1)
+  );
+  let finalContractName = capitalizedWords.join("");
+  return finalContractName;
+};

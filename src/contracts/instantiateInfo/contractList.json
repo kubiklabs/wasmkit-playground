@@ -1,23 +1,8 @@
 {
-  "counter": {
+  "neutron_voting_registry": {
     "default": {
-      "chainId": "pion-1",
-      "codeId": 2056,
-      "contractAddress": "neutron14z8qgd8v8lel0hjunjcalranc7j58mfxckuprgh0mma2c74445zqpwr49y"
-    }
-  },
-  "compiler": {
-    "default": {
-      "chainId": "uni-6",
-      "codeId": 2056,
-      "contractAddress": "neutron14z8qgd8v8lel0hjunjcalranc7j58mfxckuprgh0mma2c74445zqpwr49y"
-    }
-  },
-  "interpreter": {
-    "default": {
-      "chainId": "neutron-1",
-      "codeId": 2056,
-      "contractAddress": "neutron14z8qgd8v8lel0hjunjcalranc7j58mfxckuprgh0mma2c74445zqpwr49y"
+      "chainId": "neutron-test-1",
+      "codeId": 74
     }
   }
 }

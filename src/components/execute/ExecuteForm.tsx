@@ -5,11 +5,18 @@ import TextInput from "../inputs/TextInput";
 const DATA = ["close", "execute", "propose"];
 
 const ExecuteForm = () => {
+  const handleInputChange = (query: any) => {
+    console.log(query);
+  };
   return (
     <Flex flexDirection={"column"} gap={"10px"}>
       <form>
         <Flex alignItems={"end"} flexDirection={"column"} gap={"10px"}>
-          <SelectInput label="Select Command" inputList={DATA} />
+          <SelectInput
+            onChange={handleInputChange}
+            label="Select Command"
+            inputList={DATA}
+          />
           <Flex columnGap={"20px"} flexWrap={"wrap"}>
             <TextInput label="Var 1" />
             <TextInput label="Var 2" />

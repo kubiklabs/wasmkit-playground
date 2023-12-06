@@ -7,8 +7,10 @@ import { useChainInfo } from "../hooks/useChainInfo";
 import { useNetworkConfig } from "../hooks/useNetworkConfig";
 import { useRecoilValue } from "recoil";
 import { networkContracts } from "../context/networkContractState.";
+import { useParams } from "react-router-dom";
 
 const QueryContract = () => {
+  const { contractid } = useParams();
   const data = useRecoilValue(networkContracts);
   console.log(data);
 
