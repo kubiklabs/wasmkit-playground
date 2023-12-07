@@ -1,6 +1,14 @@
 import { Code, Flex, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
-const Preview = () => {
+const Preview = ({ code }: { code: string | object }) => {
+  useEffect(() => {
+    console.log(code);
+    setUpdatedCode(code);
+  }, [code]);
+
+  const [updatedCode, setUpdatedCode] = useState(code);
+
   return (
     <Flex flex={"1"} flexDirection={"column"}>
       <Text
@@ -20,15 +28,7 @@ const Preview = () => {
         overflow={"auto"}
         colorScheme="black"
       >
-        <pre>
-          {JSON.stringify(
-            {
-              getCount: {},
-            },
-            null,
-            2
-          )}
-        </pre>
+        <pre>{JSON.stringify(updatedCode, null, 2)}</pre>
       </Code>
     </Flex>
   );

@@ -3,27 +3,27 @@ import Sheet from "../components/layout/Sheet";
 import QueryForm from "../components/query/QueryForm";
 import Preview from "../components/containers/Preview";
 import Result from "../components/containers/Result";
-import { useChainInfo } from "../hooks/useChainInfo";
-import { useNetworkConfig } from "../hooks/useNetworkConfig";
-import { useRecoilValue } from "recoil";
-import { networkContracts } from "../context/networkContractState.";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { MsgObject } from "../types/dataTypes";
 
 const QueryContract = () => {
-  const { contractid } = useParams();
-  const data = useRecoilValue(networkContracts);
-  console.log(data);
+  const [previewMsg, setPreviewMsg] = useState<MsgObject>({});
 
-  // const { getChainId } = useChainInfo("uni-6");
+  const handleMsgUpdate = (msg: MsgObject) => {
+    console.log(msg);
+
+    setPreviewMsg(msg);
+  };
+
   return (
     <Sheet gap="10px">
       <Flex height={"100%"} width={"100%"} gap={"40px"}>
         {/* {getChainId()} */}
         <Stack gap={"40px"} flex={1}>
-          <QueryForm />
+          <QueryForm onMsgChange={handleMsgUpdate} />
           <Result />
         </Stack>
-        <Preview />
+        <Preview code={previewMsg} />
       </Flex>
     </Sheet>
   );

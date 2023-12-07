@@ -12,7 +12,7 @@ const TextInput = ({ label, ...props }: any) => {
       >
         {label}
       </FormLabel>
-      <Input {...props} size={"lg"} />
+      <Input name={label} {...props} size={"lg"} />
     </FormControl>
   );
 };
