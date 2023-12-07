@@ -19,11 +19,11 @@ const QueryContract = () => {
     <Sheet gap="10px">
       <Flex height={"100%"} width={"100%"} gap={"40px"}>
         {/* {getChainId()} */}
+        <QueryForm flex={1} onMsgChange={handleMsgUpdate} />
         <Stack gap={"40px"} flex={1}>
-          <QueryForm onMsgChange={handleMsgUpdate} />
+          <Preview code={previewMsg} />
           <Result />
         </Stack>
-        <Preview code={previewMsg} />
       </Flex>
     </Sheet>
   );

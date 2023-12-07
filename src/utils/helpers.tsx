@@ -70,3 +70,7 @@ export const toContractName = (str: string) => {
   let finalContractName = capitalizedWords.join("");
   return finalContractName;
 };
+
+export const camelToSnake = (str: string) => {
+  return str.replace(/([A-Z])/g, "_$1").toLowerCase();
+};

@@ -1,4 +1,5 @@
 import { MsgObject } from "../types/dataTypes";
+import { camelToSnake } from "../utils/helpers";
 
 export const useReadSchema = () => {
   const getInputs = (message: any, convertedString: string) => {
@@ -25,7 +26,7 @@ export const useReadSchema = () => {
         let newObj: any = {};
 
         props.forEach((prop: any, i: any) => {
-          newObj[prop] = "";
+          newObj[camelToSnake(prop)] = "";
           const propName = prop.trim();
           const propType = types[i].trim().replace(/\?$/, "");
 
