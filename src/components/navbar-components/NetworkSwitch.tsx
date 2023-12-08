@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import {
   activeNetworkState,
   networkContracts,
-} from "../../context/networkContractState.";
+} from "../../context/networkContractState";
 // import { useNetworkConfig } from "../../hooks/useNetworkConfig";
 import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

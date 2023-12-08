@@ -5,7 +5,7 @@ import { walletState } from "../../context/walletState";
 import { useConnectWallet, useDisconnetWallet } from "../../hooks/useTxnClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { activeNetworkState } from "../../context/networkContractState.";
+import { activeNetworkState } from "../../context/networkContractState";
 import { toast } from "react-toastify";
 
 const ConnectWalletButton = () => {

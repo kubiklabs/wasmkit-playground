@@ -93,6 +93,7 @@ const QueryForm = ({
       );
       changeMsg(updatedMsg);
       setParams(paramsArray);
+
       //Extract the type string from the properties
 
       // match = queryMessage?.type.match(
@@ -179,13 +180,22 @@ const QueryForm = ({
           {params ? (
             <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
               {params.map((param) => {
-                return (
+                return !param.isOptional ? (
                   <TextInput
                     onChange={handleParamInputChange}
                     placeholder={param.type}
                     label={param.name}
                   />
-                );
+                ) : null;
+              })}
+            </Flex>
+          ) : null}
+          {params ? (
+            <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
+              {params.map((param) => {
+                return !param.isOptional ? (
+                  <TextInput placeholder={param.type} label={param.name} />
+                ) : null;
               })}
             </Flex>
           ) : null}

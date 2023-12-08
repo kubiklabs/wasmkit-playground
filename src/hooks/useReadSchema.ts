@@ -14,6 +14,7 @@ export const useReadSchema = () => {
       const paramTypesArr: any[] = [];
 
       //Use regex to extract the param and their types
+      let newObj: any = {};
       match.forEach((paramMatch: any) => {
         const [, paramNames, paramTypes] = paramMatch.match(
           /\{([^}]*)\}\s*:\s*\{([^}]*)\}/
@@ -23,30 +24,28 @@ export const useReadSchema = () => {
         const types = paramTypes.trim().split(/;\s+/); //params with their types
         console.log(props, types);
 
-        let newObj: any = {};
-
         props.forEach((prop: any, i: any) => {
-          newObj[camelToSnake(prop)] = "";
           const propName = prop.trim();
           const propType = types[i].trim().replace(/\?$/, "");
 
           paramTypesArr.push({ name: propName, type: propType });
         });
-
-        updatedMsg = {
-          [convertedString]: newObj,
-        };
       });
 
       paramTypesArr.forEach((val) => {
         const isOptional = val.type.includes("?");
         const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
+        if (!isOptional) newObj[camelToSnake(val.name)] = "";
+
         paramsArray.push({
           name: val.name,
           type: typeName,
           isOptional,
         });
       });
+      updatedMsg = {
+        [convertedString]: newObj,
+      };
     } else {
       updatedMsg = {
         [convertedString]: {},

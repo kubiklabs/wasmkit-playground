@@ -24,6 +24,7 @@ const ExecuteForm = ({
   const [activeQuery, setActiveQuery] = useState<string>("");
   const [params, setParams] = useState<any[]>([]);
   const [msg, setMsg] = useState<MsgObject>({});
+  const [showOptional, setShowOptional] = useState(false);
 
   const { getInputs } = useReadSchema();
 
@@ -68,6 +69,7 @@ const ExecuteForm = ({
       );
       changeMsg(updatedMsg);
       setParams(paramsArray);
+      console.log(paramsArray);
     }
   };
 
@@ -105,13 +107,26 @@ const ExecuteForm = ({
           {params ? (
             <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
               {params.map((param) => {
-                return (
+                return !param.isOptional ? (
                   <TextInput
                     onChange={handleParamInputChange}
                     placeholder={param.type}
                     label={param.name}
                   />
-                );
+                ) : null;
+              })}
+            </Flex>
+          ) : null}
+          {params && showOptional ? (
+            <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
+              {params.map((param) => {
+                return !param.isOptional ? (
+                  <TextInput
+                    onChange={handleParamInputChange}
+                    placeholder={param.type}
+                    label={param.name}
+                  />
+                ) : null;
               })}
             </Flex>
           ) : null}

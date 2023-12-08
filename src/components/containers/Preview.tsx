@@ -1,13 +1,16 @@
 import { Code, Flex, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { MsgObject } from "../../types/dataTypes";
 
-const Preview = ({ code }: { code: string | object }) => {
+const Preview = ({ code }: { code: MsgObject }) => {
   useEffect(() => {
-    console.log(code);
-    setUpdatedCode(code);
+    const message = JSON.stringify(code, null, 2);
+    setUpdatedCode(message);
+    // console.log(message);
   }, [code]);
 
-  const [updatedCode, setUpdatedCode] = useState(code);
+  const [updatedCode, setUpdatedCode] = useState("");
+  // const message = JSON.stringify(code, null, 2);
 
   return (
     <Flex flex={"1"} flexDirection={"column"}>
@@ -17,6 +20,7 @@ const Preview = ({ code }: { code: string | object }) => {
         fontWeight="600"
         letterSpacing="3.2px"
       >
+        {/* {updatedCode} */}
         Preview
       </Text>
       <Code
@@ -28,7 +32,7 @@ const Preview = ({ code }: { code: string | object }) => {
         overflow={"auto"}
         colorScheme="black"
       >
-        <pre>{JSON.stringify(updatedCode, null, 2)}</pre>
+        <pre>{updatedCode}</pre>
       </Code>
     </Flex>
   );

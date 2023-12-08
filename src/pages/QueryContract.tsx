@@ -5,14 +5,19 @@ import Preview from "../components/containers/Preview";
 import Result from "../components/containers/Result";
 import { useState } from "react";
 import { MsgObject } from "../types/dataTypes";
+import { useRecoilValue } from "recoil";
+import { networkContracts } from "../context/networkContractState";
 
 const QueryContract = () => {
-  const [previewMsg, setPreviewMsg] = useState<MsgObject>({});
+  const { networkContractsList } = useRecoilValue(networkContracts);
+  const [code, setCode] = useState<MsgObject>({});
+
+  console.log(networkContractsList);
 
   const handleMsgUpdate = (msg: MsgObject) => {
-    console.log(msg);
+    const newMsg = msg;
 
-    setPreviewMsg(msg);
+    setCode(newMsg);
   };
 
   return (
@@ -20,8 +25,9 @@ const QueryContract = () => {
       <Flex height={"100%"} width={"100%"} gap={"40px"}>
         {/* {getChainId()} */}
         <QueryForm flex={1} onMsgChange={handleMsgUpdate} />
+        {/* {JSON.stringify(code)} */}
         <Stack gap={"40px"} flex={1}>
-          <Preview code={previewMsg} />
+          <Preview code={code} />
           <Result />
         </Stack>
       </Flex>

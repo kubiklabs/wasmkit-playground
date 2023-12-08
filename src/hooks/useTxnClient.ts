@@ -1,6 +1,9 @@
 // import React, { useState, useEffect, useContext } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import {
+  CosmWasmClient,
+  SigningCosmWasmClient,
+} from "@cosmjs/cosmwasm-stargate";
 
 import { walletState } from "../context/walletState";
 // import { networkConstants } from "../utils/constants";
@@ -10,7 +13,7 @@ import { useMessageToaster } from "./useMessageToaster";
 import { toast } from "react-toastify";
 import { useChainInfo } from "./useChainInfo";
 // import { networkState } from "../context/networkState";
-import { activeNetworkState } from "../context/networkContractState.";
+import { activeNetworkState } from "../context/networkContractState";
 
 export interface Coin {
   readonly denom: string;
@@ -30,6 +33,7 @@ export const useDisconnetWallet = () => {
      */
     setWalletState({
       client: undefined,
+      queryClient: undefined,
       address: undefined,
       shortAddress: undefined,
       balance: undefined,
@@ -88,6 +92,9 @@ export const useConnectWallet = () => {
         await chainInfo.getRpcUrl(chainId),
         offlineSigner
       );
+      const queryClient = await CosmWasmClient.connect(
+        await chainInfo.getRpcUrl(chainId)
+      );
 
       const balance = await wasmChainClient.getBalance(
         address,
@@ -118,6 +125,7 @@ export const useConnectWallet = () => {
           denom: balance.denom,
         },
         client: wasmChainClient,
+        queryClient,
         nickName: walletName.name,
       });
       sessionStorage.setItem("isLoggedIn", "true");

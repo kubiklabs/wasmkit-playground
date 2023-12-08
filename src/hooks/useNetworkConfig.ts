@@ -3,7 +3,7 @@ import contractList from "../contracts/instantiateInfo/contractList.json";
 import {
   activeNetworkState,
   networkContracts,
-} from "../context/networkContractState.";
+} from "../context/networkContractState";
 
 import { useConnectWallet } from "../hooks/useTxnClient";
 

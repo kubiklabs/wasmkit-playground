@@ -1,4 +1,16 @@
 {
+  "sample_project": {
+    "default": {
+      "chainId": "uni-6",
+      "codeId": 2371,
+      "contractAddress": "juno1ufyv605mk5jpyrs4m7k4pjyejdu2tavhpwzzngr52m5spsfk0hxs9sj6ef"
+    },
+    "testnet": {
+      "chainId": "pion-1",
+      "codeId": 759,
+      "contractAddress": "neutron1sen0mfpmmyp0d7ngx54ad0tmgaf7x8faz4xz345m34vppu9nc30qwrrygk"
+    }
+  },
   "neutron_voting_registry": {
     "default": {
       "chainId": "neutron-test-1",
