@@ -1,5 +1,8 @@
 import { atom } from "recoil";
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import {
+  CosmWasmClient,
+  SigningCosmWasmClient,
+} from "@cosmjs/cosmwasm-stargate";
 
 export interface Coin {
   readonly denom: string;
@@ -8,6 +11,7 @@ export interface Coin {
 
 export const walletState = atom<{
   client: SigningCosmWasmClient | undefined;
+  queryClient: CosmWasmClient | undefined;
   address: string | undefined;
   shortAddress: string | undefined;
   balance: Coin | undefined;
@@ -16,6 +20,7 @@ export const walletState = atom<{
   key: "walletState",
   default: {
     client: undefined,
+    queryClient: undefined,
     address: undefined,
     shortAddress: undefined,
     balance: {

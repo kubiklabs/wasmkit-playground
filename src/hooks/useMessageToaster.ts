@@ -1,9 +1,8 @@
-import React from "react";
 import { toast, ToastOptions, TypeOptions } from "react-toastify";
 
 export const useMessageToaster = () => {
   const style: ToastOptions<{}> = {
-    position: "top-right",
+    position: "bottom-right",
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,

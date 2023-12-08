@@ -1,15 +1,19 @@
-import React, {useState, useEffect, useContext} from "react";
+// import React, { useState, useEffect, useContext } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import {
+  CosmWasmClient,
+  SigningCosmWasmClient,
+} from "@cosmjs/cosmwasm-stargate";
 
 import { walletState } from "../context/walletState";
-import { networkConstants } from "../utils/constants";
-import { coinConvert, sleep } from "../utils/common";
-import { UserContext } from "../context/userState";
+// import { networkConstants } from "../utils/constants";
+import { coinConvert, sleep } from "../utils/helpers";
+// import { UserContext } from "../context/userState";
 import { useMessageToaster } from "./useMessageToaster";
 import { toast } from "react-toastify";
 import { useChainInfo } from "./useChainInfo";
-import { networkState } from "../context/networkState";
+// import { networkState } from "../context/networkState";
+import { activeNetworkState } from "../context/networkContractState";
 
 export interface Coin {
   readonly denom: string;
@@ -29,6 +33,7 @@ export const useDisconnetWallet = () => {
      */
     setWalletState({
       client: undefined,
+      queryClient: undefined,
       address: undefined,
       shortAddress: undefined,
       balance: undefined,
@@ -39,56 +44,66 @@ export const useDisconnetWallet = () => {
 };
 
 export const useConnectWallet = () => {
+  const { activeNetworkId } = useRecoilValue(activeNetworkState);
   const chainInfo = useChainInfo();
-  const { setIsLoggingIn } = useContext(UserContext);
+  // const { setIsLoggingIn } = useContext(UserContext);
   const setWalletState = useSetRecoilState(walletState);
-  const somethingsomething = useRecoilValue(walletState)
-  
+  // const somethingsomething = useRecoilValue(walletState);
 
-  const { network } = useRecoilValue(networkState);
-  console.log("i am in txnclient", network);
-  const [baseDenom, setBaseDenom] = useState(networkConstants[network.replace(/-/g,'')]?.baseDenom);
+  // const { network } = useRecoilValue(networkState);
+  // console.log("i am in txnclient", network);
+  // const [baseDenom, setBaseDenom] = useState(
+  //   networkConstants[network.replace(/-/g, "")]?.baseDenom
+  // );
 
   // useEffect(()=>{
   //   const newNet = networkConstants[network.replace(/-/g,'')].baseDenom;
   //   setBaseDenom(newNet)
   // }, [network])
 
-  const toaster = useMessageToaster();
-//  console.log(network,"netcons");
-return async () => {
-  const tid = toast.loading("Connecting to wallet");
-  try {
-    setIsLoggingIn(true);
-    console.log("here i am")
-    while (
-      !(window as any).keplr ||
-      !(window as any).getEnigmaUtils ||
-      !(window as any).getOfflineSignerOnlyAmino
+  // const toaster = useMessageToaster();
+  //  console.log(network,"netcons");
+  return async (chainId = activeNetworkId) => {
+    const tid = toast.loading("Connecting to wallet");
+    try {
+      // setIsLoggingIn(true);
+      console.log("here i am");
+      while (
+        !(window as any).keplr ||
+        !(window as any).getEnigmaUtils ||
+        !(window as any).getOfflineSignerOnlyAmino
       ) {
         await sleep(0.5);
       }
-      
+
       await (window as any).keplr.experimentalSuggestChain(
-        chainInfo.getChainInfoData()
-        );
-        await (window as any).keplr.enable(chainInfo.getChainId());
-        
-        const offlineSigner = (window as any).keplr.getOfflineSignerOnlyAmino(
-          chainInfo.getChainId()
-          );
-          
-          const [{ address }] = await offlineSigner.getAccounts();
-          
-          // console.log("reached here")
-          const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-            chainInfo.getRpcUrl(),
-            offlineSigner
-            );
+        await chainInfo.getChainInfoData(chainId)
+      );
+      await (window as any).keplr.enable(await chainInfo.getChainId(chainId));
 
-      const balance = await wasmChainClient.getBalance(address, baseDenom);
+      const offlineSigner = (window as any).keplr.getOfflineSignerOnlyAmino(
+        await chainInfo.getChainId(chainId)
+      );
 
-      const walletName = await (window as any).keplr.getKey(chainInfo.getChainId());
+      const [{ address }] = await offlineSigner.getAccounts();
+
+      // console.log("reached here")
+      const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
+        await chainInfo.getRpcUrl(chainId),
+        offlineSigner
+      );
+      const queryClient = await CosmWasmClient.connect(
+        await chainInfo.getRpcUrl(chainId)
+      );
+
+      const balance = await wasmChainClient.getBalance(
+        address,
+        await chainInfo.getDenomName(chainId)
+      );
+
+      const walletName = await (window as any).keplr.getKey(
+        await chainInfo.getChainId(chainId)
+      );
 
       toast.update(tid, {
         type: "success",
@@ -102,19 +117,22 @@ return async () => {
       setWalletState({
         address: address,
         shortAddress:
-          address.substr(0, 8) + "..." + address.substr(address.length - 3, 3),
+          address?.substr(0, 8) +
+          "..." +
+          address?.substr(address.length - 3, 3),
         balance: {
           amount: coinConvert(balance.amount, 6, "human"),
-          denom: balance.denom
+          denom: balance.denom,
         },
         client: wasmChainClient,
+        queryClient,
         nickName: walletName.name,
       });
       sessionStorage.setItem("isLoggedIn", "true");
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoggingIn(false);
+      // setIsLoggingIn(false);
     }
   };
 };
