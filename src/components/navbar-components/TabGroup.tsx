@@ -8,14 +8,14 @@ const TabGroup = () => {
 
   return (
     <Flex gap={"20px"}>
-      <Link to={`/${contractid}/contracts`}>
-        <GeneralButton name="Contract Details" />
+      <Link to={`/${contractid}/Details`}>
+        <GeneralButton id="Details" name="Contract Details" />
       </Link>
       <Link to={`/${contractid}/Query`}>
-        <GeneralButton name="Query" />
+        <GeneralButton id="Query" name="Query" />
       </Link>
       <Link to={`/${contractid}/Execute`}>
-        <GeneralButton name="Execute" />
+        <GeneralButton id="Execute" name="Execute" />
       </Link>
     </Flex>
   );

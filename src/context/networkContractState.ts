@@ -2,11 +2,13 @@ import { atom } from "recoil";
 
 export const activeNetworkState = atom<{
   activeNetworkId: string;
+  isLoggingIn: boolean;
 }>({
   key: "activeNetworkState",
   default: {
     // network: (localStorage.getItem("networkState") !== null)? localStorage.getItem("networkState") as string: "JunoTestnet",
     activeNetworkId: "",
+    isLoggingIn: false,
   },
   dangerouslyAllowMutability: true,
 });

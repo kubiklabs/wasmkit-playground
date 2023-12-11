@@ -33,7 +33,7 @@ function App() {
             <Stack height={"100%"} overflowY={"auto"}>
               <Routes>
                 <Route
-                  path="/:contractid/contracts"
+                  path="/:contractid/Details"
                   element={<ContractDetails />}
                 />
                 <Route
