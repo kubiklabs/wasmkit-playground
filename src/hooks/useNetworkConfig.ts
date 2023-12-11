@@ -49,11 +49,16 @@ export const useNetworkConfig = () => {
     });
   };
 
-  const switchActiveNetwork = (chainId: string) => {
+  const switchActiveNetwork = async (chainId: string) => {
     setActiveNetwork({
       activeNetworkId: chainId,
+      isLoggingIn: true,
     });
-    connectWallet(chainId);
+    await connectWallet(chainId);
+    setActiveNetwork({
+      activeNetworkId: chainId,
+      isLoggingIn: false,
+    });
     console.log("Network switched to " + chainId);
   };
 

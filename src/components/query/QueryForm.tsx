@@ -31,7 +31,7 @@ const QueryForm = ({
 
   useEffect(() => {
     fetchQueryList();
-  }, []);
+  }, [contractid]);
 
   //var name manupulation for matching the name format in schema
   const contractName = toContractName(contractid as string);
@@ -93,78 +93,6 @@ const QueryForm = ({
       );
       changeMsg(updatedMsg);
       setParams(paramsArray);
-
-      //Extract the type string from the properties
-
-      // match = queryMessage?.type.match(
-      //   /\{([^}]*)\}\s*:\s*\{([^}]*)\}[\s,]*?(?=,|\))/g
-      // );
-
-      // if (match) {
-      //   const paramTypesArr: any[] = [];
-
-      //   //Use regex to extract the param and their types
-      //   match.forEach((paramMatch: any) => {
-      //     const [, paramNames, paramTypes] = paramMatch.match(
-      //       /\{([^}]*)\}\s*:\s*\{([^}]*)\}/
-      //     );
-
-      //     const props = paramNames.trim().split(/,\s+/); //only params array
-      //     const types = paramTypes.trim().split(/;\s+/); //params with their types
-      //     console.log(props, types);
-      //     // setParams(types);
-
-      //     let newObj: any = {};
-
-      //     props.forEach((prop: any, i: any) => {
-      //       newObj[prop] = "";
-      //       const propName = prop.trim();
-      //       const propType = types[i].trim().replace(/\?$/, "");
-
-      //       paramTypesArr.push({ name: propName, type: propType });
-      //     });
-
-      //     const updatedMsg: MsgObject = {
-      //       // ...msg,
-      //       [convertedString]: newObj,
-      //     };
-      //     changeMsg(updatedMsg);
-      //   });
-
-      //   paramTypesArr.forEach((val) => {
-      //     const isOptional = val.type.includes("?");
-      //     const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
-      //     paramsArray.push({
-      //       name: val.name,
-      //       type: typeName,
-      //       isOptional,
-      //     });
-      //   });
-      //   setParams(paramsArray);
-
-      //   // let obj = paramTypesArr.reduce((acc: any, value: any, index: any) => {
-      //   //   const isOptional = value.type.includes("?");
-      //   //   const typeName = value.type.split(":")[1].replace(/;$/, "").trim();
-      //   //   if (!isOptional && value.name !== "account") {
-      //   //     let convertedString2 = value.name
-      //   //       .replace(/([A-Z])/g, "_$1")
-      //   //       .toLowerCase();
-      //   //     if (typeName === "number") {
-      //   //       acc[convertedString2] = 0;
-      //   //     } else acc[convertedString2] = "";
-      //   //   }
-
-      //   //   return acc;
-      //   // }, {});
-      // } else {
-      //   setParams([]);
-
-      //   const updatedMsg: MsgObject = {
-      //     // ...msg,
-      //     [convertedString]: {},
-      //   };
-      //   changeMsg(updatedMsg);
-      // }
     }
   };
 

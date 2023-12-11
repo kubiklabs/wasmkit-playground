@@ -9,10 +9,7 @@ import { useRecoilValue } from "recoil";
 import { networkContracts } from "../context/networkContractState";
 
 const QueryContract = () => {
-  const { networkContractsList } = useRecoilValue(networkContracts);
   const [code, setCode] = useState<MsgObject>({});
-
-  console.log(networkContractsList);
 
   const handleMsgUpdate = (msg: MsgObject) => {
     const newMsg = msg;

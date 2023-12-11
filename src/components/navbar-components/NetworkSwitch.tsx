@@ -10,8 +10,10 @@ import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { useNetworkConfig } from "../../hooks/useNetworkConfig";
+import { useNavigate } from "react-router-dom";
 
 const NetworkSwitch = () => {
+  const navigate = useNavigate();
   const { activeNetworkId } = useRecoilValue(activeNetworkState);
   const { networkContractsList } = useRecoilValue(networkContracts);
   const { switchActiveNetwork } = useNetworkConfig();
@@ -29,6 +31,7 @@ const NetworkSwitch = () => {
 
   const handleNetworkSwitch = (chainId: string) => {
     if (chainId !== activeNetworkId) switchActiveNetwork(chainId);
+    navigate("/");
   };
 
   return (

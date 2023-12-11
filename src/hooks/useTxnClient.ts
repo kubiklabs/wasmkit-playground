@@ -46,23 +46,9 @@ export const useDisconnetWallet = () => {
 export const useConnectWallet = () => {
   const { activeNetworkId } = useRecoilValue(activeNetworkState);
   const chainInfo = useChainInfo();
-  // const { setIsLoggingIn } = useContext(UserContext);
   const setWalletState = useSetRecoilState(walletState);
-  // const somethingsomething = useRecoilValue(walletState);
+  const setActiveNetwork = useSetRecoilState(activeNetworkState);
 
-  // const { network } = useRecoilValue(networkState);
-  // console.log("i am in txnclient", network);
-  // const [baseDenom, setBaseDenom] = useState(
-  //   networkConstants[network.replace(/-/g, "")]?.baseDenom
-  // );
-
-  // useEffect(()=>{
-  //   const newNet = networkConstants[network.replace(/-/g,'')].baseDenom;
-  //   setBaseDenom(newNet)
-  // }, [network])
-
-  // const toaster = useMessageToaster();
-  //  console.log(network,"netcons");
   return async (chainId = activeNetworkId) => {
     const tid = toast.loading("Connecting to wallet");
     try {
@@ -128,7 +114,8 @@ export const useConnectWallet = () => {
         queryClient,
         nickName: walletName.name,
       });
-      sessionStorage.setItem("isLoggedIn", "true");
+
+      // sessionStorage.setItem("isLoggedIn", "true");
     } catch (error) {
       console.log(error);
     } finally {

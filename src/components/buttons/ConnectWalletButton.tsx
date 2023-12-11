@@ -1,5 +1,5 @@
 import GeneralButton from "./GeneralButton";
-import { Box, Divider, Flex, Text, Tooltip } from "@chakra-ui/react";
+import { Box, Divider, Flex, Spinner, Text, Tooltip } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
 import { walletState } from "../../context/walletState";
 import { useConnectWallet, useDisconnetWallet } from "../../hooks/useTxnClient";
@@ -9,7 +9,8 @@ import { activeNetworkState } from "../../context/networkContractState";
 import { toast } from "react-toastify";
 
 const ConnectWalletButton = () => {
-  const { activeNetworkId } = useRecoilValue(activeNetworkState);
+  const { activeNetworkId, isLoggingIn } = useRecoilValue(activeNetworkState);
+
   const { address, balance, nickName } = useRecoilValue(walletState);
   const disconnectWallet = useDisconnetWallet();
   const connectWallet = useConnectWallet();
@@ -45,31 +46,37 @@ const ConnectWalletButton = () => {
           gap={"15px"}
           backdropFilter={"blur(15px)"}
         >
-          <Text>{nickName}</Text>
-          <Divider height={"50%"} orientation="vertical" />
-          <Text fontWeight={"bold"}>
-            {balance?.amount} {balance?.denom}
-          </Text>
-          <Divider height={"50%"} orientation="vertical" />
-          <Tooltip label="Copy address">
-            <Box
-              onClick={handleCopyAddress}
-              cursor={"pointer"}
-              _hover={{ color: "skyblue" }}
-            >
-              <FontAwesomeIcon icon={faCopy} />
-            </Box>
-          </Tooltip>
-          <Divider height={"50%"} orientation="vertical" />
-          <Tooltip label="Logout">
-            <Box
-              onClick={disconnectWallet}
-              cursor={"pointer"}
-              _hover={{ color: "red" }}
-            >
-              <FontAwesomeIcon icon={faRightFromBracket} />
-            </Box>
-          </Tooltip>
+          {isLoggingIn ? (
+            <Spinner />
+          ) : (
+            <>
+              <Text>{nickName}</Text>
+              <Divider height={"50%"} orientation="vertical" />
+              <Text fontWeight={"bold"}>
+                {balance?.amount} {balance?.denom}
+              </Text>
+              <Divider height={"50%"} orientation="vertical" />
+              <Tooltip label="Copy address">
+                <Box
+                  onClick={handleCopyAddress}
+                  cursor={"pointer"}
+                  _hover={{ color: "skyblue" }}
+                >
+                  <FontAwesomeIcon icon={faCopy} />
+                </Box>
+              </Tooltip>
+              <Divider height={"50%"} orientation="vertical" />
+              <Tooltip label="Logout">
+                <Box
+                  onClick={disconnectWallet}
+                  cursor={"pointer"}
+                  _hover={{ color: "red" }}
+                >
+                  <FontAwesomeIcon icon={faRightFromBracket} />
+                </Box>
+              </Tooltip>
+            </>
+          )}
         </Flex>
       )}
     </>

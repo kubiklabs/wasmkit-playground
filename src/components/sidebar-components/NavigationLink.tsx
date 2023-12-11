@@ -2,12 +2,13 @@ import { Box } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 
 const NavigationLink = ({ path, name }: { path: string; name: string }) => {
-  const curPath = useLocation().pathname;
+  const curPath = useLocation().pathname.split("/")[1];
+
   return (
     <Box
-      background={curPath === path ? "#A9DFD8" : ""}
+      background={curPath === path.split("/")[1] ? "#A9DFD8" : ""}
       fontSize={"24px"}
-      color={curPath === path ? "#17281" : "white"}
+      color={curPath === path.split("/")[1] ? "#17281" : "white"}
       py={"10px"}
       borderRadius={"0 10px 10px 0"}
       fontWeight={"600"}
