@@ -330,7 +330,7 @@
           },
           {
             "name": "updateConfig",
-            "type": "({\n    account,\n    customFees,\n    memo,\n    transferAmount\n  }: {\n    account: wasmKitTypes.UserAccount;\n    customFees?: wasmKitTypes.TxnStdFee;\n    memo?: string;\n    transferAmount?: readonly Coin[];\n  }, {\n    owner\n  }: {\n    owner: string;\n  }, {\n    owner2\n  }: {\n    owner2: string;\n  }) => Promise<any>"
+            "type": "({\n    account,\n    customFees,\n    memo,\n    transferAmount\n  }: {\n    account: wasmKitTypes.UserAccount;\n    customFees?: wasmKitTypes.TxnStdFee;\n    memo?: string;\n    transferAmount?: readonly Coin[];\n  }, {\n    owner\n  }: {\n    owner: string;\n  }) => Promise<any>"
           }
         ]
       },

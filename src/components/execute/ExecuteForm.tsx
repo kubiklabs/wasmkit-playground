@@ -4,10 +4,11 @@ import ActionButton from "../buttons/ActionButton";
 import TextInput from "../inputs/TextInput";
 import { useEffect, useState } from "react";
 import { MsgObject } from "../../types/dataTypes";
-import { toContractName } from "../../utils/helpers";
+import { camelToSnake, toContractName } from "../../utils/helpers";
 import contractSchema from "../../contracts/schema/contractSchema.json";
 import { useParams } from "react-router-dom";
 import { useReadSchema } from "../../hooks/useReadSchema";
+import AddInput from "../inputs/AddInput";
 
 type IContractSchema = typeof contractSchema;
 
@@ -24,9 +25,13 @@ const ExecuteForm = ({
   const [activeQuery, setActiveQuery] = useState<string>("");
   const [params, setParams] = useState<any[]>([]);
   const [msg, setMsg] = useState<MsgObject>({});
+  const [optionalMsg, setOptionalMsg] = useState<MsgObject>({});
+
+  const [optionalArray, setOptionalArray] = useState<any[]>([]);
+  const [optionalInputsArray, setOptionalInputsArray] = useState<any[]>([]);
   const [showOptional, setShowOptional] = useState(false);
 
-  const { getInputs } = useReadSchema();
+  const { getInputs } = useReadSchema(false);
 
   useEffect(() => {
     fetchQueryList();
@@ -55,22 +60,38 @@ const ExecuteForm = ({
 
   //Fetching the input parameter using the queryInterface. Complete operation on strings using reg-ex.
   const fetchInputParams = (query: string) => {
-    let convertedString = query.replace(/([A-Z])/g, "_$1").toLowerCase();
+    let convertedString = camelToSnake(query);
 
     //Find the message object from the schema Array
-    const queryMessage = queryInterface?.properties.find(
+    const executeMessage = queryInterface?.properties.find(
       ({ name }) => name === query
     );
 
-    if (queryMessage) {
-      const { paramsArray, updatedMsg } = getInputs(
-        queryMessage,
+    if (executeMessage) {
+      const { paramsArray, updatedMsg, optionalArray } = getInputs(
+        executeMessage,
         convertedString
       );
+      console.log(optionalArray);
+
       changeMsg(updatedMsg);
       setParams(paramsArray);
+      setOptionalArray(optionalArray);
       console.log(paramsArray);
     }
+  };
+
+  const handleOptionParams = (index: number) => {
+    const newOpInput = [...optionalInputsArray, optionalArray[index]];
+    setOptionalInputsArray(newOpInput);
+
+    let newOpArr = optionalArray;
+    newOpArr.splice(index, 1);
+
+    console.log(newOpArr);
+    console.log(newOpInput);
+
+    setOptionalArray(newOpArr);
   };
 
   const changeMsg = (msg: MsgObject) => {
@@ -81,6 +102,7 @@ const ExecuteForm = ({
 
   const handleInputChange = (query: any) => {
     console.log(query);
+    setOptionalInputsArray([]);
     setActiveQuery(query);
     fetchInputParams(query);
   };
@@ -88,11 +110,22 @@ const ExecuteForm = ({
   const handleParamInputChange = (e: any) => {
     const { name, value } = e.target;
     //convert camelCase to snake_case
-    let convertedName = name.replace(/([A-Z])/g, "_$1").toLowerCase();
-    let convertedQuery = activeQuery.replace(/([A-Z])/g, "_$1").toLowerCase();
+    let convertedName = camelToSnake(name);
+    let convertedQuery = camelToSnake(activeQuery);
     let newMsg = msg;
     newMsg[convertedQuery][convertedName] = value;
     onMsgChange(newMsg);
+  };
+
+  const handleOptionParamsChange = (e: any) => {
+    const { name, value } = e.target;
+    //convert camelCase to snake_case
+    let convertedName = camelToSnake(name);
+    let convertedQuery = camelToSnake(activeQuery);
+    let newMsg = optionalMsg;
+
+    newMsg[convertedName] = value;
+    console.log(newMsg);
   };
 
   return (
@@ -104,29 +137,49 @@ const ExecuteForm = ({
             label="Select Command"
             inputList={queryList}
           />
-          {params ? (
-            <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
-              {params.map((param) => {
-                return !param.isOptional ? (
-                  <TextInput
-                    onChange={handleParamInputChange}
-                    placeholder={param.type}
-                    label={param.name}
+          {optionalArray ? (
+            <Flex
+              gap={"10px"}
+              width={"100%"}
+              columnGap={"20px"}
+              flexWrap={"wrap"}
+            >
+              {optionalArray.map((param, index) => {
+                return (
+                  <AddInput
+                    key={param.name}
+                    onClick={() => handleOptionParams(index)}
+                    content={param.name}
                   />
-                ) : null;
+                );
               })}
             </Flex>
           ) : null}
-          {params && showOptional ? (
+          {optionalInputsArray ? (
+            <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
+              {optionalInputsArray.map((param) => {
+                return (
+                  <TextInput
+                    onChange={handleOptionParamsChange}
+                    placeholder={param.type}
+                    label={param.name}
+                    key={param.name}
+                  />
+                );
+              })}
+            </Flex>
+          ) : null}
+          {params ? (
             <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
               {params.map((param) => {
-                return !param.isOptional ? (
+                return (
                   <TextInput
+                    key={param.name}
                     onChange={handleParamInputChange}
                     placeholder={param.type}
                     label={param.name}
                   />
-                ) : null;
+                );
               })}
             </Flex>
           ) : null}

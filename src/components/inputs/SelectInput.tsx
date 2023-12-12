@@ -34,7 +34,11 @@ const SelectInput = ({
         onChange={handleOptionChange}
       >
         {inputList?.map((item) => {
-          return <option value={item}>{item}</option>;
+          return (
+            <option key={item} value={item}>
+              {item}
+            </option>
+          );
         })}
       </Select>
     </FormControl>

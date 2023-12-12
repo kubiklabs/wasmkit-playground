@@ -27,7 +27,7 @@ const QueryForm = ({
   const [params, setParams] = useState<any[]>([]);
   const [msg, setMsg] = useState<MsgObject>({});
 
-  const { getInputs } = useReadSchema();
+  const { getInputs } = useReadSchema(true);
 
   useEffect(() => {
     fetchQueryList();
@@ -108,17 +108,17 @@ const QueryForm = ({
           {params ? (
             <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
               {params.map((param) => {
-                return !param.isOptional ? (
+                return (
                   <TextInput
                     onChange={handleParamInputChange}
                     placeholder={param.type}
                     label={param.name}
                   />
-                ) : null;
+                );
               })}
             </Flex>
           ) : null}
-          {params ? (
+          {/* {params ? (
             <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
               {params.map((param) => {
                 return !param.isOptional ? (
@@ -126,7 +126,7 @@ const QueryForm = ({
                 ) : null;
               })}
             </Flex>
-          ) : null}
+          ) : null} */}
           <ActionButton name="Query" />
         </Flex>
       </form>
