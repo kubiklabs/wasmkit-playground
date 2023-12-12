@@ -1,6 +1,6 @@
 import { Box, Code, Flex, Text } from "@chakra-ui/react";
 
-const Result = () => {
+const Result = ({ result }: { result: string }) => {
   return (
     <Flex flex={"1"} flexDirection={"column"}>
       <Text
@@ -21,9 +21,7 @@ const Result = () => {
         overflow={"auto"}
         colorScheme="black"
       >
-        {`{\n\n
-            \ngetCount:{}
-        }`}
+        <pre>{result}</pre>
       </Code>
     </Flex>
   );

@@ -2,14 +2,14 @@ import { Code, Flex, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { MsgObject } from "../../types/dataTypes";
 
-const Preview = ({ code }: { code: MsgObject }) => {
-  useEffect(() => {
-    const message = JSON.stringify(code, null, 2);
-    setUpdatedCode(message);
-    // console.log(message);
-  }, [code]);
+const Preview = ({ code }: { code: string }) => {
+  // useEffect(() => {
+  //   const message = JSON.stringify(code, null, 2);
+  //   setUpdatedCode(message);
+  //   // console.log(message);
+  // }, [code]);
 
-  const [updatedCode, setUpdatedCode] = useState("");
+  // const [updatedCode, setUpdatedCode] = useState("");
   // const message = JSON.stringify(code, null, 2);
 
   return (
@@ -32,7 +32,7 @@ const Preview = ({ code }: { code: MsgObject }) => {
         overflow={"auto"}
         colorScheme="black"
       >
-        <pre>{updatedCode}</pre>
+        <pre>{code}</pre>
       </Code>
     </Flex>
   );

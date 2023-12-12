@@ -8,7 +8,7 @@ import contractList from "../contracts/instantiateInfo/contractList.json";
 
 export const useAction = () => {
   const { queryClient } = useRecoilValue(walletState);
-  const { contractId } = useParams();
+  const { contractid } = useParams();
 
   const { address } = useRecoilValue(walletState);
   const { activeNetworkId } = useRecoilValue(activeNetworkState);
@@ -19,8 +19,10 @@ export const useAction = () => {
       return;
     }
 
+    console.log(contractList, contractid);
+
     const contractAddress = (
-      Object.values(contractList[contractId as keyof typeof contractList]).find(
+      Object.values(contractList[contractid as keyof typeof contractList]).find(
         (network) => network.chainId === activeNetworkId
       ) as any
     )?.contractAddress;
@@ -40,4 +42,6 @@ export const useAction = () => {
       return response;
     } catch (error) {}
   };
+
+  return { sendQuery };
 };

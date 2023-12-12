@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import TextInput from "../inputs/TextInput";
 import { MsgObject } from "../../types/dataTypes";
 import { useReadSchema } from "../../hooks/useReadSchema";
+import { useAction } from "../../hooks/useAction";
+import { toast } from "react-toastify";
 
 type IContractSchema = typeof contractSchema;
 
@@ -15,10 +17,12 @@ const DATA = ["getCount", "getAccount", "getClient"];
 
 const QueryForm = ({
   onMsgChange,
+  onResultChange,
   flex,
 }: {
   flex?: number;
   onMsgChange: (msg: MsgObject) => void;
+  onResultChange: (msg: MsgObject) => void;
 }) => {
   const { contractid } = useParams();
 
@@ -28,6 +32,8 @@ const QueryForm = ({
   const [msg, setMsg] = useState<MsgObject>({});
 
   const { getInputs } = useReadSchema(true);
+
+  const { sendQuery } = useAction();
 
   useEffect(() => {
     fetchQueryList();
@@ -96,6 +102,33 @@ const QueryForm = ({
     }
   };
 
+  const handleAction = async () => {
+    const tid = toast.loading("Query in process");
+    try {
+      const response = await sendQuery(msg);
+      toast.update(tid, {
+        type: "success",
+        render: `Query is processed!`,
+        isLoading: false,
+        autoClose: 5000,
+        closeButton: true,
+      });
+
+      console.log(response);
+      onResultChange(response);
+    } catch (error) {
+      console.log(error);
+
+      toast.update(tid, {
+        type: "error",
+        render: `Query failed!`,
+        isLoading: false,
+        autoClose: 5000,
+        closeButton: true,
+      });
+    }
+  };
+
   return (
     <Flex flex={flex} flexDirection={"column"} gap={"10px"}>
       <form>
@@ -127,7 +160,7 @@ const QueryForm = ({
               })}
             </Flex>
           ) : null} */}
-          <ActionButton name="Query" />
+          <ActionButton onClick={handleAction} name="Query" />
         </Flex>
       </form>
     </Flex>

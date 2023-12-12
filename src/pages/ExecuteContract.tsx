@@ -7,12 +7,20 @@ import { useState } from "react";
 import { MsgObject } from "../types/dataTypes";
 
 const ExecuteContract = () => {
-  const [previewMsg, setPreviewMsg] = useState<MsgObject>({});
+  const [code, setCode] = useState<string>("");
+  const [result, setResult] = useState<string>("");
 
   const handleMsgUpdate = (msg: MsgObject) => {
-    console.log(msg);
+    const newMsg = JSON.stringify(msg, null, 2);
 
-    setPreviewMsg(msg);
+    setCode(newMsg);
+  };
+
+  const handleResultUpdate = (msg: any) => {
+    const newMsg = JSON.stringify(msg);
+    console.log(newMsg);
+
+    setResult(newMsg);
   };
   return (
     <Sheet gap="10px">
@@ -20,9 +28,9 @@ const ExecuteContract = () => {
         <Stack gap={"40px"} flex={1}>
           hello
           <ExecuteForm onMsgChange={handleMsgUpdate} />
-          <Result />
+          <Result result={result} />
         </Stack>
-        <Preview code={previewMsg} />
+        <Preview code={code} />
       </Flex>
     </Sheet>
   );
