@@ -24,13 +24,12 @@ const ExecuteContract = () => {
   };
   return (
     <Sheet gap="10px">
-      <Flex height={"100%"} width={"100%"} gap={"40px"}>
+      <Flex flexWrap={"wrap"} height={"100%"} width={"100%"} gap={"40px"}>
+        <ExecuteForm flex={1} onMsgChange={handleMsgUpdate} />
         <Stack gap={"40px"} flex={1}>
-          hello
-          <ExecuteForm onMsgChange={handleMsgUpdate} />
+          <Preview code={code} />
           <Result result={result} />
         </Stack>
-        <Preview code={code} />
       </Flex>
     </Sheet>
   );

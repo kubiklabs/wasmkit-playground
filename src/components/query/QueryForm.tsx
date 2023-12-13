@@ -151,15 +151,6 @@ const QueryForm = ({
               })}
             </Flex>
           ) : null}
-          {/* {params ? (
-            <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
-              {params.map((param) => {
-                return !param.isOptional ? (
-                  <TextInput placeholder={param.type} label={param.name} />
-                ) : null;
-              })}
-            </Flex>
-          ) : null} */}
           <ActionButton onClick={handleAction} name="Query" />
         </Flex>
       </form>

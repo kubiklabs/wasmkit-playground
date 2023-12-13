@@ -1,4 +1,13 @@
-import { Flex } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Divider,
+  Flex,
+} from "@chakra-ui/react";
 import SelectInput from "../inputs/SelectInput";
 import ActionButton from "../buttons/ActionButton";
 import TextInput from "../inputs/TextInput";
@@ -9,6 +18,7 @@ import contractSchema from "../../contracts/schema/contractSchema.json";
 import { useParams } from "react-router-dom";
 import { useReadSchema } from "../../hooks/useReadSchema";
 import AddInput from "../inputs/AddInput";
+import CustomTypeInputs from "../inputs/CustomTypeInputs";
 
 type IContractSchema = typeof contractSchema;
 
@@ -16,7 +26,9 @@ const DATA = ["close", "execute", "propose"];
 
 const ExecuteForm = ({
   onMsgChange,
+  flex,
 }: {
+  flex?: number;
   onMsgChange: (msg: MsgObject) => void;
 }) => {
   const { contractid } = useParams();
@@ -129,9 +141,9 @@ const ExecuteForm = ({
   };
 
   return (
-    <Flex flexDirection={"column"} gap={"10px"}>
+    <Flex flex={flex} flexDirection={"column"} gap={"10px"}>
       <form>
-        <Flex alignItems={"end"} flexDirection={"column"} gap={"10px"}>
+        <Flex alignItems={"end"} flexDirection={"column"} gap={"20px"}>
           <SelectInput
             onChange={handleInputChange}
             label="Select Command"
@@ -139,7 +151,7 @@ const ExecuteForm = ({
           />
           {optionalArray ? (
             <Flex
-              gap={"10px"}
+              gap={"20px"}
               width={"100%"}
               columnGap={"20px"}
               flexWrap={"wrap"}
@@ -155,22 +167,76 @@ const ExecuteForm = ({
               })}
             </Flex>
           ) : null}
-          {optionalInputsArray ? (
-            <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
-              {optionalInputsArray.map((param) => {
-                return (
-                  <TextInput
-                    onChange={handleOptionParamsChange}
-                    placeholder={param.type}
-                    label={param.name}
-                    key={param.name}
-                  />
-                );
-              })}
-            </Flex>
+          {optionalInputsArray.length ? (
+            <Accordion width={"100%"} defaultIndex={[0]} allowMultiple>
+              <AccordionItem borderTop={"none"}>
+                <h2>
+                  <AccordionButton
+                    _focusVisible={{
+                      outline: "none",
+                    }}
+                    _focus={{
+                      outline: "none",
+                    }}
+                    border={"none"}
+                  >
+                    <Box
+                      _focusVisible={{
+                        outline: "none",
+                      }}
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                    >
+                      Optional Params
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  {optionalInputsArray.length ? (
+                    <Flex
+                      borderRadius={"10px"}
+                      width={"100%"}
+                      gap={"20px"}
+                      flexWrap={"wrap"}
+                      p={"10px"}
+                      bg={"#ffffff09"}
+                    >
+                      {optionalInputsArray.map((param) => {
+                        return (
+                          <>
+                            <CustomTypeInputs
+                              type={param.type}
+                              key={param.name}
+                              label={param.name}
+                            />
+                            <Divider borderColor={"#ffffff39"} />
+                          </>
+                          // <TextInput
+                          //   onChange={handleOptionParamsChange}
+                          //   placeholder={param.type}
+                          //   label={param.name}
+                          //   key={param.name}
+                          // />
+                        );
+                      })}
+                    </Flex>
+                  ) : null}
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
           ) : null}
-          {params ? (
-            <Flex width={"100%"} columnGap={"20px"} flexWrap={"wrap"}>
+
+          {params.length ? (
+            <Flex
+              borderRadius={"10px"}
+              border={"1px solid #ffffff29"}
+              p={"10px"}
+              width={"100%"}
+              columnGap={"20px"}
+              flexWrap={"wrap"}
+            >
               {params.map((param) => {
                 return (
                   <TextInput
