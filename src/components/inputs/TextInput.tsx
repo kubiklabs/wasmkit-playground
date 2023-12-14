@@ -1,12 +1,12 @@
 import { FormControl, FormLabel, Input, InputProps } from "@chakra-ui/react";
 
-const TextInput = ({ inputType, label, ...props }: any) => {
+const TextInput = ({ name, inputType, label, smallLabel, ...props }: any) => {
   return (
     <FormControl>
       {label ? (
         <FormLabel
           color="#F5F5F5"
-          fontSize="24px"
+          fontSize={smallLabel ? "18px" : "24px"}
           fontWeight="600"
           letterSpacing="3.2px"
           mb={"0"}
@@ -14,7 +14,13 @@ const TextInput = ({ inputType, label, ...props }: any) => {
           {label}
         </FormLabel>
       ) : null}
-      <Input min={"0"} type={inputType} name={label} {...props} size={"lg"} />
+      <Input
+        min={"0"}
+        type={inputType}
+        name={name || label}
+        {...props}
+        size={"lg"}
+      />
     </FormControl>
   );
 };

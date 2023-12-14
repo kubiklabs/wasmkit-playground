@@ -6,12 +6,7 @@ const ContractDetails = () => {
   const { contractid } = useParams();
   console.log(contractid);
 
-  return (
-    <Sheet>
-      Contract Details
-      <ArrayOfComps component={<h1>hello</h1>} />
-    </Sheet>
-  );
+  return <Sheet>Contract Details</Sheet>;
 };
 
 export default ContractDetails;

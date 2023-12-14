@@ -1,4 +1,4 @@
-import { Flex, FormLabel, Stack } from "@chakra-ui/react";
+import { Flex, FormLabel, Stack, keyframes } from "@chakra-ui/react";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
@@ -6,25 +6,54 @@ import React, { useState } from "react";
 const ArrayOfComps = ({
   component,
   label,
+  onChange,
 }: {
   component: JSX.Element;
   label: string;
+  onChange: (value: any[]) => void;
 }) => {
   const [array, setArray] = useState<JSX.Element[]>([]);
-  [component];
+  const [inputArray, setInputArray] = useState<any[]>([{}]);
 
   const onAdd = () => {
-    const newArray = array;
-    newArray.push(component);
     setArray((prev) => {
+      const newArray = [...prev, component];
+      // prev.push(component);
+      return [...newArray];
+    });
+    setInputArray((prev) => {
+      const newArray = [...prev, {}];
+      // newArray.push({});
       return [...newArray];
     });
   };
 
-  const onRemove = () => {
-    const newArray = array;
-    newArray.pop();
-    setArray((prev) => [...newArray]);
+  const onRemove = (index: number) => {
+    setArray((prev) => {
+      prev.splice(index, 1);
+      const newArray = [...prev];
+      return [...newArray];
+    });
+    setInputArray((prev) => {
+      prev.splice(index, 1);
+      const newArray = [...prev];
+      return [...newArray];
+      // const newArray = prev;
+      // newArray.pop();
+      // return [...newArray];
+    });
+  };
+
+  const handleChange = (e: any, index: number) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setInputArray((prev) => {
+      let newArray = prev;
+      newArray[index][name] = value;
+      onChange(newArray);
+
+      return [...newArray];
+    });
   };
 
   return (
@@ -43,6 +72,7 @@ const ArrayOfComps = ({
         justifyContent={"center"}
         alignItems={"center"}
         gap={"10px"}
+        onChange={(e) => handleChange(e, 0)}
       >
         {component}
         <FontAwesomeIcon
@@ -54,12 +84,18 @@ const ArrayOfComps = ({
       </Flex>
       {array.map((component, index) => {
         return index ? (
-          <Flex width={"100%"} alignItems={"center"} gap={"10px"} key={index}>
+          <Flex
+            onChange={(e) => handleChange(e, index)}
+            width={"100%"}
+            alignItems={"center"}
+            gap={"10px"}
+            key={index}
+          >
             {component}
             <FontAwesomeIcon
               cursor={"pointer"}
               size={"lg"}
-              onClick={onRemove}
+              onClick={() => onRemove(index)}
               icon={faCircleMinus}
             />
           </Flex>

@@ -50,6 +50,10 @@ export const useConnectWallet = () => {
   const setActiveNetwork = useSetRecoilState(activeNetworkState);
 
   return async (chainId = activeNetworkId) => {
+    setActiveNetwork({
+      activeNetworkId: chainId,
+      isLoggingIn: true,
+    });
     const tid = toast.loading("Connecting to wallet");
     try {
       // setIsLoggingIn(true);
@@ -119,7 +123,10 @@ export const useConnectWallet = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      // setIsLoggingIn(false);
+      setActiveNetwork({
+        activeNetworkId: chainId,
+        isLoggingIn: false,
+      });
     }
   };
 };

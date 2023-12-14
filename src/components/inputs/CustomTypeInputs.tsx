@@ -6,16 +6,28 @@ import ArrayOfComps from "./ArrayOfComps";
 interface CustomTypeInputProps extends FlexProps {
   type: string;
   label?: string;
+  onInputChange?: (name: string, value: string) => void;
 }
 
-const CustomTypeInputs = ({ type, label, ...props }: CustomTypeInputProps) => {
+const CustomTypeInputs = ({
+  onInputChange,
+  type,
+  label,
+  ...props
+}: CustomTypeInputProps) => {
   let children;
+
+  const handleParamInputChange = (e?: any, cName?: string, cValue?: any) => {
+    const name = cName || e.target.name || "";
+    const value = cValue || e.target.value || "";
+    if (onInputChange) onInputChange(name, value);
+  };
 
   const JSXElements = {
     string: (
       <TextInput
         inputType="string"
-        // onChange={handleParamInputChange}
+        onChange={handleParamInputChange}
         // placeholder={param.type}
         label={label}
       />
@@ -23,7 +35,7 @@ const CustomTypeInputs = ({ type, label, ...props }: CustomTypeInputProps) => {
     number: (
       <TextInput
         inputType="number"
-        // onChange={handleParamInputChange}
+        onChange={handleParamInputChange}
         // placeholder={param.type}
         label={label}
       />
@@ -31,7 +43,7 @@ const CustomTypeInputs = ({ type, label, ...props }: CustomTypeInputProps) => {
     "number | null": (
       <TextInput
         inputType="number"
-        // onChange={handleParamInputChange}
+        onChange={handleParamInputChange}
         // placeholder={param.type}
         label={label}
       />
@@ -42,7 +54,7 @@ const CustomTypeInputs = ({ type, label, ...props }: CustomTypeInputProps) => {
     children = (
       <TextInput
         inputType="string"
-        // onChange={handleParamInputChange}
+        onChange={handleParamInputChange}
         placeholder={type}
         label={label}
       />
@@ -51,7 +63,7 @@ const CustomTypeInputs = ({ type, label, ...props }: CustomTypeInputProps) => {
     children = (
       <TextInput
         inputType="number"
-        // onChange={handleParamInputChange}
+        onChange={handleParamInputChange}
         // placeholder={param.type}
         label={label}
       />
@@ -59,6 +71,7 @@ const CustomTypeInputs = ({ type, label, ...props }: CustomTypeInputProps) => {
   } else if (type === "readonly Coin[]") {
     children = (
       <ArrayOfComps
+        onChange={(value) => handleParamInputChange("", label, value)}
         label={label as string}
         component={<CustomTypeInputs width={"100%"} type="Coin" />}
         // component={<TextInput inputType="number" />}
@@ -79,8 +92,19 @@ const CustomTypeInputs = ({ type, label, ...props }: CustomTypeInputProps) => {
             {label}
           </FormLabel>
         ) : null}
-        <TextInput flex={1} placeholder={"amount"} inputType="number" />
-        <TextInput placeholder={"denom"} inputType="string" />
+        <TextInput
+          name="amount"
+          flex={1}
+          placeholder={"amount"}
+          inputType="number"
+          onChange={handleParamInputChange}
+        />
+        <TextInput
+          onChange={handleParamInputChange}
+          name="denom"
+          placeholder={"denom"}
+          inputType="string"
+        />
       </Flex>
     );
   } else if (type === "wasmKitTypes.TxnStdFee") {
@@ -95,13 +119,29 @@ const CustomTypeInputs = ({ type, label, ...props }: CustomTypeInputProps) => {
         >
           {label}
         </FormLabel>
-        <CustomTypeInputs label="amount" type="readonly Coin[]" />
-        <TextInput label={"gas"} placeholder={type} inputType="number" />
+        <CustomTypeInputs
+          onInputChange={(name, value) =>
+            handleParamInputChange("", name, value)
+          }
+          label="amount"
+          type="readonly Coin[]"
+        />
+        <TextInput
+          onChange={handleParamInputChange}
+          label={"gas"}
+          placeholder={type}
+          inputType="number"
+        />
       </Stack>
     );
   } else {
     children = (
-      <TextInput label={label} placeholder={type} inputType="string" />
+      <TextInput
+        onChange={handleParamInputChange}
+        label={label}
+        placeholder={type}
+        inputType="string"
+      />
     );
   }
 

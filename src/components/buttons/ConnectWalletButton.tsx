@@ -17,6 +17,9 @@ const ConnectWalletButton = () => {
 
   const handleWalletConnect = async () => {
     if (activeNetworkId) await connectWallet(activeNetworkId);
+    else {
+      toast.error("Select Network");
+    }
   };
 
   const handleCopyAddress = () => {
@@ -28,7 +31,7 @@ const ConnectWalletButton = () => {
 
   return (
     <>
-      {!address ? (
+      {!address && !isLoggingIn ? (
         <GeneralButton
           onClick={handleWalletConnect}
           py={"30px"}

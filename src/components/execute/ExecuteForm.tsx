@@ -19,6 +19,8 @@ import { useParams } from "react-router-dom";
 import { useReadSchema } from "../../hooks/useReadSchema";
 import AddInput from "../inputs/AddInput";
 import CustomTypeInputs from "../inputs/CustomTypeInputs";
+import { useAction } from "../../hooks/useAction";
+import { toast } from "react-toastify";
 
 type IContractSchema = typeof contractSchema;
 
@@ -27,9 +29,11 @@ const DATA = ["close", "execute", "propose"];
 const ExecuteForm = ({
   onMsgChange,
   flex,
+  onResultChange,
 }: {
   flex?: number;
   onMsgChange: (msg: MsgObject) => void;
+  onResultChange: (msg: MsgObject) => void;
 }) => {
   const { contractid } = useParams();
 
@@ -44,6 +48,8 @@ const ExecuteForm = ({
   const [showOptional, setShowOptional] = useState(false);
 
   const { getInputs } = useReadSchema(false);
+
+  const { sendExecute } = useAction();
 
   useEffect(() => {
     fetchQueryList();
@@ -129,15 +135,58 @@ const ExecuteForm = ({
     onMsgChange(newMsg);
   };
 
-  const handleOptionParamsChange = (e: any) => {
-    const { name, value } = e.target;
+  const handleOptionalParamsChange = (
+    name: string,
+    value: any,
+    optionName: string
+  ) => {
+    // const { name, value } = e.target;
     //convert camelCase to snake_case
     let convertedName = camelToSnake(name);
-    let convertedQuery = camelToSnake(activeQuery);
+    // let convertedQuery = camelToSnake(activeQuery);
     let newMsg = optionalMsg;
+    newMsg[optionName] = optionalMsg[optionName] || {};
 
-    newMsg[convertedName] = value;
+    newMsg[optionName][convertedName] = value;
     console.log(newMsg);
+    setOptionalMsg(newMsg);
+  };
+
+  const handleSendExecute = async () => {
+    const tid = toast.loading("Txn in process");
+    try {
+      const response = await sendExecute(msg, optionalMsg);
+      if (response) {
+        toast.update(tid, {
+          type: "success",
+          render: `Txn is processed!`,
+          isLoading: false,
+          autoClose: 5000,
+          closeButton: true,
+        });
+      } else {
+        toast.update(tid, {
+          type: "error",
+          render: `Txn failed!`,
+          isLoading: false,
+          autoClose: 5000,
+          closeButton: true,
+        });
+      }
+
+      console.log(response);
+      // onResultChange(response);
+    } catch (error) {
+      console.log(error);
+
+      toast.update(tid, {
+        type: "error",
+        render: `Txn failed!`,
+        isLoading: false,
+        autoClose: 5000,
+        closeButton: true,
+      });
+    }
   };
 
   return (
@@ -193,7 +242,7 @@ const ExecuteForm = ({
                     <AccordionIcon />
                   </AccordionButton>
                 </h2>
-                <AccordionPanel pb={4}>
+                <AccordionPanel p={"0"} pb={4}>
                   {optionalInputsArray.length ? (
                     <Flex
                       borderRadius={"10px"}
@@ -207,6 +256,13 @@ const ExecuteForm = ({
                         return (
                           <>
                             <CustomTypeInputs
+                              onInputChange={(name, value) =>
+                                handleOptionalParamsChange(
+                                  name,
+                                  value,
+                                  param.name
+                                )
+                              }
                               type={param.type}
                               key={param.name}
                               label={param.name}
@@ -250,7 +306,7 @@ const ExecuteForm = ({
             </Flex>
           ) : null}
 
-          <ActionButton name="Execute" />
+          <ActionButton onClick={handleSendExecute} name="Execute" />
         </Flex>
       </form>
     </Flex>
