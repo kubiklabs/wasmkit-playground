@@ -127,11 +127,18 @@ const ExecuteForm = ({
 
   const handleParamInputChange = (e: any) => {
     const { name, value } = e.target;
+    let typeVal = value;
+    if (!isNaN(Number(value))) {
+      typeVal = Number(value);
+      console.log("yes");
+    }
     //convert camelCase to snake_case
     let convertedName = camelToSnake(name);
     let convertedQuery = camelToSnake(activeQuery);
     let newMsg = msg;
-    newMsg[convertedQuery][convertedName] = value;
+    newMsg[convertedQuery][convertedName] = typeVal;
+    console.log(newMsg);
+
     onMsgChange(newMsg);
   };
 

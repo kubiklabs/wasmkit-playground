@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { activeNetworkState } from "../context/networkContractState";
 import contractList from "../contracts/instantiateInfo/contractList.json";
 import { StdFee } from "@cosmjs/stargate";
-import { memo } from "react";
 
 const defaultFee: StdFee = {
   amount: [{ amount: "200000", denom: "umlg" }],
@@ -104,7 +103,7 @@ export const useAction = () => {
         }
       }
     }
-    let memo = optionalParams.memo.memo || "";
+    let memo = optionalParams?.memo?.memo || "";
     console.log(memo);
 
     // try {
