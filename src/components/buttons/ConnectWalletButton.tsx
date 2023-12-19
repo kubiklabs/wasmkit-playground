@@ -40,13 +40,14 @@ const ConnectWalletButton = () => {
       ) : (
         <Flex
           color={"white"}
-          width={"250px"}
+          minWidth={"250px"}
           borderRadius={"5px"}
           bg={"rgba(255, 255, 255, 0.05)"}
           alignItems={"center"}
           justifyContent={"center"}
           fontSize={"20px"}
           gap={"15px"}
+          p={"15px"}
           backdropFilter={"blur(15px)"}
         >
           {isLoggingIn ? (

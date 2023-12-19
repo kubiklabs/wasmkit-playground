@@ -17,6 +17,9 @@ function App() {
   useEffect(() => {
     appConstructor();
   }, []);
+  window.addEventListener("keplr_keystorechange", () => {
+    location.reload();
+  });
 
   const { setNetworkContractsConfig } = useNetworkConfig();
 

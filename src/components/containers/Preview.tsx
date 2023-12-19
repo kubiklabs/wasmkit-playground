@@ -19,6 +19,7 @@ const Preview = ({ code }: { code: string }) => {
         fontSize="32px"
         fontWeight="600"
         letterSpacing="3.2px"
+        textAlign={"left"}
       >
         {/* {updatedCode} */}
         Preview
