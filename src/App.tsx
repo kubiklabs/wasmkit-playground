@@ -11,6 +11,7 @@ import { useNetworkConfig } from "./hooks/useNetworkConfig";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ContractList from "./pages/ContractList";
 
 function App() {
   useEffect(() => {
@@ -32,6 +33,7 @@ function App() {
             <NavbarContainer />
             <Stack height={"100%"} overflowY={"auto"}>
               <Routes>
+                <Route path="/" element={<ContractList />} />
                 <Route
                   path="/:contractid/Details"
                   element={<ContractDetails />}

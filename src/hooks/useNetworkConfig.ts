@@ -47,6 +47,7 @@ export const useNetworkConfig = () => {
     setNetworkContractState({
       networkContractsList: config,
     });
+    switchActiveNetwork(Object.keys(config)[0]);
   };
 
   const switchActiveNetwork = async (chainId: string) => {
