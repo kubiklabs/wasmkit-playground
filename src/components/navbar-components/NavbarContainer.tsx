@@ -9,13 +9,14 @@ const NavbarContainer = () => {
       position={"absolute"}
       top={"0"}
       right={"0"}
-      bg={"#A9DFD810"}
+      // bg={"#A9DFD810"}
       width={"100%"}
-      px={"10px"}
-      py={"20px"}
+      p={"10px"}
+      pt={"20px"}
+      pr={"40px"}
       backdropFilter={"blur(5px)"}
       justifyContent={"end"}
-      borderBottom={"2px solid #A9DFD810"}
+      // borderBottom={"2px solid #A9DFD810"}
       gap={"20px"}
     >
       <ConnectWalletButton />

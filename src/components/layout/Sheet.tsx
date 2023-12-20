@@ -11,7 +11,6 @@ const Sheet = (props: any) => {
       width={"100%"}
       height={"100%"}
       bg="rgba(255, 255, 255, 0.05)"
-      mt={"20px"}
       overflowY={"auto"}
       color={"white"}
       p={"60px"}

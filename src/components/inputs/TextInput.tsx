@@ -15,6 +15,7 @@ const TextInput = ({ name, inputType, label, smallLabel, ...props }: any) => {
         </FormLabel>
       ) : null}
       <Input
+        borderColor={"#ffffff39"}
         min={"0"}
         type={inputType}
         name={name || label}

@@ -7,6 +7,7 @@ import {
   Box,
   Divider,
   Flex,
+  Tooltip,
 } from "@chakra-ui/react";
 import SelectInput from "../inputs/SelectInput";
 import ActionButton from "../buttons/ActionButton";
@@ -21,6 +22,13 @@ import AddInput from "../inputs/AddInput";
 import CustomTypeInputs from "../inputs/CustomTypeInputs";
 import { useAction } from "../../hooks/useAction";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCross,
+  faMinus,
+  faSquareMinus,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 
 type IContractSchema = typeof contractSchema;
 
@@ -99,27 +107,32 @@ const ExecuteForm = ({
     }
   };
 
+  //Functional to handle the addition of optional parameter
   const handleOptionParams = (index: number) => {
     const newOpInput = [...optionalInputsArray, optionalArray[index]];
     setOptionalInputsArray(newOpInput);
 
     let newOpArr = optionalArray;
     newOpArr.splice(index, 1);
-
-    console.log(newOpArr);
-    console.log(newOpInput);
-
     setOptionalArray(newOpArr);
+  };
+
+  //Functional to handle the removal of optional parameter
+  const handleRemoveOptionalItem = (index: number) => {
+    const newOpArr = [...optionalArray, optionalInputsArray[index]];
+    setOptionalArray(newOpArr);
+
+    let newOpInput = optionalInputsArray;
+    newOpInput.splice(index, 1);
+    setOptionalInputsArray(newOpInput);
   };
 
   const changeMsg = (msg: MsgObject) => {
     setMsg(msg);
-    console.log(msg);
     onMsgChange(msg);
   };
 
   const handleInputChange = (query: any) => {
-    console.log(query);
     setOptionalInputsArray([]);
     setActiveQuery(query);
     fetchInputParams(query);
@@ -205,7 +218,7 @@ const ExecuteForm = ({
             label="Select Command"
             inputList={queryList}
           />
-          {optionalArray ? (
+          {optionalArray.length ? (
             <Flex
               gap={"20px"}
               width={"100%"}
@@ -259,22 +272,41 @@ const ExecuteForm = ({
                       p={"10px"}
                       bg={"#ffffff09"}
                     >
-                      {optionalInputsArray.map((param) => {
+                      {optionalInputsArray.map((param, index) => {
                         return (
                           <>
-                            <CustomTypeInputs
-                              onInputChange={(name, value) =>
-                                handleOptionalParamsChange(
-                                  name,
-                                  value,
-                                  param.name
-                                )
-                              }
-                              type={param.type}
-                              key={param.name}
-                              label={param.name}
-                            />
-                            <Divider borderColor={"#ffffff39"} />
+                            <Flex width={"100%"} gap={"5px"}>
+                              <CustomTypeInputs
+                                onInputChange={(name, value) =>
+                                  handleOptionalParamsChange(
+                                    name,
+                                    value,
+                                    param.name
+                                  )
+                                }
+                                type={param.type}
+                                key={param.name}
+                                label={param.name}
+                              />
+                              <Tooltip label={`Remove ${param.name}`}>
+                                <FontAwesomeIcon
+                                  onClick={() =>
+                                    handleRemoveOptionalItem(index)
+                                  }
+                                  size="xs"
+                                  icon={faMinus}
+                                  cursor={"pointer"}
+                                  style={{
+                                    borderRadius: "20px",
+                                    padding: "4px 5px",
+                                    border: "2px solid #ffffff70",
+                                  }}
+                                />
+                              </Tooltip>
+                            </Flex>
+                            {index + 1 !== optionalInputsArray.length ? (
+                              <Divider borderColor={"#ffffff39"} />
+                            ) : null}
                           </>
                           // <TextInput
                           //   onChange={handleOptionParamsChange}

@@ -1,6 +1,7 @@
 import { Code, Flex, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { MsgObject } from "../../types/dataTypes";
+import ReactJson from "@microlink/react-json-view";
 
 const Preview = ({ code }: { code: string }) => {
   // useEffect(() => {
@@ -13,10 +14,10 @@ const Preview = ({ code }: { code: string }) => {
   // const message = JSON.stringify(code, null, 2);
 
   return (
-    <Flex flex={"1"} flexDirection={"column"}>
+    <Flex gap={"10px"} flex={"1"} flexDirection={"column"}>
       <Text
         color="#F5F5F5"
-        fontSize="32px"
+        fontSize="28px"
         fontWeight="600"
         letterSpacing="3.2px"
         textAlign={"left"}
@@ -33,7 +34,15 @@ const Preview = ({ code }: { code: string }) => {
         overflow={"auto"}
         colorScheme="black"
       >
-        <pre>{code}</pre>
+        {code && (
+          <ReactJson
+            displayDataTypes={false}
+            theme={"colors"}
+            style={{ background: "transparent" }}
+            name={false}
+            src={JSON.parse(code)}
+          />
+        )}
       </Code>
     </Flex>
   );
