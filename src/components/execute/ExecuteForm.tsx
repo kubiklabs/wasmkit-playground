@@ -109,6 +109,13 @@ const ExecuteForm = ({
 
   //Functional to handle the addition of optional parameter
   const handleOptionParams = (index: number) => {
+    // const optionName = optionalArray[index].name;
+    // let newMsg = optionalMsg;
+    // newMsg[optionName] = {};
+    // console.log(optionName);
+    // setOptionalMsg(newMsg);
+    // console.log(newMsg);
+
     const newOpInput = [...optionalInputsArray, optionalArray[index]];
     setOptionalInputsArray(newOpInput);
 
@@ -119,6 +126,12 @@ const ExecuteForm = ({
 
   //Functional to handle the removal of optional parameter
   const handleRemoveOptionalItem = (index: number) => {
+    // const optionName = optionalArray[index]?.name;
+    // let newMsg = optionalMsg;
+    // delete newMsg[optionName];
+    // setOptionalMsg(newMsg);
+    // console.log(newMsg);
+
     const newOpArr = [...optionalArray, optionalInputsArray[index]];
     setOptionalArray(newOpArr);
 
@@ -297,6 +310,7 @@ const ExecuteForm = ({
                                   icon={faMinus}
                                   cursor={"pointer"}
                                   style={{
+                                    transform: "scale(0.7)",
                                     borderRadius: "20px",
                                     padding: "4px 5px",
                                     border: "2px solid #ffffff70",
@@ -305,7 +319,7 @@ const ExecuteForm = ({
                               </Tooltip>
                             </Flex>
                             {index + 1 !== optionalInputsArray.length ? (
-                              <Divider borderColor={"#ffffff39"} />
+                              <Divider borderColor={"#ffffff90"} />
                             ) : null}
                           </>
                           // <TextInput
