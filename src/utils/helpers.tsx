@@ -1,5 +1,5 @@
 import { Decimal } from "decimal.js";
-import { networkConstants } from "./constants";
+import { networkConstants, typeDefaultValueMap } from "./constants";
 
 // The number set here is an arbitrary number.
 Decimal.set({ toExpPos: 50 });
@@ -73,4 +73,16 @@ export const toContractName = (str: string) => {
 
 export const camelToSnake = (str: string) => {
   return str.replace(/([A-Z])/g, "_$1").toLowerCase();
+};
+
+export const getTypesDefaultValue = (type: string) => {
+  console.log(type);
+
+  type v = keyof typeof typeDefaultValueMap;
+
+  let defaultValue: any;
+
+  defaultValue = typeDefaultValueMap[type as v];
+  if (defaultValue === undefined) defaultValue = {};
+  return defaultValue;
 };

@@ -4,18 +4,17 @@ import { Link, useParams } from "react-router-dom";
 
 const TabGroup = () => {
   const { contractid } = useParams();
-  console.log(contractid);
 
   return (
-    <Flex gap={"20px"}>
-      <Link to={`/${contractid}/Details`}>
-        <GeneralButton id="Details" name="Contract Details" />
+    <Flex width={"100%"} gap={"20px"}>
+      <Link style={{ flex: 1 }} to={`/${contractid}/Details`}>
+        <GeneralButton width={"100%"} id="Details" name="Contract Details" />
       </Link>
-      <Link to={`/${contractid}/Query`}>
-        <GeneralButton id="Query" name="Query" />
+      <Link style={{ flex: 1 }} to={`/${contractid}/Query`}>
+        <GeneralButton width={"100%"} id="Query" name="Query" />
       </Link>
-      <Link to={`/${contractid}/Execute`}>
-        <GeneralButton id="Execute" name="Execute" />
+      <Link style={{ flex: 1 }} to={`/${contractid}/Execute`}>
+        <GeneralButton width={"100%"} id="Execute" name="Execute" />
       </Link>
     </Flex>
   );

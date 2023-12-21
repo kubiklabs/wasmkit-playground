@@ -4,15 +4,6 @@ import { MsgObject } from "../../types/dataTypes";
 import ReactJson from "@microlink/react-json-view";
 
 const Preview = ({ code }: { code: string }) => {
-  // useEffect(() => {
-  //   const message = JSON.stringify(code, null, 2);
-  //   setUpdatedCode(message);
-  //   // console.log(message);
-  // }, [code]);
-
-  // const [updatedCode, setUpdatedCode] = useState("");
-  // const message = JSON.stringify(code, null, 2);
-
   return (
     <Flex gap={"10px"} flex={"1"} flexDirection={"column"}>
       <Text
@@ -22,7 +13,6 @@ const Preview = ({ code }: { code: string }) => {
         letterSpacing="3.2px"
         textAlign={"left"}
       >
-        {/* {updatedCode} */}
         Preview
       </Text>
       <Code

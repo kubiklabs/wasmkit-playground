@@ -3,7 +3,13 @@ import ReactJson from "@microlink/react-json-view";
 
 const Result = ({ result }: { result: string }) => {
   return (
-    <Flex gap={"10px"} flex={"1"} flexDirection={"column"}>
+    <Flex
+      maxW={"100%"}
+      minW={"300px"}
+      gap={"10px"}
+      flex={"1"}
+      flexDirection={"column"}
+    >
       <Text
         textAlign={"left"}
         color="#F5F5F5"
@@ -18,17 +24,20 @@ const Result = ({ result }: { result: string }) => {
         borderRadius={"10px"}
         height={"100%"}
         padding={"40px"}
-        bg={"rgba(255, 255, 255, 0.05)"}
+        bg={"black"}
         overflow={"auto"}
         colorScheme="black"
       >
-        {result && (
+        {result ? (
           <ReactJson
+            collapsed={1}
             style={{ background: "transparent" }}
             theme={"colors"}
             name={false}
             src={JSON.parse(result)}
           />
+        ) : (
+          "Result will appear here  "
         )}
       </Code>
     </Flex>

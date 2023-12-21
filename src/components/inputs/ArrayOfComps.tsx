@@ -1,4 +1,4 @@
-import { Flex, FormLabel, Stack, keyframes } from "@chakra-ui/react";
+import { Flex, FormLabel, Stack, Tooltip, keyframes } from "@chakra-ui/react";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
@@ -37,10 +37,8 @@ const ArrayOfComps = ({
     setInputArray((prev) => {
       prev.splice(index, 1);
       const newArray = [...prev];
+      onChange(newArray);
       return [...newArray];
-      // const newArray = prev;
-      // newArray.pop();
-      // return [...newArray];
     });
   };
 
@@ -75,12 +73,14 @@ const ArrayOfComps = ({
         onChange={(e) => handleChange(e, 0)}
       >
         {component}
-        <FontAwesomeIcon
-          cursor={"pointer"}
-          size={"lg"}
-          onClick={onAdd}
-          icon={faCirclePlus}
-        />
+        <Tooltip label="Add Field">
+          <FontAwesomeIcon
+            cursor={"pointer"}
+            size={"lg"}
+            onClick={onAdd}
+            icon={faCirclePlus}
+          />
+        </Tooltip>
       </Flex>
       {array.map((component, index) => {
         return index ? (
@@ -92,12 +92,14 @@ const ArrayOfComps = ({
             key={index}
           >
             {component}
-            <FontAwesomeIcon
-              cursor={"pointer"}
-              size={"lg"}
-              onClick={() => onRemove(index)}
-              icon={faCircleMinus}
-            />
+            <Tooltip label="Remove Field">
+              <FontAwesomeIcon
+                cursor={"pointer"}
+                size={"lg"}
+                onClick={() => onRemove(index)}
+                icon={faCircleMinus}
+              />
+            </Tooltip>
           </Flex>
         ) : null;
       })}

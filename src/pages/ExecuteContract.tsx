@@ -17,17 +17,24 @@ const ExecuteContract = () => {
   };
 
   const handleResultUpdate = (msg: any) => {
-    const newMsg = JSON.stringify(msg);
+    const newMsg = JSON.stringify(msg, (key, value) => {
+      // Check if the value is a BigInt
+      if (typeof value === "bigint") {
+        // Convert BigInt to string
+        return value.toString();
+      }
+      return value;
+    });
     console.log(newMsg);
 
     setResult(newMsg);
   };
   return (
     <Sheet gap="10px">
-      <Flex flexWrap={"wrap"} height={"100%"} width={"100%"} gap={"40px"}>
+      <Flex flexWrap={"wrap"} width={"100%"} gap={"40px"}>
         <ExecuteForm
           onResultChange={handleResultUpdate}
-          flex={1}
+          flex={2}
           onMsgChange={handleMsgUpdate}
         />
         <Stack gap={"40px"} flex={1}>

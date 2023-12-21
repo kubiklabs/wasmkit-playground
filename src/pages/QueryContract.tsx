@@ -25,11 +25,11 @@ const QueryContract = () => {
 
   return (
     <Sheet gap="10px">
-      <Flex height={"100%"} width={"100%"} gap={"40px"}>
+      <Flex width={"100%"} gap={"40px"}>
         {/* {getChainId()} */}
         <QueryForm
           onResultChange={handleResultUpdate}
-          flex={1}
+          flex={2}
           onMsgChange={handleMsgUpdate}
         />
         {/* {JSON.stringify(code)} */}

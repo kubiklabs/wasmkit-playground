@@ -1,6 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
+import { scrollbarStyle } from "../../utils/constants";
 
 const Sheet = (props: any) => {
   const { contractid } = useParams();
@@ -17,6 +18,7 @@ const Sheet = (props: any) => {
       pt={"20px"}
       gap={"20px"}
       position={"relative"}
+      sx={scrollbarStyle}
     >
       <Navbar />
 

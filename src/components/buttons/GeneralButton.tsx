@@ -6,7 +6,7 @@ const GeneralButton = (props: ButtonProps) => {
   return (
     <Button
       color={"white"}
-      width={"250px"}
+      // maxWidth={"250px"}
       borderRadius={"5px"}
       bg={
         props.id !== tabName

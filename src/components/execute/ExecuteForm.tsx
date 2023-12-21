@@ -14,7 +14,11 @@ import ActionButton from "../buttons/ActionButton";
 import TextInput from "../inputs/TextInput";
 import { useEffect, useState } from "react";
 import { MsgObject } from "../../types/dataTypes";
-import { camelToSnake, toContractName } from "../../utils/helpers";
+import {
+  camelToSnake,
+  getTypesDefaultValue,
+  toContractName,
+} from "../../utils/helpers";
 import contractSchema from "../../contracts/schema/contractSchema.json";
 import { useParams } from "react-router-dom";
 import { useReadSchema } from "../../hooks/useReadSchema";
@@ -23,16 +27,9 @@ import CustomTypeInputs from "../inputs/CustomTypeInputs";
 import { useAction } from "../../hooks/useAction";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCross,
-  faMinus,
-  faSquareMinus,
-  faX,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
 type IContractSchema = typeof contractSchema;
-
-const DATA = ["close", "execute", "propose"];
 
 const ExecuteForm = ({
   onMsgChange,
@@ -41,7 +38,7 @@ const ExecuteForm = ({
 }: {
   flex?: number;
   onMsgChange: (msg: MsgObject) => void;
-  onResultChange: (msg: MsgObject) => void;
+  onResultChange: (msg: object) => void;
 }) => {
   const { contractid } = useParams();
 
@@ -63,15 +60,21 @@ const ExecuteForm = ({
     fetchQueryList();
   }, []);
 
-  //var name manupulation for matching the name format in schema
+  /**
+   * var name manupulation for matching the name format in schema
+   */
   const contractName = toContractName(contractid as string);
 
-  //get the Interface object from the schema arrray
+  /**
+   * get the Interface object from the schema arrray
+   */
   const queryInterface = contractSchema[
     `${contractName}Contract` as keyof IContractSchema
   ].schemaData.find((item) => item.name === `${contractName}Interface`);
 
-  //function to create the list of available execute msgs from the schema JSON
+  /**
+   * function to create the list of available execute msgs from the schema JSON
+   */
   const fetchQueryList = () => {
     //create the final array of execute msgs.
     const resultArray: string[] = (queryInterface as any).properties.map(
@@ -84,10 +87,11 @@ const ExecuteForm = ({
     fetchInputParams(resultArray[0]);
   };
 
-  //Fetching the input parameter using the queryInterface. Complete operation on strings using reg-ex.
+  /**
+   * Fetching the input parameter using the queryInterface. Complete operation on strings using reg-ex.
+   */
   const fetchInputParams = (query: string) => {
     let convertedString = camelToSnake(query);
-
     //Find the message object from the schema Array
     const executeMessage = queryInterface?.properties.find(
       ({ name }) => name === query
@@ -98,23 +102,21 @@ const ExecuteForm = ({
         executeMessage,
         convertedString
       );
-      console.log(optionalArray);
-
-      changeMsg(updatedMsg);
+      changeMsg({ msg: updatedMsg });
       setParams(paramsArray);
       setOptionalArray(optionalArray);
-      console.log(paramsArray);
     }
   };
 
-  //Functional to handle the addition of optional parameter
+  /**
+   * Functional to handle the addition of optional parameter
+   */
   const handleOptionParams = (index: number) => {
-    // const optionName = optionalArray[index].name;
-    // let newMsg = optionalMsg;
-    // newMsg[optionName] = {};
-    // console.log(optionName);
-    // setOptionalMsg(newMsg);
-    // console.log(newMsg);
+    const optionName = optionalArray[index].name;
+    let newMsg = optionalMsg;
+    newMsg[optionName] = getTypesDefaultValue(optionalArray[index]?.type);
+    setOptionalMsg(newMsg);
+    onMsgChange({ ...msg, ...newMsg });
 
     const newOpInput = [...optionalInputsArray, optionalArray[index]];
     setOptionalInputsArray(newOpInput);
@@ -124,13 +126,15 @@ const ExecuteForm = ({
     setOptionalArray(newOpArr);
   };
 
-  //Functional to handle the removal of optional parameter
+  /**
+   * Functional to handle the removal of optional parameter
+   */
   const handleRemoveOptionalItem = (index: number) => {
-    // const optionName = optionalArray[index]?.name;
-    // let newMsg = optionalMsg;
-    // delete newMsg[optionName];
-    // setOptionalMsg(newMsg);
-    // console.log(newMsg);
+    const optionName = optionalInputsArray[index]?.name;
+    let newMsg = optionalMsg;
+    delete newMsg[optionName];
+    setOptionalMsg(newMsg);
+    onMsgChange({ ...msg, ...newMsg });
 
     const newOpArr = [...optionalArray, optionalInputsArray[index]];
     setOptionalArray(newOpArr);
@@ -140,55 +144,69 @@ const ExecuteForm = ({
     setOptionalInputsArray(newOpInput);
   };
 
+  /**
+   * Function to handle the updation of message object to show in preview
+   */
   const changeMsg = (msg: MsgObject) => {
     setMsg(msg);
     onMsgChange(msg);
   };
 
+  /**
+   * Function to handle the change of selected inputs
+   */
   const handleInputChange = (query: any) => {
     setOptionalInputsArray([]);
     setActiveQuery(query);
     fetchInputParams(query);
   };
 
+  /**
+   * Function to handle the change of inputs of the necessary parameters
+   */
   const handleParamInputChange = (e: any) => {
     const { name, value } = e.target;
     let typeVal = value;
     if (!isNaN(Number(value))) {
       typeVal = Number(value);
-      console.log("yes");
     }
     //convert camelCase to snake_case
     let convertedName = camelToSnake(name);
     let convertedQuery = camelToSnake(activeQuery);
-    let newMsg = msg;
+    let newMsg = msg.msg;
     newMsg[convertedQuery][convertedName] = typeVal;
-    console.log(newMsg);
-
-    onMsgChange(newMsg);
+    onMsgChange({ msg: newMsg, ...optionalMsg });
   };
 
+  /**
+   * Function to handle the change of inputs of the optional parameters
+   */
   const handleOptionalParamsChange = (
     name: string,
     value: any,
     optionName: string
   ) => {
-    // const { name, value } = e.target;
-    //convert camelCase to snake_case
-    let convertedName = camelToSnake(name);
-    // let convertedQuery = camelToSnake(activeQuery);
+    const convertedName = camelToSnake(name);
     let newMsg = optionalMsg;
     newMsg[optionName] = optionalMsg[optionName] || {};
 
-    newMsg[optionName][convertedName] = value;
-    console.log(newMsg);
+    if (convertedName === camelToSnake(optionName)) {
+      newMsg[optionName] = value;
+    } else newMsg[optionName][convertedName] = value;
     setOptionalMsg(newMsg);
+    onMsgChange({ ...msg, ...newMsg });
   };
 
+  /**
+   * Function to handle the dispatch of the execute message on click of the Execute Button
+   */
   const handleSendExecute = async () => {
     const tid = toast.loading("Txn in process");
     try {
-      const response = await sendExecute(msg, optionalMsg);
+      const response = await sendExecute(msg.msg, optionalMsg);
+      console.log(response);
+
+      onResultChange(response as object);
       if (response) {
         toast.update(tid, {
           type: "success",
@@ -206,11 +224,9 @@ const ExecuteForm = ({
           closeButton: true,
         });
       }
-
-      console.log(response);
-      // onResultChange(response);
     } catch (error) {
       console.log(error);
+      // onResultChange(error as Error);
 
       toast.update(tid, {
         type: "error",
