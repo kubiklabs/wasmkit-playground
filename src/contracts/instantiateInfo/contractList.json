@@ -4,7 +4,7 @@
       "chainId": "uni-6",
       "codeId": 2371,
       "contractAddress": "juno1ufyv605mk5jpyrs4m7k4pjyejdu2tavhpwzzngr52m5spsfk0hxs9sj6ef",
-      "contractTag": "custom tag"
+      "contractTag": "Custom Tag"
     },
     "testnet": {
       "chainId": "pion-1",

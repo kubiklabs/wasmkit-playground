@@ -20,10 +20,11 @@ const Result = ({ result }: { result: string }) => {
         Result
       </Text>
       <Code
+        fontSize={"1rem"}
         textAlign={"left"}
         borderRadius={"10px"}
         height={"100%"}
-        padding={"40px"}
+        padding={"30px"}
         bg={"black"}
         overflow={"auto"}
         colorScheme="black"
