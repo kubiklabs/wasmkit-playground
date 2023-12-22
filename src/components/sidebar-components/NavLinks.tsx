@@ -16,6 +16,7 @@ const NavLinks = () => {
           const contractName = contract.tagName || contract.name;
           return (
             <NavigationLink
+              key={contractName}
               name={contractName}
               path={`/${contractName}/details`}
             />

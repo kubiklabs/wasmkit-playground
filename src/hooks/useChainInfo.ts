@@ -1,25 +1,8 @@
-// import { useRecoilValue } from "recoil";
-// import { configState } from "../context/configState";
-
-import { useEffect, useState } from "react";
 import { ChainInfo } from "../types/configTypes";
 
 export const useChainInfo = () => {
-  // const [chainInfo, setChainInfo] = useState<ChainInfo>();
-
-  // useEffect(() => {
-  //   fetchChainInfo();
-  // }, [chainId]);
-
-  const fetchChainInfo = async (chainId: string) => {
-    const chainInfo = await import(`../config/${chainId}/chain_info.json`);
-    // setChainInfo(chainInfo);
-    console.log(chainInfo);
-  };
-  // const { chainInfo } = useRecoilValue(configState);
-
   /*
-   * Returns the chainInfo data of secret chain
+   * Returns the chainInfo data of the provided chain
    */
   const getChainInfoData = async (chainId: string) => {
     const chainInfo = await import(`../config/${chainId}/chain_info.json`);
@@ -29,7 +12,7 @@ export const useChainInfo = () => {
   };
 
   /*
-   * Returns the chainId of secret chain
+   * Returns the chainId of the provided chain
    */
   const getChainId = async (chainId: string) => {
     const chainInfo = await import(`../config/${chainId}/chain_info.json`);
@@ -38,7 +21,7 @@ export const useChainInfo = () => {
   };
 
   /*
-   * Returns the RPC url of secret chain
+   * Returns the RPC url of the provided chain
    */
   const getRpcUrl = async (chainId: string) => {
     const chainInfo = await import(`../config/${chainId}/chain_info.json`);
@@ -47,7 +30,7 @@ export const useChainInfo = () => {
   };
 
   /*
-   * Returns the REST url of secret chain
+   * Returns the REST url of the provided chain
    */
   const getRestUrl = async (chainId: string) => {
     const chainInfo = await import(`../config/${chainId}/chain_info.json`);
@@ -55,10 +38,24 @@ export const useChainInfo = () => {
     return (chainInfo as ChainInfo)?.rest;
   };
 
+  /*
+   * Returns the display denom of the provided chain
+   */
+
   const getDenomName = async (chainId: string) => {
     const chainInfo = await import(`../config/${chainId}/chain_info.json`);
 
     return (chainInfo as ChainInfo)?.stakeCurrency.coinDenom;
+  };
+
+  /*
+   * Returns the actual denom of the provided chain
+   */
+
+  const getMinimalDenomName = async (chainId: string) => {
+    const chainInfo = await import(`../config/${chainId}/chain_info.json`);
+
+    return (chainInfo as ChainInfo)?.stakeCurrency.coinMinimalDenom;
   };
 
   return {
@@ -67,5 +64,6 @@ export const useChainInfo = () => {
     getRpcUrl,
     getRestUrl,
     getDenomName,
+    getMinimalDenomName,
   };
 };

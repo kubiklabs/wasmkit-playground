@@ -74,25 +74,20 @@ const ExecuteForm = ({
     | undefined = undefined;
 
   useEffect(() => {
-    /**
-     * var name manupulation for matching the name format in schema
-     */
+    // var name manupulation for matching the name format in schema
 
     if (networkContractsList !== undefined) {
       const contractName = toContractName(
         getActualContractName(contractid as string)
       );
 
-      /**
-       * get the Interface object from the schema arrray
-       */
+      //get the Interface object from the schema arrray
       queryInterface = contractSchema[
         `${contractName}Contract` as keyof IContractSchema
       ].schemaData.find((item) => item.name === `${contractName}Interface`);
       fetchQueryList();
     }
-    fetchQueryList();
-  }, []);
+  }, [networkContractsList]);
 
   /**
    * function to create the list of available execute msgs from the schema JSON
