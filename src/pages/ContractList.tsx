@@ -1,4 +1,4 @@
-import { Grid, Text } from "@chakra-ui/react";
+import { Flex, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import Card from "../components/containers/Card";
 import { useRecoilValue } from "recoil";
@@ -22,11 +22,11 @@ const ContractList = () => {
       >
         Select a contract
       </Text>
-      <Grid
+      <Flex
         gap={"20px"}
+        minW={"350px"}
         // justifyContent={"space-evenly"}
         // gridAutoFlow={"column"}
-        gridTemplateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
       >
         {activeNetworkId &&
           networkContractsList[activeNetworkId].map((contract: any) => {
@@ -34,6 +34,7 @@ const ContractList = () => {
 
             return (
               <Card
+                flex={1}
                 onClick={() => navigate(`/${contractName}/details`)}
                 maxW={"400px"}
                 p={"20px"}
@@ -47,7 +48,7 @@ const ContractList = () => {
               </Card>
             );
           })}
-      </Grid>
+      </Flex>
     </>
   );
 };

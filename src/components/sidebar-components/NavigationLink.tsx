@@ -7,6 +7,7 @@ const NavigationLink = ({ path, name }: { path: string; name: string }) => {
 
   return (
     <Box
+      w={"100%"}
       background={curPath === path.split("/")[1] ? "#A9DFD8" : ""}
       fontSize={"24px"}
       color={curPath === path.split("/")[1] ? "#171821" : "#ffffff"}

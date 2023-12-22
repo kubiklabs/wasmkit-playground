@@ -17,5 +17,12 @@
       "chainId": "neutron-test-1",
       "codeId": 74
     }
+  },
+  "counter": {
+    "default": {
+      "chainId": "pion-1",
+      "codeId": 2370,
+      "contractAddress": "neutron1rhv67ts93vef9w40z6xha2h7pc6vfnqy2jxwkyfyrrtdz4hfn7qsjph772"
+    }
   }
 }
