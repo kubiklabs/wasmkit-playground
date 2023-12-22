@@ -86,3 +86,12 @@ export const getTypesDefaultValue = (type: string) => {
   if (defaultValue === undefined) defaultValue = {};
   return defaultValue;
 };
+
+export const getUriSnakeCase = (str: string) => {
+  let spacedCase = str.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase();
+
+  // Replace spaces with underscores for snake case
+  let snakeCase = spacedCase.replace(/\s+/g, "_");
+
+  return snakeCase;
+};

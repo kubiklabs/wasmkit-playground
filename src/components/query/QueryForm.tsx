@@ -10,6 +10,9 @@ import { MsgObject } from "../../types/dataTypes";
 import { useReadSchema } from "../../hooks/useReadSchema";
 import { useAction } from "../../hooks/useAction";
 import { toast } from "react-toastify";
+import { useReadConfig } from "../../hooks/useReadConfig";
+import { networkContracts } from "../../context/networkContractState";
+import { useRecoilValue } from "recoil";
 
 type IContractSchema = typeof contractSchema;
 
@@ -30,22 +33,42 @@ const QueryForm = ({
   const [activeQuery, setActiveQuery] = useState<string>("");
   const [params, setParams] = useState<any[]>([]);
   const [msg, setMsg] = useState<MsgObject>({});
+  // const [contractName, setContractName] = useState("");
+
+  const { networkContractsList } = useRecoilValue(networkContracts);
+
+  const { getActualContractName } = useReadConfig();
 
   const { getInputs } = useReadSchema(true);
 
   const { sendQuery } = useAction();
 
+  let queryInterface:
+    | {
+        kind: string;
+        name: string;
+        properties: {
+          name: string;
+          type: string;
+        }[];
+      }
+    | undefined = undefined;
+
   useEffect(() => {
-    fetchQueryList();
-  }, [contractid]);
-
-  //var name manupulation for matching the name format in schema
-  const contractName = toContractName(contractid as string);
-
-  //get the ReadOnlyInterface object from the schema arrray
-  const queryInterface = contractSchema[
-    `${contractName}Contract` as keyof IContractSchema
-  ].schemaData.find((item) => item.name === `${contractName}ReadOnlyInterface`);
+    //var name manupulation for matching the name format in schema
+    if (networkContractsList !== undefined) {
+      const contractName = toContractName(
+        getActualContractName(contractid as string)
+      );
+      queryInterface = contractSchema[
+        `${contractName}Contract` as keyof IContractSchema
+      ].schemaData.find(
+        (item) => item.name === `${contractName}ReadOnlyInterface`
+      );
+      // setContractName(contractName);
+      fetchQueryList();
+    }
+  }, [contractid, networkContractsList]);
 
   //function to create the list of available query msgs from the schema JSON
   const fetchQueryList = () => {

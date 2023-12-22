@@ -26,14 +26,15 @@ export const useNetworkConfig = () => {
         const contracts: any[] = networkContractConfig[innerData.chainId]
           ? networkContractConfig[innerData.chainId]
           : [];
+        const newElement = (innerData as any).contractTag || "";
         let newConfig = {
           ...networkContractConfig,
-          [innerData.chainId]: [...contracts, name],
+          [innerData.chainId]: [...contracts, { name, tagName: newElement }],
         };
         networkContractConfig = newConfig;
       });
     });
-    //   console.log(networkContractConfig);
+    console.log(networkContractConfig);
 
     return networkContractConfig;
   };

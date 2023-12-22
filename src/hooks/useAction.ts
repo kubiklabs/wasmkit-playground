@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { activeNetworkState } from "../context/networkContractState";
 import contractList from "../contracts/instantiateInfo/contractList.json";
 import { StdFee } from "@cosmjs/stargate";
+import { useReadConfig } from "./useReadConfig";
 
 const defaultFee: StdFee = {
   amount: [{ amount: "200000", denom: "umlg" }],
@@ -19,18 +20,21 @@ export const useAction = () => {
   const { address, client } = useRecoilValue(walletState);
   const { activeNetworkId } = useRecoilValue(activeNetworkState);
 
+  const { getActualContractName } = useReadConfig();
+
   const sendQuery = async (queryMsg: MsgObject) => {
     if (!address) {
       toast.error("Connect Wallet before Querying!");
       return;
     }
-
-    console.log(contractList, contractid);
-
     const contractAddress = (
-      Object.values(contractList[contractid as keyof typeof contractList]).find(
-        (network) => network.chainId === activeNetworkId
-      ) as any
+      Object.values(
+        contractList[
+          getActualContractName(
+            contractid as string
+          ) as keyof typeof contractList
+        ]
+      ).find((network) => network.chainId === activeNetworkId) as any
     )?.contractAddress;
 
     if (!contractAddress) {
@@ -58,9 +62,13 @@ export const useAction = () => {
     console.log(contractList, contractid);
 
     const contractAddress = (
-      Object.values(contractList[contractid as keyof typeof contractList]).find(
-        (network) => network.chainId === activeNetworkId
-      ) as any
+      Object.values(
+        contractList[
+          getActualContractName(
+            contractid as string
+          ) as keyof typeof contractList
+        ]
+      ).find((network) => network.chainId === activeNetworkId) as any
     )?.contractAddress;
 
     if (!contractAddress) {

@@ -1,8 +1,5 @@
 import { Stack } from "@chakra-ui/react";
 import NavigationLink from "./NavigationLink";
-
-import { useNetworkConfig } from "../../hooks/useNetworkConfig";
-import { useRef } from "react";
 import { useRecoilValue } from "recoil";
 import {
   activeNetworkState,
@@ -10,18 +7,17 @@ import {
 } from "../../context/networkContractState";
 
 const NavLinks = () => {
-  const { getContractsList } = useNetworkConfig();
   const { networkContractsList } = useRecoilValue(networkContracts);
   const { activeNetworkId } = useRecoilValue(activeNetworkState);
-  const contractList = useRef(getContractsList());
   return (
     <Stack mt={"20px"} gap={"0"}>
       {activeNetworkId &&
-        networkContractsList[activeNetworkId].map((contractName: string) => {
+        networkContractsList[activeNetworkId].map((contract: any) => {
+          const contractName = contract.tagName || contract.name;
           return (
             <NavigationLink
               name={contractName}
-              path={`/${contractName}/Details`}
+              path={`/${contractName}/details`}
             />
           );
         })}

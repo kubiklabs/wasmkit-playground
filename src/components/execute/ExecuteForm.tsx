@@ -28,6 +28,9 @@ import { useAction } from "../../hooks/useAction";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { networkContracts } from "../../context/networkContractState";
+import { useReadConfig } from "../../hooks/useReadConfig";
 
 type IContractSchema = typeof contractSchema;
 
@@ -50,27 +53,46 @@ const ExecuteForm = ({
 
   const [optionalArray, setOptionalArray] = useState<any[]>([]);
   const [optionalInputsArray, setOptionalInputsArray] = useState<any[]>([]);
-  const [showOptional, setShowOptional] = useState(false);
+
+  const { networkContractsList } = useRecoilValue(networkContracts);
+
+  const { getActualContractName } = useReadConfig();
 
   const { getInputs } = useReadSchema(false);
 
   const { sendExecute } = useAction();
 
+  let queryInterface:
+    | {
+        kind: string;
+        name: string;
+        properties: {
+          name: string;
+          type: string;
+        }[];
+      }
+    | undefined = undefined;
+
   useEffect(() => {
+    /**
+     * var name manupulation for matching the name format in schema
+     */
+
+    if (networkContractsList !== undefined) {
+      const contractName = toContractName(
+        getActualContractName(contractid as string)
+      );
+
+      /**
+       * get the Interface object from the schema arrray
+       */
+      queryInterface = contractSchema[
+        `${contractName}Contract` as keyof IContractSchema
+      ].schemaData.find((item) => item.name === `${contractName}Interface`);
+      fetchQueryList();
+    }
     fetchQueryList();
   }, []);
-
-  /**
-   * var name manupulation for matching the name format in schema
-   */
-  const contractName = toContractName(contractid as string);
-
-  /**
-   * get the Interface object from the schema arrray
-   */
-  const queryInterface = contractSchema[
-    `${contractName}Contract` as keyof IContractSchema
-  ].schemaData.find((item) => item.name === `${contractName}Interface`);
 
   /**
    * function to create the list of available execute msgs from the schema JSON
@@ -96,6 +118,8 @@ const ExecuteForm = ({
     const executeMessage = queryInterface?.properties.find(
       ({ name }) => name === query
     );
+
+    console.log(executeMessage);
 
     if (executeMessage) {
       const { paramsArray, updatedMsg, optionalArray } = getInputs(

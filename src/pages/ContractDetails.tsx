@@ -3,17 +3,21 @@ import Sheet from "../components/layout/Sheet";
 import { useEffect, useState } from "react";
 import { useReadConfig } from "../hooks/useReadConfig";
 import { Flex, Stack, Text } from "@chakra-ui/layout";
+import { useRecoilValue } from "recoil";
+import { networkContracts } from "../context/networkContractState";
 
 const ContractDetails = () => {
   const { contractid } = useParams();
   const [contractDetails, setContractDetails] = useState<any>({});
-  const { getContractDetails } = useReadConfig();
-  console.log(contractid);
+  const { getContractDetails, getActualContractName } = useReadConfig();
+  const { networkContractsList } = useRecoilValue(networkContracts);
 
   useEffect(() => {
-    const details = getContractDetails(contractid as string);
-    setContractDetails(details);
-  }, []);
+    if (networkContractsList) {
+      const details = getContractDetails(contractid as string);
+      setContractDetails(details);
+    }
+  }, [networkContractsList]);
 
   return (
     <Sheet>
@@ -30,6 +34,20 @@ const ContractDetails = () => {
           </Text>
           <Text fontSize={"1.5rem"}>
             {contractDetails?.contractAddress || "-"}
+          </Text>
+        </Flex>
+        <Flex alignItems={"center"} gap={"10px"}>
+          <Text fontWeight={"bold"} fontSize={"1.5rem"}>
+            Contract Tag Name:{" "}
+          </Text>
+          <Text fontSize={"1.5rem"}>{contractDetails?.contractTag || "-"}</Text>
+        </Flex>
+        <Flex alignItems={"center"} gap={"10px"}>
+          <Text fontWeight={"bold"} fontSize={"1.5rem"}>
+            Contract File Name:{" "}
+          </Text>
+          <Text fontSize={"1.5rem"}>
+            {getActualContractName(contractDetails?.contractTag) || "-"}
           </Text>
         </Flex>
       </Stack>

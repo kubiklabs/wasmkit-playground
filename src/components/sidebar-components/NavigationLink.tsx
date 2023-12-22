@@ -2,7 +2,8 @@ import { Box } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 
 const NavigationLink = ({ path, name }: { path: string; name: string }) => {
-  const curPath = useLocation().pathname.split("/")[1];
+  let curPath = useLocation().pathname.split("/")[1];
+  curPath = decodeURIComponent(curPath);
 
   return (
     <Box

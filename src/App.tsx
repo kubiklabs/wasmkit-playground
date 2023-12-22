@@ -38,14 +38,14 @@ function App() {
               <Routes>
                 <Route path="/" element={<ContractList />} />
                 <Route
-                  path="/:contractid/Details"
+                  path="/:contractid/details"
                   element={<ContractDetails />}
                 />
                 <Route
-                  path="/:contractid/Execute"
+                  path="/:contractid/execute"
                   element={<ExecuteContract />}
                 />
-                <Route path="/:contractid/Query" element={<QueryContract />} />
+                <Route path="/:contractid/query" element={<QueryContract />} />
               </Routes>
             </Stack>
           </div>

@@ -29,10 +29,12 @@ const ContractList = () => {
         gridTemplateColumns={"repeat(auto-fit, minmax(350px, 1fr))"}
       >
         {activeNetworkId &&
-          networkContractsList[activeNetworkId].map((contractName: string) => {
+          networkContractsList[activeNetworkId].map((contract: any) => {
+            const contractName = contract.tagName || contract.name;
+
             return (
               <Card
-                onClick={() => navigate(`/${contractName}/Details`)}
+                onClick={() => navigate(`/${contractName}/details`)}
                 maxW={"400px"}
                 p={"20px"}
                 cursor={"pointer"}
