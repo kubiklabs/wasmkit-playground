@@ -50,6 +50,9 @@ const ExecuteForm = ({
   const [params, setParams] = useState<any[]>([]);
   const [msg, setMsg] = useState<MsgObject>({});
   const [optionalMsg, setOptionalMsg] = useState<MsgObject>({});
+  const [queryInterface, setQueryInterface] = useState<
+    QueryInterface | undefined
+  >(undefined);
 
   const [optionalArray, setOptionalArray] = useState<any[]>([]);
   const [optionalInputsArray, setOptionalInputsArray] = useState<any[]>([]);
@@ -62,54 +65,74 @@ const ExecuteForm = ({
 
   const { sendExecute } = useAction();
 
-  let queryInterface:
-    | {
-        kind: string;
-        name: string;
-        properties: {
-          name: string;
-          type: string;
-        }[];
-      }
-    | undefined = undefined;
+  interface QueryInterface {
+    kind: string;
+    name: string;
+    properties: {
+      name: string;
+      type: string;
+    }[];
+  }
 
   useEffect(() => {
-    // var name manupulation for matching the name format in schema
+    constructorOnChange();
+  }, [networkContractsList]);
 
+  /**
+   * Function to setup the query interface object when the contract list is popoulated.
+   */
+
+  const constructorOnChange = () => {
     if (networkContractsList !== undefined) {
       const contractName = toContractName(
         getActualContractName(contractid as string)
       );
 
-      //get the Interface object from the schema arrray
-      queryInterface = contractSchema[
-        `${contractName}Contract` as keyof IContractSchema
-      ].schemaData.find((item) => item.name === `${contractName}Interface`);
-      fetchQueryList();
+      let queryInterface: QueryInterface | undefined;
+
+      try {
+        //get the Interface object from the schema arrray
+        queryInterface = contractSchema[
+          `${contractName}Contract` as keyof IContractSchema
+        ].schemaData.find((item) => item.name === `${contractName}Interface`);
+      } catch (error) {
+        toast.error("Interface not found");
+        console.log(error);
+        return;
+      }
+      console.log(queryInterface);
+      setQueryInterface(queryInterface);
+      fetchQueryList(queryInterface as QueryInterface);
     }
-  }, [networkContractsList]);
+  };
 
   /**
    * function to create the list of available execute msgs from the schema JSON
    */
-  const fetchQueryList = () => {
+  const fetchQueryList = (queryInterface: QueryInterface) => {
     //create the final array of execute msgs.
-    const resultArray: string[] = (queryInterface as any).properties.map(
+    console.log(queryInterface);
+
+    const resultArray: string[] = queryInterface.properties.map(
       (property: any) => {
         return property.name;
       }
     );
     setQueryList(resultArray);
     setActiveQuery(resultArray[0]);
-    fetchInputParams(resultArray[0]);
+    fetchInputParams(resultArray[0], queryInterface);
   };
 
   /**
    * Fetching the input parameter using the queryInterface. Complete operation on strings using reg-ex.
    */
-  const fetchInputParams = (query: string) => {
+  const fetchInputParams = (query: string, queryInterface: QueryInterface) => {
+    console.log(query);
+
     let convertedString = camelToSnake(query);
     //Find the message object from the schema Array
+    console.log(queryInterface);
+
     const executeMessage = queryInterface?.properties.find(
       ({ name }) => name === query
     );
@@ -177,7 +200,7 @@ const ExecuteForm = ({
   const handleInputChange = (query: any) => {
     setOptionalInputsArray([]);
     setActiveQuery(query);
-    fetchInputParams(query);
+    fetchInputParams(query, queryInterface as QueryInterface);
   };
 
   /**
@@ -357,12 +380,6 @@ const ExecuteForm = ({
                               <Divider borderColor={"#ffffff90"} />
                             ) : null}
                           </>
-                          // <TextInput
-                          //   onChange={handleOptionParamsChange}
-                          //   placeholder={param.type}
-                          //   label={param.name}
-                          //   key={param.name}
-                          // />
                         );
                       })}
                     </Flex>
