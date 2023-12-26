@@ -51,19 +51,30 @@ export const useReadSchema = (isQuery: boolean) => {
             });
           }
         });
-      }
+        paramTypesArr[paramTypesArr.length - 1]?.forEach((val) => {
+          const isOptional = val.type.includes("?");
+          const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
+          if (!isOptional) newObj[camelToSnake(val.name)] = "";
 
-      paramTypesArr[paramTypesArr.length - 1]?.forEach((val) => {
-        const isOptional = val.type.includes("?");
-        const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
-        if (!isOptional) newObj[camelToSnake(val.name)] = "";
-
-        paramsArray.push({
-          name: val.name,
-          type: typeName,
-          isOptional,
+          paramsArray.push({
+            name: val.name,
+            type: typeName,
+            isOptional,
+          });
         });
-      });
+      } else {
+        paramTypesArr[0]?.forEach((val) => {
+          const isOptional = val.type.includes("?");
+          const typeName = val.type.split(":")[1].replace(/;$/, "").trim();
+          if (!isOptional) newObj[camelToSnake(val.name)] = "";
+
+          paramsArray.push({
+            name: val.name,
+            type: typeName,
+            isOptional,
+          });
+        });
+      }
 
       updatedMsg = {
         [convertedString]: newObj,

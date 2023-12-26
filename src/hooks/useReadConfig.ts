@@ -18,7 +18,7 @@ export const useReadConfig = () => {
     let name = tagName;
     if (!contractList[name as keyof typeof contractList])
       name = networkContractsList?.[activeNetworkId]?.find(
-        (item: any) => item.tagName
+        (item: any) => item.tagName === tagName
       )?.name;
     return name;
   };
