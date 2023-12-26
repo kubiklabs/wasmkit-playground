@@ -17,7 +17,7 @@ const QueryContract = () => {
   };
 
   const handleResultUpdate = (msg: any) => {
-    const newMsg = JSON.stringify(msg, null, 2);
+    const newMsg = JSON.stringify({ response: msg }, null, 2);
     console.log(newMsg);
 
     setResult(newMsg);

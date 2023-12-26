@@ -17,7 +17,7 @@ const ExecuteContract = () => {
   };
 
   const handleResultUpdate = (msg: any) => {
-    const newMsg = JSON.stringify(msg, (key, value) => {
+    const newMsg = JSON.stringify({ response: msg }, (key, value) => {
       // Check if the value is a BigInt
       if (typeof value === "bigint") {
         // Convert BigInt to string

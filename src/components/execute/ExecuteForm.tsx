@@ -281,7 +281,7 @@ const ExecuteForm = ({
   };
 
   return (
-    <Flex flex={flex} flexDirection={"column"} gap={"10px"}>
+    <Flex minW={"35%"} flex={flex} flexDirection={"column"} gap={"10px"}>
       <form>
         <Flex alignItems={"end"} flexDirection={"column"} gap={"20px"}>
           <SelectInput

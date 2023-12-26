@@ -23,7 +23,7 @@ const Sheet = (props: any) => {
       <Navbar />
 
       <Box display={"flex"} gap={"10px"} fontSize={"1.3rem"}>
-        <Text>Your selected - </Text>
+        <Text>Your selected contract - </Text>
         <Text fontWeight={"bold"}>{contractid}</Text>
       </Box>
       {props.children}
