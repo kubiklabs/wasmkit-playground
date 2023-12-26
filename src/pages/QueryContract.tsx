@@ -29,7 +29,7 @@ const QueryContract = () => {
         {/* {getChainId()} */}
         <QueryForm
           onResultChange={handleResultUpdate}
-          flex={2}
+          flex={1}
           onMsgChange={handleMsgUpdate}
         />
         {/* {JSON.stringify(code)} */}

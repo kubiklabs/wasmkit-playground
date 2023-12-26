@@ -29,6 +29,7 @@ export const useDisconnetWallet = () => {
      */
     setWalletState({
       client: undefined,
+      addrPrefix: undefined,
       queryClient: undefined,
       address: undefined,
       shortAddress: undefined,
@@ -102,6 +103,7 @@ export const useConnectWallet = () => {
       /* successfully update the wallet state */
       setWalletState({
         address: address,
+        addrPrefix: await chainInfo.getAccAddrPrefix(chainId),
         shortAddress:
           address?.substr(0, 8) +
           "..." +

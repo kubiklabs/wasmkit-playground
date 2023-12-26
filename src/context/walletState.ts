@@ -11,6 +11,7 @@ export interface Coin {
 
 export const walletState = atom<{
   client: SigningCosmWasmClient | undefined;
+  addrPrefix: string | undefined;
   queryClient: CosmWasmClient | undefined;
   address: string | undefined;
   shortAddress: string | undefined;
@@ -19,6 +20,7 @@ export const walletState = atom<{
 }>({
   key: "walletState",
   default: {
+    addrPrefix: undefined,
     client: undefined,
     queryClient: undefined,
     address: undefined,

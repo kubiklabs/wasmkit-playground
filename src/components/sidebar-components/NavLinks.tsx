@@ -5,12 +5,23 @@ import {
   activeNetworkState,
   networkContracts,
 } from "../../context/networkContractState";
+import { scrollbarStyle } from "../../utils/constants";
 
 const NavLinks = () => {
   const { networkContractsList } = useRecoilValue(networkContracts);
   const { activeNetworkId } = useRecoilValue(activeNetworkState);
   return (
-    <Stack alignItems={"center"} mt={"20px"} gap={"0"}>
+    <Stack
+      sx={scrollbarStyle}
+      overflowY={"auto"}
+      h={"100%"}
+      alignItems={"center"}
+      mt={"20px"}
+      gap={"0"}
+    >
+      <NavigationLink key={""} name={"Overview"} path={`/`} />
+      <Divider my={"10px"} width={"90%"} borderColor={"#ffffff60"} />
+
       {activeNetworkId &&
         networkContractsList[activeNetworkId].map(
           (contract: any, index: number) => {

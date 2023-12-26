@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Tooltip } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 
 const NavigationLink = ({ path, name }: { path: string; name: string }) => {
@@ -11,25 +11,30 @@ const NavigationLink = ({ path, name }: { path: string; name: string }) => {
       background={curPath === path.split("/")[1] ? "#A9DFD8" : ""}
       fontSize={"24px"}
       color={curPath === path.split("/")[1] ? "#171821" : "#ffffff"}
-      py={"10px"}
-      borderRadius={"0 10px 10px 0"}
+      p={"10px"}
+      // borderRadius={"0 10px 10px 0"}
     >
-      <Link
-        style={{
-          width: "100%",
-          display: "block",
-          fontWeight: "bold",
-        }}
-        to={path}
-      >
-        <Text
-          _hover={{
-            color: curPath === path.split("/")[1] ? "#171821" : "#ffffff90",
+      <Tooltip label={name}>
+        <Link
+          style={{
+            width: "100%",
+            display: "block",
+            fontWeight: "bold",
           }}
+          to={path}
         >
-          {name}
-        </Text>
-      </Link>
+          <Text
+            overflow={"hidden"}
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            _hover={{
+              color: curPath === path.split("/")[1] ? "#171821" : "#ffffff90",
+            }}
+          >
+            {name}
+          </Text>
+        </Link>
+      </Tooltip>
     </Box>
   );
 };

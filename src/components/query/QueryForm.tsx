@@ -37,8 +37,6 @@ const QueryForm = ({
     QueryInterface | undefined
   >(undefined);
 
-  // const [contractName, setContractName] = useState("");
-
   const { networkContractsList } = useRecoilValue(networkContracts);
 
   const { getActualContractName } = useReadConfig();
@@ -85,7 +83,9 @@ const QueryForm = ({
     }
   }, [contractid, networkContractsList]);
 
-  //function to create the list of available query msgs from the schema JSON
+  /**
+   * function to create the list of available query msgs from the schema JSON
+   */
   const fetchQueryList = (queryInterface: QueryInterface) => {
     //create the final array of query msgs.
     const resultArray: string[] = (queryInterface as any).properties.map(
@@ -98,13 +98,18 @@ const QueryForm = ({
     fetchInputParams(resultArray[0], queryInterface);
   };
 
-  //Callback function from the SelectInput component to process the change in input.
+  /**
+   * Callback function from the SelectInput component to process the change in input.
+   */
   const handleInputChange = (query: any) => {
     console.log(query);
     setActiveQuery(query);
     fetchInputParams(query, queryInterface as QueryInterface);
   };
 
+  /**
+   * handle the chnage of input field
+   */
   const handleParamInputChange = (e: any) => {
     const { name, value } = e.target;
     //convert camelCase to snake_case
@@ -115,17 +120,22 @@ const QueryForm = ({
     onMsgChange(newMsg);
   };
 
+  /**
+   * handle the change in Msg
+   */
   const changeMsg = (msg: MsgObject) => {
     setMsg(msg);
     console.log(msg);
     onMsgChange(msg);
   };
 
-  //Fetching the input parameter using the queryInterface. Complete operation on strings using reg-ex.
+  /**
+   * Fetching the input parameter using the queryInterface. Complete operation on strings using reg-ex.
+   */
   const fetchInputParams = (query: string, queryInterface: QueryInterface) => {
     let convertedString = query.replace(/([A-Z])/g, "_$1").toLowerCase();
 
-    //Find the message object from the schema Array
+    // Find the message object from the schema Array
     const queryMessage = queryInterface?.properties.find(
       ({ name }) => name === query
     );
@@ -140,6 +150,9 @@ const QueryForm = ({
     }
   };
 
+  /**
+   * handle the dispatch of the query function
+   */
   const handleAction = async () => {
     const tid = toast.loading("Query in process");
     try {

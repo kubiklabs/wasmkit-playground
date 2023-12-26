@@ -58,6 +58,16 @@ export const useChainInfo = () => {
     return (chainInfo as ChainInfo)?.stakeCurrency.coinMinimalDenom;
   };
 
+  /*
+   * Returns the actual denom of the provided chain
+   */
+
+  const getAccAddrPrefix = async (chainId: string) => {
+    const chainInfo = await import(`../config/${chainId}/chain_info.json`);
+
+    return (chainInfo as ChainInfo)?.bech32Config.bech32PrefixAccAddr;
+  };
+
   return {
     getChainInfoData,
     getChainId,
@@ -65,5 +75,6 @@ export const useChainInfo = () => {
     getRestUrl,
     getDenomName,
     getMinimalDenomName,
+    getAccAddrPrefix,
   };
 };

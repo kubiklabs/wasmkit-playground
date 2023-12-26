@@ -47,7 +47,7 @@ const ContractDetails = () => {
             Contract File Name:{" "}
           </Text>
           <Text fontSize={"1.5rem"}>
-            {getActualContractName(contractDetails?.contractTag) || "-"}
+            {getActualContractName(contractid as string) || "-"}
           </Text>
         </Flex>
       </Stack>

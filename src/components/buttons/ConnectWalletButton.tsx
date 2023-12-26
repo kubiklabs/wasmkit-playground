@@ -1,5 +1,13 @@
 import GeneralButton from "./GeneralButton";
-import { Box, Divider, Flex, Spinner, Text, Tooltip } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Flex,
+  Link,
+  Spinner,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
 import { walletState } from "../../context/walletState";
 import { useConnectWallet, useDisconnetWallet } from "../../hooks/useTxnClient";
@@ -11,7 +19,8 @@ import { toast } from "react-toastify";
 const ConnectWalletButton = () => {
   const { activeNetworkId, isLoggingIn } = useRecoilValue(activeNetworkState);
 
-  const { address, balance, nickName } = useRecoilValue(walletState);
+  const { address, balance, nickName, addrPrefix } =
+    useRecoilValue(walletState);
   const disconnectWallet = useDisconnetWallet();
   const connectWallet = useConnectWallet();
 
@@ -54,7 +63,16 @@ const ConnectWalletButton = () => {
             <Spinner />
           ) : (
             <>
-              <Text>{nickName}</Text>
+              <Link
+                _hover={{
+                  textDecoration: "none",
+                  color: "#A9DFD8",
+                }}
+                target="_blank"
+                href={`https://www.mintscan.io/${addrPrefix}/address/${address}`}
+              >
+                <Text>{nickName}</Text>
+              </Link>
               <Divider height={"50%"} orientation="vertical" />
               <Text fontWeight={"bold"}>
                 {balance?.amount} {balance?.denom}

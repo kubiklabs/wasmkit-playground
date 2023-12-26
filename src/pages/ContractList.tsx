@@ -25,6 +25,7 @@ const ContractList = () => {
       <Flex
         gap={"20px"}
         minW={"350px"}
+        flexWrap={"wrap"}
         // justifyContent={"space-evenly"}
         // gridAutoFlow={"column"}
       >

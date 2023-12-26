@@ -34,7 +34,7 @@ const ExecuteContract = () => {
       <Flex flexWrap={"wrap"} width={"100%"} gap={"40px"}>
         <ExecuteForm
           onResultChange={handleResultUpdate}
-          flex={2}
+          flex={1}
           onMsgChange={handleMsgUpdate}
         />
         <Stack gap={"40px"} flex={1}>
