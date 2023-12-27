@@ -22,12 +22,13 @@ const ContractList = () => {
       >
         Select a contract
       </Text>
-      <Flex
+      <Grid
         gap={"20px"}
-        minW={"350px"}
+        // minW={"350px"}
         flexWrap={"wrap"}
         // justifyContent={"space-evenly"}
         // gridAutoFlow={"column"}
+        gridTemplateColumns={"repeat(auto-fit, minmax(250px, 400px))"}
       >
         {activeNetworkId &&
           networkContractsList[activeNetworkId].map((contract: any) => {
@@ -38,6 +39,7 @@ const ContractList = () => {
                 flex={1}
                 onClick={() => navigate(`/${contractName}/details`)}
                 maxW={"400px"}
+                whitespace={""}
                 p={"20px"}
                 cursor={"pointer"}
                 _hover={{
@@ -49,7 +51,46 @@ const ContractList = () => {
               </Card>
             );
           })}
-      </Flex>
+        <Card
+          flex={1}
+          onClick={() => navigate(`}/details`)}
+          maxW={"400px"}
+          p={"20px"}
+          cursor={"pointer"}
+          _hover={{
+            bg: "#ffffff20",
+          }}
+          color="white"
+        >
+          {"Helloi"}
+        </Card>
+        {/* <Card
+          flex={1}
+          onClick={() => navigate(`}/details`)}
+          maxW={"400px"}
+          p={"20px"}
+          cursor={"pointer"}
+          _hover={{
+            bg: "#ffffff20",
+          }}
+          color="white"
+        >
+          {"Helloi"}
+        </Card>
+        <Card
+          flex={1}
+          onClick={() => navigate(`}/details`)}
+          maxW={"400px"}
+          p={"20px"}
+          cursor={"pointer"}
+          _hover={{
+            bg: "#ffffff20",
+          }}
+          color="white"
+        >
+          {"Helloi"}
+        </Card> */}
+      </Grid>
     </>
   );
 };
