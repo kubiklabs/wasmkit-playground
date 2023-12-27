@@ -25,7 +25,7 @@ const QueryForm = ({
 }: {
   flex?: number;
   onMsgChange: (msg: MsgObject) => void;
-  onResultChange: (msg: MsgObject) => void;
+  onResultChange: (msg: MsgObject | undefined) => void;
 }) => {
   const { contractid } = useParams();
 
@@ -145,6 +145,7 @@ const QueryForm = ({
         queryMessage,
         convertedString
       );
+      onResultChange(undefined);
       changeMsg(updatedMsg);
       setParams(paramsArray);
     }

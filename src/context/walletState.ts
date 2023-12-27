@@ -17,6 +17,7 @@ export const walletState = atom<{
   shortAddress: string | undefined;
   balance: Coin | undefined;
   nickName: string | undefined;
+  isTestnet: boolean | undefined;
 }>({
   key: "walletState",
   default: {
@@ -30,6 +31,7 @@ export const walletState = atom<{
       denom: "",
     },
     nickName: undefined,
+    isTestnet: undefined,
   },
   dangerouslyAllowMutability: true,
 });

@@ -19,7 +19,7 @@ import { toast } from "react-toastify";
 const ConnectWalletButton = () => {
   const { activeNetworkId, isLoggingIn } = useRecoilValue(activeNetworkState);
 
-  const { address, balance, nickName, addrPrefix } =
+  const { address, balance, nickName, addrPrefix, isTestnet } =
     useRecoilValue(walletState);
   const disconnectWallet = useDisconnetWallet();
   const connectWallet = useConnectWallet();
@@ -69,7 +69,11 @@ const ConnectWalletButton = () => {
                   color: "#A9DFD8",
                 }}
                 target="_blank"
-                href={`https://www.mintscan.io/${addrPrefix}/address/${address}`}
+                href={`https://${
+                  isTestnet ? "testnet." : ""
+                }mintscan.io/${addrPrefix}${
+                  isTestnet ? "-testnet" : ""
+                }/address/${address}`}
               >
                 <Text>{nickName}</Text>
               </Link>

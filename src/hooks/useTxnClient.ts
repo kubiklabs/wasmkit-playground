@@ -10,6 +10,7 @@ import { useMessageToaster } from "./useMessageToaster";
 import { toast } from "react-toastify";
 import { useChainInfo } from "./useChainInfo";
 import { activeNetworkState } from "../context/networkContractState";
+import testnetList from "../config/testnetList.json";
 
 export interface Coin {
   readonly denom: string;
@@ -35,14 +36,16 @@ export const useDisconnetWallet = () => {
       shortAddress: undefined,
       balance: undefined,
       nickName: undefined,
+      isTestnet: undefined,
     });
-    Success("Wallet Disconnected!");
+    toast.warn("Wallet Disconnected!");
   };
 };
 
 export const useConnectWallet = () => {
   const { activeNetworkId } = useRecoilValue(activeNetworkState);
   const chainInfo = useChainInfo();
+  const disconnect = useDisconnetWallet();
   const setWalletState = useSetRecoilState(walletState);
   const setActiveNetwork = useSetRecoilState(activeNetworkState);
 
@@ -94,12 +97,13 @@ export const useConnectWallet = () => {
 
       toast.update(tid, {
         type: "success",
-        render: `Keplr is connected!`,
+        render: `Keplr is connected to ${chainId}!`,
         isLoading: false,
         autoClose: 5000,
         closeButton: true,
       });
 
+      const isTestnet = Object.keys(testnetList).find((id) => id === chainId);
       /* successfully update the wallet state */
       setWalletState({
         address: address,
@@ -115,9 +119,20 @@ export const useConnectWallet = () => {
         client: wasmChainClient,
         queryClient,
         nickName: walletName.name,
+        isTestnet: isTestnet ? true : false,
       });
     } catch (error) {
       console.log(error);
+      disconnect();
+      toast.update(tid, {
+        type: "error",
+        render: `Cannot connect to ${chainId} due to the following error: \n${
+          (error as Error).message
+        }`,
+        isLoading: false,
+        autoClose: 5000,
+        closeButton: true,
+      });
     } finally {
       setActiveNetwork({
         activeNetworkId: chainId,

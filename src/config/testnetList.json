@@ -1,0 +1,10 @@
+{
+  "uni-6": {
+    "name": "juno-testnet",
+    "network": "juno"
+  },
+  "pion-1": {
+    "name": "neutron-testnet",
+    "network": "neutron"
+  }
+}

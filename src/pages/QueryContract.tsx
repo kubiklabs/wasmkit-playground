@@ -8,7 +8,7 @@ import { MsgObject } from "../types/dataTypes";
 
 const QueryContract = () => {
   const [code, setCode] = useState<string>("");
-  const [result, setResult] = useState<string>("");
+  const [result, setResult] = useState<string | undefined>("");
 
   const handleMsgUpdate = (msg: MsgObject) => {
     const newMsg = JSON.stringify(msg, null, 2);
@@ -17,7 +17,8 @@ const QueryContract = () => {
   };
 
   const handleResultUpdate = (msg: any) => {
-    const newMsg = JSON.stringify({ response: msg }, null, 2);
+    let newMsg;
+    if (msg) newMsg = JSON.stringify({ response: msg }, null, 2);
     console.log(newMsg);
 
     setResult(newMsg);

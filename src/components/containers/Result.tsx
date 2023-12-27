@@ -1,7 +1,7 @@
 import { Box, Code, Flex, Text } from "@chakra-ui/react";
 import ReactJson from "@microlink/react-json-view";
 
-const Result = ({ result }: { result: string }) => {
+const Result = ({ result }: { result: string | undefined }) => {
   return (
     <Flex
       maxW={"100%"}

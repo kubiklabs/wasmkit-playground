@@ -51,45 +51,6 @@ const ContractList = () => {
               </Card>
             );
           })}
-        <Card
-          flex={1}
-          onClick={() => navigate(`}/details`)}
-          maxW={"400px"}
-          p={"20px"}
-          cursor={"pointer"}
-          _hover={{
-            bg: "#ffffff20",
-          }}
-          color="white"
-        >
-          {"Helloi"}
-        </Card>
-        {/* <Card
-          flex={1}
-          onClick={() => navigate(`}/details`)}
-          maxW={"400px"}
-          p={"20px"}
-          cursor={"pointer"}
-          _hover={{
-            bg: "#ffffff20",
-          }}
-          color="white"
-        >
-          {"Helloi"}
-        </Card>
-        <Card
-          flex={1}
-          onClick={() => navigate(`}/details`)}
-          maxW={"400px"}
-          p={"20px"}
-          cursor={"pointer"}
-          _hover={{
-            bg: "#ffffff20",
-          }}
-          color="white"
-        >
-          {"Helloi"}
-        </Card> */}
       </Grid>
     </>
   );
