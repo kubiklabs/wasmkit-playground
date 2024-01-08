@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
 const KeyValuePair = ({
@@ -9,11 +9,15 @@ const KeyValuePair = ({
   valueName: string;
 }) => {
   return (
-    <Flex alignItems={"center"} gap={"10px"}>
-      <Text whiteSpace={"nowrap"} fontWeight={"bold"} fontSize={"1.5rem"}>
+    <Flex alignItems={{base: "start", md:"center"}} gap={"10px"}>
+      <Text
+        whiteSpace={"nowrap"}
+        fontWeight={"bold"}
+        fontSize={{ base: "1rem", md: "1.5rem" }}
+      >
         {keyName}{" "}
       </Text>
-      <Text fontSize={"1.5rem"}>{valueName}</Text>
+      <Text wordBreak={{base: "break-word", md: "normal"}} fontSize={{ base: "1rem", md: "1.5rem" }}>{valueName}</Text>
     </Flex>
   );
 };
