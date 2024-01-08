@@ -184,7 +184,7 @@ const QueryForm = ({
   return (
     <Flex minW={"35%"} flex={flex} flexDirection={"column"} gap={"10px"}>
       <form>
-        <Flex alignItems={"end"} flexDirection={"column"} gap={"10px"}>
+        <Flex flexDirection={"column"} gap={"10px"} alignItems={"end"}>
           <SelectInput
             onChange={handleInputChange}
             label="Select Query"

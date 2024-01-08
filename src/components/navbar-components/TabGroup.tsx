@@ -7,7 +7,7 @@ const TabGroup = () => {
   const { contractid } = useParams();
 
   return (
-    <Flex width={"100%"} gap={"20px"}>
+    <Flex width={"100%"} gap={"20px"} flexDirection={{base:"column", sm:"row"}}>
       <TabButton
         name="Contract Details"
         id="details"

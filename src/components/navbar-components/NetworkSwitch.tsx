@@ -41,9 +41,11 @@ const NetworkSwitch = () => {
       // onFocusCapture={handleMenuState}
       // onBlur={handleMenuState}
       position={"relative"}
+      width={"full"}
     >
       <GeneralButton
-        width={"200px"}
+        width={"100%"}
+        // width={"200px"}
         py={"30px"}
         name={activeNetworkId || "Select Network"}
       />

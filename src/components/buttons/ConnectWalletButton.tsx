@@ -49,7 +49,8 @@ const ConnectWalletButton = () => {
       ) : (
         <Flex
           color={"white"}
-          minWidth={"250px"}
+          width={"full"}
+          // minWidth={"250px"}
           borderRadius={"5px"}
           bg={"rgba(255, 255, 255, 0.05)"}
           alignItems={"center"}
@@ -58,6 +59,7 @@ const ConnectWalletButton = () => {
           gap={"15px"}
           p={"15px"}
           backdropFilter={"blur(15px)"}
+          // maxWidth={{ base: "full" }}
         >
           {isLoggingIn ? (
             <Spinner />
@@ -75,11 +77,17 @@ const ConnectWalletButton = () => {
                   isTestnet ? "-testnet" : ""
                 }/address/${address}`}
               >
-                <Text>{nickName}</Text>
+                <Text fontSize={{ base: "16px", md: "20px" }}>{nickName}</Text>
               </Link>
               <Divider height={"50%"} orientation="vertical" />
-              <Text fontWeight={"bold"}>
-                {balance?.amount} {balance?.denom}
+              <Text
+                fontWeight={"bold"}
+                display={"flex"}
+                gap={"10px"}
+                fontSize={{ base: "16px", md: "20px" }}
+              >
+                <div>{balance?.amount}</div>
+                <div>{balance?.denom}</div>
               </Text>
               <Divider height={"50%"} orientation="vertical" />
               <Tooltip label="Copy address">
@@ -87,6 +95,7 @@ const ConnectWalletButton = () => {
                   onClick={handleCopyAddress}
                   cursor={"pointer"}
                   _hover={{ color: "skyblue" }}
+                  fontSize={{ base: "16px", md: "20px" }}
                 >
                   <FontAwesomeIcon icon={faCopy} />
                 </Box>
@@ -97,6 +106,7 @@ const ConnectWalletButton = () => {
                   onClick={disconnectWallet}
                   cursor={"pointer"}
                   _hover={{ color: "red" }}
+                  fontSize={{ base: "16px", md: "20px" }}
                 >
                   <FontAwesomeIcon icon={faRightFromBracket} />
                 </Box>
