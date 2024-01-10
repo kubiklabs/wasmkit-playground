@@ -34,7 +34,11 @@ function App() {
           <SideBar />
           <div className="App">
             <NavbarContainer />
-            <Stack height={"100%"} overflowY={"auto"}>
+            <Stack
+              height={{ md: "100%" }}
+              overflowY={"auto"}
+              padding={{base: "0 15px"}}
+            >
               <Routes>
                 <Route path="/" element={<ContractList />} />
                 <Route

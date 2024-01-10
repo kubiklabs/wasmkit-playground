@@ -25,11 +25,13 @@ const SelectInput = ({
       </FormLabel>
       <Select
         size={"lg"}
+        width={{ base: "50%", md: "100%" }}
         cursor={"pointer"}
         border={"none"}
         _focusVisible={{
           borderColor: "white",
         }}
+        // width={"20px"}
         bg={"rgba(255, 255, 255, 0.05)"}
         onChange={handleOptionChange}
       >
