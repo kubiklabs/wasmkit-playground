@@ -14,7 +14,7 @@ const Sheet = (props: any) => {
       bg="rgba(255, 255, 255, 0.05)"
       overflowY={"auto"}
       color={"white"}
-      p={"60px"}
+      p={{ base: "20px", md: "35px" }}
       pt={"20px"}
       gap={"20px"}
       position={"relative"}

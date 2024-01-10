@@ -12,7 +12,6 @@
 .App {
   /* background: white; */
   flex: 1;
-  padding: 40px;
   padding-top: 100px;
   position: relative;
   /* height: 100%;
@@ -57,4 +56,19 @@
 option {
   background: rgb(43, 42, 42) !important;
   padding: 5px !important;
+}
+
+@media screen and (max-width: 30em) {
+  .App{
+    padding-top: 200px;
+    padding-left: 0px;
+    padding-right: 0px;
+    overflow-x: auto;
+  }
+}
+
+@media screen and (max-width: 48em){
+  #root { 
+    flex-direction: column;
+  }
 }

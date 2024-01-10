@@ -14,10 +14,13 @@ const NavbarContainer = () => {
       p={"10px"}
       pt={"20px"}
       pr={"40px"}
+      pl={"40px"}
       backdropFilter={"blur(5px)"}
-      justifyContent={"end"}
+      justifyContent={{base: "center", md:"end"}}
+      alignItems={"start"}
       // borderBottom={"2px solid #A9DFD810"}
       gap={"20px"}
+      flexDirection={{base:"column", sm:"row"}}
     >
       <ConnectWalletButton />
       <NetworkSwitch />
