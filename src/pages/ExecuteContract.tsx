@@ -31,7 +31,12 @@ const ExecuteContract = () => {
   };
   return (
     <Sheet gap="10px">
-      <Flex flexWrap={"wrap"} width={"100%"} gap={"40px"}>
+      <Flex
+        flexWrap={"wrap"}
+        width={"100%"}
+        gap={"40px"}
+        flexDirection={{ base: "column", md: "row" }}
+      >
         <ExecuteForm
           onResultChange={handleResultUpdate}
           flex={1}

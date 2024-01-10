@@ -26,7 +26,11 @@ const QueryContract = () => {
 
   return (
     <Sheet gap="10px">
-      <Flex width={"100%"} gap={"40px"}>
+      <Flex
+        width={"100%"}
+        gap={"40px"}
+        flexDirection={{ base: "column", md: "row" }}
+      >
         {/* {getChainId()} */}
         <QueryForm
           onResultChange={handleResultUpdate}
